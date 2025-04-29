@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/register/register.page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -76,7 +78,14 @@ class _SplashPageState extends State<SplashPage> {
                         ),
                         backgroundColor: Color.fromARGB(255, 137, 26, 255),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => RegisterPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         "Resiger",
                         style: GoogleFonts.dmSans(
@@ -108,7 +117,7 @@ class _SplashPageState extends State<SplashPage> {
                         ),
                       ),
                     ),
-                    // SizedBox(height: 10.h),
+                    SizedBox(height: 10.h),
                   ],
                 ),
               ),
