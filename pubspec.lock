@@ -179,6 +179,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.16.0"
+  otpify:
+    dependency: "direct main"
+    description:
+      name: otpify
+      sha256: e3deb2acf9ebd2859d155e3887c22126ea8a478238374401ddb4bb892968c48a
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5"
   path:
     dependency: transitive
     description:

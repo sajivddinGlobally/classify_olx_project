@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/login/login.page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -184,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => RegisterPage(),
+                                builder: (context) => LoginPage(),
                               ),
                             );
                           },
