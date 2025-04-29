@@ -24,7 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Stack(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height + 20,
+              height: MediaQuery.of(context).size.height * 3 / 2,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -196,6 +196,29 @@ class _RegisterPageState extends State<RegisterPage> {
                               color: Colors.white,
                             ),
                           ),
+                        ),
+                        SizedBox(height: 75.h),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Already have an account?",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFF615B68),
+                              ),
+                            ),
+                            Text(
+                              "Login",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xFF891AFF),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
