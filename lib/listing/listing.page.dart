@@ -46,11 +46,14 @@ class _ListingPageState extends State<ListingPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      "assets/listingimage.png",
-                      width: MediaQuery.of(context).size.width,
-                      height: 133.h,
-                      fit: BoxFit.cover,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.r),
+                      child: Image.asset(
+                        "assets/listingimage.png",
+                        width: MediaQuery.of(context).size.width,
+                        height: 133.h,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     SizedBox(height: 10.h),
                     Text(
