@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
             Stack(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height / 2,
+                  height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -230,266 +230,322 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 26.h),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Top Deal",
-                    style: GoogleFonts.dmSans(
-                      fontSize: 26.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 36, 33, 38),
-                    ),
-                  ),
-                  Container(
-                    width: 65.w,
-                    height: 26.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35.45.r),
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "View all",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 97, 91, 104),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 300.h,
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.horizontal,
-                itemCount: dealsList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(top: 21.h, left: 20.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
+                      SizedBox(height: 26.h),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15.r),
-                              child: Image.asset(
-                                // "assets/shoes1.png",
-                                dealsList[index]["imageUrl"].toString(),
-                                width: 240.w,
-                                height: 160.h,
-                                fit: BoxFit.cover,
+                            Text(
+                              "Top Deal",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 36, 33, 38),
                               ),
                             ),
-                            Positioned(
-                              right: 15.w,
-                              top: 15.h,
-                              child: Container(
-                                width: 30.w,
-                                height: 30.h,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.favorite_border,
-                                    size: 18.sp,
+                            Container(
+                              width: 65.w,
+                              height: 26.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(35.45.r),
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "View all",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 97, 91, 104),
                                   ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 15.h),
-                        Container(
-                          // width: 135.w,
-                          height: 25.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.r),
-                            color: Color.fromARGB(25, 137, 26, 255),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 6.w, right: 6.w),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  size: 15.sp,
-                                  color: Color.fromARGB(255, 137, 26, 255),
-                                ),
-                                Text(
-                                  // "Udaipur, rajasthan",
-                                  dealsList[index]["location"].toString(),
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 137, 26, 255),
+                      ),
+                      SizedBox(
+                        height: 300.h,
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: dealsList.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(top: 21.h, left: 20.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          15.r,
+                                        ),
+                                        child: Image.asset(
+                                          // "assets/shoes1.png",
+                                          dealsList[index]["imageUrl"]
+                                              .toString(),
+                                          width: 240.w,
+                                          height: 160.h,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        right: 15.w,
+                                        top: 15.h,
+                                        child: Container(
+                                          width: 30.w,
+                                          height: 30.h,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
+                                          ),
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.favorite_border,
+                                              size: 18.sp,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  SizedBox(height: 15.h),
+                                  Container(
+                                    // width: 135.w,
+                                    height: 25.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30.r),
+                                      color: Color.fromARGB(25, 137, 26, 255),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 6.w,
+                                        right: 6.w,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on,
+                                            size: 15.sp,
+                                            color: Color.fromARGB(
+                                              255,
+                                              137,
+                                              26,
+                                              255,
+                                            ),
+                                          ),
+                                          Text(
+                                            // "Udaipur, rajasthan",
+                                            dealsList[index]["location"]
+                                                .toString(),
+                                            style: GoogleFonts.dmSans(
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromARGB(
+                                                255,
+                                                137,
+                                                26,
+                                                255,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 8.h),
+                                  Text(
+                                    // "Nike Air Jorden 55 Medium",
+                                    dealsList[index]["title"].toString(),
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromARGB(255, 97, 91, 104),
+                                      letterSpacing: -0.80,
+                                    ),
+                                  ),
+                                  Text(
+                                    // "\$450.00",
+                                    dealsList[index]["price"].toString(),
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromARGB(255, 137, 26, 255),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SelectBody(
+                                  image: "assets/Starbucks.png",
+                                  text: "Starbucks",
+                                ),
+                                SelectBody(
+                                  image: "assets/Honda.png",
+                                  text: "Honda",
+                                ),
+                                SelectBody(
+                                  image: "assets/Adidas.png",
+                                  text: "Adidas",
+                                ),
+                                SelectBody(
+                                  image: "assets/MacDonalds.png",
+                                  text: "MacDonalds",
+                                ),
+                                SelectBody(
+                                  image: "assets/Redbull.png",
+                                  text: "Redbull",
                                 ),
                               ],
                             ),
-                          ),
+                            SizedBox(height: 25.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SelectBody(
+                                  image: "assets/Aston martin.png",
+                                  text: "Aston martin",
+                                ),
+                                SelectBody(
+                                  image: "assets/Peugeot.png",
+                                  text: "Peugeot",
+                                ),
+                                SelectBody(
+                                  image: "assets/Lacerte.png",
+                                  text: "Lacerte",
+                                ),
+                                SelectBody(
+                                  image: "assets/Gucci.png",
+                                  text: "Gucci",
+                                ),
+                                SelectBody(
+                                  image: "assets/Marshall.png",
+                                  text: "Marshall",
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          // "Nike Air Jorden 55 Medium",
-                          dealsList[index]["title"].toString(),
-                          style: GoogleFonts.dmSans(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromARGB(255, 97, 91, 104),
-                            letterSpacing: -0.80,
-                          ),
-                        ),
-                        Text(
-                          // "\$450.00",
-                          dealsList[index]["price"].toString(),
-                          style: GoogleFonts.dmSans(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 137, 26, 255),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SelectBody(
-                        image: "assets/Starbucks.png",
-                        text: "Starbucks",
                       ),
-                      SelectBody(image: "assets/Honda.png", text: "Honda"),
-                      SelectBody(image: "assets/Adidas.png", text: "Adidas"),
-                      SelectBody(
-                        image: "assets/MacDonalds.png",
-                        text: "MacDonalds",
+                      SizedBox(height: 30.h),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Latest Listing",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 36, 33, 38),
+                                letterSpacing: -1,
+                              ),
+                            ),
+                            Container(
+                              width: 65.w,
+                              height: 26.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(35.45.r),
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "View all",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 97, 91, 104),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      SelectBody(image: "assets/Redbull.png", text: "Redbull"),
+                      SizedBox(height: 20.h),
+                      LatestBody(),
+                      SizedBox(height: 30.h),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Trending Products",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 36, 33, 38),
+                                letterSpacing: -1,
+                              ),
+                            ),
+                            Container(
+                              width: 65.w,
+                              height: 26.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(35.45.r),
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "View all",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 97, 91, 104),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      ProductBody(),
+                      SizedBox(height: 50.h),
                     ],
                   ),
-                  SizedBox(height: 25.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SelectBody(
-                        image: "assets/Aston martin.png",
-                        text: "Aston martin",
-                      ),
-                      SelectBody(image: "assets/Peugeot.png", text: "Peugeot"),
-                      SelectBody(image: "assets/Lacerte.png", text: "Lacerte"),
-                      SelectBody(image: "assets/Gucci.png", text: "Gucci"),
-                      SelectBody(
-                        image: "assets/Marshall.png",
-                        text: "Marshall",
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            SizedBox(height: 30.h),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Latest Listing",
-                    style: GoogleFonts.dmSans(
-                      fontSize: 26.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 36, 33, 38),
-                      letterSpacing: -1,
-                    ),
-                  ),
-                  Container(
-                    width: 65.w,
-                    height: 26.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35.45.r),
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "View all",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 97, 91, 104),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20.h),
-            LatestBody(),
-            SizedBox(height: 30.h),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Trending Products",
-                    style: GoogleFonts.dmSans(
-                      fontSize: 26.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 36, 33, 38),
-                      letterSpacing: -1,
-                    ),
-                  ),
-                  Container(
-                    width: 65.w,
-                    height: 26.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35.45.r),
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "View all",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 97, 91, 104),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20.h),
-            ProductBody(),
-            SizedBox(height: 50.h),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.messenger_outline),
+            label: "Chat",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.layers_outlined),
+            label: "My Listings",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_2_outlined),
+            label: "Profile",
+          ),
+        ],
       ),
     );
   }
