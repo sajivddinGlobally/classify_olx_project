@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 240, 228, 250),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 54.h),
+                      SizedBox(height: 60.h),
                       Row(
                         children: [
                           SizedBox(width: 20.w),
@@ -203,7 +204,137 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            Text("asdfafdafa  dfhakfjdh adkhfak"),
+            SizedBox(height: 26.h),
+            Padding(
+              padding: EdgeInsets.only(left: 20.w, right: 20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Top Deal",
+                    style: GoogleFonts.dmSans(
+                      fontSize: 26.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromARGB(255, 36, 33, 38),
+                    ),
+                  ),
+                  Container(
+                    width: 65.w,
+                    height: 26.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(35.45.r),
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "View all",
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 97, 91, 104),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 300.h,
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.horizontal,
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(top: 21.h, left: 20.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.r),
+                              child: Image.asset(
+                                "assets/shoes1.png",
+                                width: 240.w,
+                                height: 160.h,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              right: 15.w,
+                              top: 15.h,
+                              child: Container(
+                                width: 30.w,
+                                height: 30.h,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.favorite_border,
+                                    size: 18.sp,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15.h),
+                        Container(
+                          width: 135.w,
+                          height: 25.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.r),
+                            color: Color.fromARGB(25, 137, 26, 255),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 6.w, right: 6.w),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  size: 15.sp,
+                                  color: Color.fromARGB(255, 137, 26, 255),
+                                ),
+                                Text(
+                                  "Udaipur, rajasthan",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 137, 26, 255),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          "Nike Air Jorden 55 Medium",
+                          style: GoogleFonts.dmSans(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Color.fromARGB(255, 97, 91, 104),
+                            letterSpacing: -0.80,
+                          ),
+                        ),
+                        Text(
+                          "\$450.00",
+                          style: GoogleFonts.dmSans(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 137, 26, 255),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
