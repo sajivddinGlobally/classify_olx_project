@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -458,18 +457,35 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class LatestBody extends StatelessWidget {
+class LatestBody extends StatefulWidget {
   const LatestBody({super.key});
 
   @override
+  State<LatestBody> createState() => _LatestBodyState();
+}
+
+class _LatestBodyState extends State<LatestBody> {
+  List<Map<String, String>> latestList = [
+    {"imageUrl": "assets/shirt1.png"},
+    {"imageUrl": "assets/shirt2.png"},
+    {"imageUrl": "assets/shirt3.png"},
+    {"imageUrl": "assets/shirt4.png"},
+    {"imageUrl": "assets/shirt5.png"},
+    {"imageUrl": "assets/shirt6.png"},
+    {"imageUrl": "assets/shirt7.png"},
+    {"imageUrl": "assets/shirt8.png"},
+  ];
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200.h,
-      color: Colors.yellow,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 3,
+        // itemCount: latestList.length,
+        itemCount: (latestList.length / 2).ceil(),
         itemBuilder: (context, index) {
+          int topIndex = index * 2;
+          int bottomIndex = topIndex + 1;
           return Padding(
             padding: EdgeInsets.only(left: 20.w),
             child: Column(
@@ -493,7 +509,9 @@ class LatestBody extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.r),
                           child: Image.asset(
-                            "assets/shirt1.png",
+                            // "assets/shirt1.png",
+                            // latestList[index]["imageUrl"].toString(),
+                            latestList[topIndex]["imageUrl"]!,
                             width: 70.w,
                             height: 78.h,
                             fit: BoxFit.cover,
@@ -579,7 +597,9 @@ class LatestBody extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10.r),
                               child: Image.asset(
-                                "assets/shirt1.png",
+                                // "assets/shirt1.png",
+                                // latestList[index]["imageUrl"].toString(),
+                                latestList[bottomIndex]["imageUrl"]!,
                                 width: 70.w,
                                 height: 78.h,
                                 fit: BoxFit.cover,
