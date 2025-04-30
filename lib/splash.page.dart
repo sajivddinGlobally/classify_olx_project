@@ -70,15 +70,8 @@ class _SplashPageState extends State<SplashPage> {
                       ),
                     ),
                     SizedBox(height: 30.h),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(
-                          MediaQuery.of(context).size.width,
-                          49.h,
-                        ),
-                        backgroundColor: Color.fromARGB(255, 137, 26, 255),
-                      ),
-                      onPressed: () {
+                    InkWell(
+                      onTap: () {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
@@ -86,12 +79,22 @@ class _SplashPageState extends State<SplashPage> {
                           ),
                         );
                       },
-                      child: Text(
-                        "Resiger",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 49.h,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 137, 26, 255),
+                          borderRadius: BorderRadius.circular(35.45.r),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Resiger",
+                            style: GoogleFonts.dmSans(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),

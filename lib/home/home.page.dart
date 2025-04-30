@@ -17,6 +17,38 @@ class _HomePageState extends State<HomePage> {
     'assets/image2.jpg',
     'assets/image3.jpg',
   ];
+  List<Map<String, String>> dealsList = [
+    {
+      "imageUrl": "assets/shoes1.png",
+      "location": "Udaipur, rajasthan",
+      "title": "Nike Air Jorden 55 Medium",
+      "price": "\$450.00",
+    },
+    {
+      "imageUrl": "assets/shoes2.png",
+      "location": "Mumbai, Maharashtra",
+      "title": "Adidas Ultraboost 21",
+      "price": "\$180.00",
+    },
+    {
+      "imageUrl": "assets/shoes3.png",
+      "location": "Delhi, India",
+      "title": "Puma RS-X3",
+      "price": "\$130.00",
+    },
+    {
+      "imageUrl": "assets/shoes4.png",
+      "location": "Bangalore, Karnataka",
+      "title": "Reebok Classic Leather",
+      "price": "\$75.00",
+    },
+    {
+      "imageUrl": "assets/shoes5.png",
+      "location": "Chennai, Tamil Nadu",
+      "title": "New Balance 574",
+      "price": "\$85.00",
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -244,7 +276,7 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.horizontal,
-                itemCount: 6,
+                itemCount: dealsList.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.only(top: 21.h, left: 20.w),
@@ -256,7 +288,8 @@ class _HomePageState extends State<HomePage> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(15.r),
                               child: Image.asset(
-                                "assets/shoes1.png",
+                                // "assets/shoes1.png",
+                                dealsList[index]["imageUrl"].toString(),
                                 width: 240.w,
                                 height: 160.h,
                                 fit: BoxFit.cover,
@@ -284,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         SizedBox(height: 15.h),
                         Container(
-                          width: 135.w,
+                          // width: 135.w,
                           height: 25.h,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.r),
@@ -300,7 +333,8 @@ class _HomePageState extends State<HomePage> {
                                   color: Color.fromARGB(255, 137, 26, 255),
                                 ),
                                 Text(
-                                  "Udaipur, rajasthan",
+                                  // "Udaipur, rajasthan",
+                                  dealsList[index]["location"].toString(),
                                   style: GoogleFonts.dmSans(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -313,7 +347,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         SizedBox(height: 8.h),
                         Text(
-                          "Nike Air Jorden 55 Medium",
+                          // "Nike Air Jorden 55 Medium",
+                          dealsList[index]["title"].toString(),
                           style: GoogleFonts.dmSans(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
@@ -322,7 +357,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Text(
-                          "\$450.00",
+                          // "\$450.00",
+                          dealsList[index]["price"].toString(),
                           style: GoogleFonts.dmSans(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w600,
@@ -335,8 +371,297 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.w, right: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SelectBody(
+                        image: "assets/Starbucks.png",
+                        text: "Starbucks",
+                      ),
+                      SelectBody(image: "assets/Honda.png", text: "Honda"),
+                      SelectBody(image: "assets/Adidas.png", text: "Adidas"),
+                      SelectBody(
+                        image: "assets/MacDonalds.png",
+                        text: "MacDonalds",
+                      ),
+                      SelectBody(image: "assets/Redbull.png", text: "Redbull"),
+                    ],
+                  ),
+                  SizedBox(height: 25.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SelectBody(
+                        image: "assets/Aston martin.png",
+                        text: "Aston martin",
+                      ),
+                      SelectBody(image: "assets/Peugeot.png", text: "Peugeot"),
+                      SelectBody(image: "assets/Lacerte.png", text: "Lacerte"),
+                      SelectBody(image: "assets/Gucci.png", text: "Gucci"),
+                      SelectBody(
+                        image: "assets/Marshall.png",
+                        text: "Marshall",
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30.h),
+            Padding(
+              padding: EdgeInsets.only(left: 20.w, right: 20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Latest Listing",
+                    style: GoogleFonts.dmSans(
+                      fontSize: 26.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromARGB(255, 36, 33, 38),
+                      letterSpacing: -1,
+                    ),
+                  ),
+                  Container(
+                    width: 65.w,
+                    height: 26.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(35.45.r),
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "View all",
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 97, 91, 104),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20.h),
+            LatestBody(),
+            SizedBox(height: 50.h),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class LatestBody extends StatelessWidget {
+  const LatestBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200.h,
+      color: Colors.yellow,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.only(left: 20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 250.w,
+                  height: 90.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.r),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 6.w,
+                          top: 6.h,
+                          bottom: 6.h,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: Image.asset(
+                            "assets/shirt1.png",
+                            width: 70.w,
+                            height: 78.h,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            // width: 135.w,
+                            height: 20.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.r),
+                              color: Color.fromARGB(25, 137, 26, 255),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 6.w, right: 6.w),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 15.sp,
+                                    color: Color.fromARGB(255, 137, 26, 255),
+                                  ),
+                                  Text(
+                                    "Udaipur, rajasthan",
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromARGB(255, 137, 26, 255),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Text(
+                            "Nike Air Jorden 55 Medium",
+
+                            style: GoogleFonts.dmSans(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromARGB(255, 97, 91, 104),
+                              letterSpacing: -0.80,
+                            ),
+                          ),
+                          Text(
+                            "\$450.00",
+
+                            style: GoogleFonts.dmSans(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 137, 26, 255),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 250.w,
+                      height: 90.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.r),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: 6.w,
+                              top: 6.h,
+                              bottom: 6.h,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.r),
+                              child: Image.asset(
+                                "assets/shirt1.png",
+                                width: 70.w,
+                                height: 78.h,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                // width: 135.w,
+                                height: 20.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30.r),
+                                  color: Color.fromARGB(25, 137, 26, 255),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 6.w,
+                                    right: 6.w,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        size: 15.sp,
+                                        color: Color.fromARGB(
+                                          255,
+                                          137,
+                                          26,
+                                          255,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Udaipur, rajasthan",
+                                        style: GoogleFonts.dmSans(
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color.fromARGB(
+                                            255,
+                                            137,
+                                            26,
+                                            255,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                "Nike Air Jorden 55 Medium",
+
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color.fromARGB(255, 97, 91, 104),
+                                  letterSpacing: -0.80,
+                                ),
+                              ),
+                              Text(
+                                "\$450.00",
+
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 137, 26, 255),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -365,6 +690,7 @@ class _SelectBodyState extends State<SelectBody> {
           ),
           child: Image.asset(widget.image),
         ),
+        SizedBox(height: 6.h),
         Text(
           widget.text,
           style: GoogleFonts.dmSans(
