@@ -643,7 +643,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               SizedBox(height: 20.h),
                               ProductBody(),
-                              SizedBox(height: 50.h),
+                              SizedBox(height: 10.h),
                             ],
                           ),
                         ),

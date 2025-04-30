@@ -35,6 +35,23 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
               ),
             ),
             Image.asset("assets/bgimage.png"),
+            Padding(
+              padding: EdgeInsets.only(left: 20.w, top: 60.h),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  width: 46.w,
+                  height: 46.h,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: Icon(Icons.arrow_back),
+                ),
+              ),
+            ),
             Positioned(
               top: 168.h,
               left: 0,
