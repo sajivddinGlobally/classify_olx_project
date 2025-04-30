@@ -449,7 +449,158 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: 20.h),
             LatestBody(),
+            SizedBox(height: 30.h),
+            Padding(
+              padding: EdgeInsets.only(left: 20.w, right: 20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Trending Products",
+                    style: GoogleFonts.dmSans(
+                      fontSize: 26.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromARGB(255, 36, 33, 38),
+                      letterSpacing: -1,
+                    ),
+                  ),
+                  Container(
+                    width: 65.w,
+                    height: 26.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(35.45.r),
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "View all",
+                        style: GoogleFonts.dmSans(
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 97, 91, 104),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20.h),
+            ProductBody(),
             SizedBox(height: 50.h),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProductBody extends StatefulWidget {
+  const ProductBody({super.key});
+
+  @override
+  State<ProductBody> createState() => _ProductBodyState();
+}
+
+class _ProductBodyState extends State<ProductBody> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: 20.w, right: 20.w),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 108.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.r),
+          color: Colors.white,
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 10.w),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.r),
+                child: Image.asset(
+                  "assets/car1.png",
+                  width: 120.w,
+                  height: 84.h,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(width: 15.w),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      // width: 135.w,
+                      height: 20.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.r),
+                        color: Color.fromARGB(25, 137, 26, 255),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 6.w, right: 6.w),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              size: 15.sp,
+                              color: Color.fromARGB(255, 137, 26, 255),
+                            ),
+                            Text(
+                              "Udaipur, rajasthan",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 137, 26, 255),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 70.w),
+                    Container(
+                      width: 30.w,
+                      height: 30.h,
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(25, 137, 26, 255),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.favorite_border,
+                          size: 15.sp,
+                          color: Color.fromARGB(255, 137, 26, 255),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  "Nike Air Jorden 55 Medium",
+                  style: GoogleFonts.dmSans(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromARGB(255, 97, 91, 104),
+                    letterSpacing: -0.80,
+                  ),
+                ),
+                Text(
+                  "\$450.00",
+
+                  style: GoogleFonts.dmSans(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromARGB(255, 137, 26, 255),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
