@@ -128,6 +128,31 @@ class _PaymentPageState extends State<PaymentPage> {
                   }).toList(),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 50.h),
+            child: GestureDetector(
+              onTap: () {},
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 49.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(35.45.r),
+                  color: Color.fromARGB(255, 137, 26, 255),
+                ),
+                child: Center(
+                  child: Text(
+                    "Checkout",
+                    style: GoogleFonts.dmSans(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 60.h),
         ],
       ),
     );
