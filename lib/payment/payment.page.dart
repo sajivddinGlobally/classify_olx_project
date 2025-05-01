@@ -46,14 +46,19 @@ class _PaymentPageState extends State<PaymentPage> {
           Row(
             children: [
               SizedBox(width: 20.w),
-              Container(
-                width: 46.w,
-                height: 46.h,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  width: 46.w,
+                  height: 46.h,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: Center(child: Icon(Icons.arrow_back)),
                 ),
-                child: Center(child: Icon(Icons.arrow_back)),
               ),
               SizedBox(width: 100.w),
               Text(

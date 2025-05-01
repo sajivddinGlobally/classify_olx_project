@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/payment/payment.page.dart';
+import 'package:shopping_app_olx/plan/reting.page.dart';
 
 class PlanPage extends StatefulWidget {
   const PlanPage({super.key});
@@ -165,7 +166,7 @@ class _PlanPageState extends State<PlanPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => PaymentPage(),
+                            builder: (context) => RetingPage(),
                           ),
                         );
                       },
