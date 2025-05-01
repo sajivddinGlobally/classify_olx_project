@@ -10,6 +10,10 @@ class ListingPage extends StatefulWidget {
 }
 
 class _ListingPageState extends State<ListingPage> {
+  List<Map<String, String>> listingList = [
+    {"imageUrl": "assets/listingimage.png"},
+    {"imageUrl": "assets/listingimage2.png"},
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,82 +36,94 @@ class _ListingPageState extends State<ListingPage> {
             ],
           ),
           SizedBox(height: 30.h),
-          Padding(
-            padding: EdgeInsets.only(left: 20.w, right: 20.w),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 216.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.r),
-                color: Colors.white,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 12.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: Image.asset(
-                        "assets/listingimage.png",
-                        width: MediaQuery.of(context).size.width,
-                        height: 133.h,
-                        fit: BoxFit.cover,
-                      ),
+          ListView.builder(
+            itemCount: listingList.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 216.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.r),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 12.w,
+                      right: 12.w,
+                      top: 12.h,
                     ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      "Raymond's Silk Shirts with red coller",
-                      style: GoogleFonts.dmSans(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Color.fromARGB(255, 97, 91, 104),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "\$250.00",
-                          style: GoogleFonts.dmSans(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 137, 26, 255),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: Image.asset(
+                            // "assets/listingimage.png",
+                            listingList[index]["imageUrl"].toString(),
+                            width: MediaQuery.of(context).size.width,
+                            height: 133.h,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        Container(
-                          width: 78.w,
-                          height: 29.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40.r),
-                            color: Color.fromARGB(25, 137, 26, 255),
+                        SizedBox(height: 10.h),
+                        Text(
+                          "Raymond's Silk Shirts with red coller",
+                          style: GoogleFonts.dmSans(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Color.fromARGB(255, 97, 91, 104),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.edit,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "\$250.00",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
                                 color: Color.fromARGB(255, 137, 26, 255),
-                                size: 15.sp,
                               ),
-                              Text(
-                                "Edit Ad",
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 137, 26, 255),
-                                ),
+                            ),
+                            Container(
+                              width: 78.w,
+                              height: 29.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(40.r),
+                                color: Color.fromARGB(25, 137, 26, 255),
                               ),
-                            ],
-                          ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.edit,
+                                    color: Color.fromARGB(255, 137, 26, 255),
+                                    size: 15.sp,
+                                  ),
+                                  Text(
+                                    "Edit Ad",
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromARGB(255, 137, 26, 255),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ],
       ),

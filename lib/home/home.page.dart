@@ -671,7 +671,6 @@ class _HomePageState extends State<HomePage> {
               type: BottomNavigationBarType.fixed,
               selectedItemColor: Color.fromARGB(255, 137, 26, 255),
               unselectedItemColor: Color.fromARGB(255, 97, 91, 104),
-
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home_outlined),
