@@ -104,32 +104,42 @@ class _PlanPageState extends State<PlanPage> {
                       ),
                     ),
                     SizedBox(height: 30.h),
-                    Column(
-                      children: [
-                        PlanBody(
-                          bgColor: Colors.white,
-                          plan: Colors.black,
-                          month: Colors.black,
-                          name: Colors.black,
-                          title: Colors.black,
-                        ),
-                        SizedBox(height: 10.h),
-                        PlanBody(
-                          bgColor: Color.fromARGB(255, 137, 25, 255),
-                          plan: Colors.white,
-                          month: Colors.white,
-                          name: Colors.white,
-                          title: Colors.white,
-                        ),
-                        SizedBox(height: 10.h),
-                        PlanBody(
-                          bgColor: Colors.white,
-                          plan: Colors.black,
-                          month: Colors.black,
-                          name: Colors.black,
-                          title: Colors.black,
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => PaymentPage(),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          PlanBody(
+                            bgColor: Colors.white,
+                            plan: Colors.black,
+                            month: Colors.black,
+                            name: Colors.black,
+                            title: Colors.black,
+                          ),
+                          SizedBox(height: 10.h),
+                          PlanBody(
+                            bgColor: Color.fromARGB(255, 137, 25, 255),
+                            plan: Colors.white,
+                            month: Colors.white,
+                            name: Colors.white,
+                            title: Colors.white,
+                          ),
+                          SizedBox(height: 10.h),
+                          PlanBody(
+                            bgColor: Colors.white,
+                            plan: Colors.black,
+                            month: Colors.black,
+                            name: Colors.black,
+                            title: Colors.black,
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 30.h),
                     Text(
