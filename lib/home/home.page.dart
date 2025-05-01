@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/category.page.dart';
 import 'package:shopping_app_olx/chat/chat.page.dart';
+import 'package:shopping_app_olx/cloth/clothing.page.dart';
 import 'package:shopping_app_olx/listing/listing.page.dart';
 import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 import 'package:shopping_app_olx/profile/profile.page.dart';
@@ -223,9 +224,21 @@ class _HomePageState extends State<HomePage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          SelectBody(
-                                            image: "assets/clothing.png",
-                                            text: "Clothing ",
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                  builder:
+                                                      (context) =>
+                                                          ClothingPage(),
+                                                ),
+                                              );
+                                            },
+                                            child: SelectBody(
+                                              image: "assets/clothing.png",
+                                              text: "Clothing ",
+                                            ),
                                           ),
                                           SelectBody(
                                             image: "assets/electronic.png",

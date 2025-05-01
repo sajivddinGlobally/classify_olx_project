@@ -18,7 +18,7 @@ class _PlanPageState extends State<PlanPage> {
         child: Stack(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height + 50,
+              height: MediaQuery.of(context).size.height + 100,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -64,153 +64,74 @@ class _PlanPageState extends State<PlanPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 40.h),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 191.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.r),
-                        color: Color.fromARGB(255, 137, 26, 255),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 30.w,
-                          right: 30.w,
-                          top: 30.h,
+                    DefaultTabController(
+                      length: 2,
+                      child: TabBar(
+                        dividerColor: Color.fromARGB(255, 137, 25, 255),
+                        dividerHeight: 1.w,
+                        unselectedLabelColor: Color.fromARGB(255, 30, 30, 30),
+                        labelColor: Colors.black,
+                        labelStyle: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 18,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                RichText(
-                                  text: TextSpan(
-                                    style: GoogleFonts.dmSans(
-                                      fontSize: 30.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
-                                    children: [
-                                      TextSpan(text: '₹1540.00/'),
-                                      WidgetSpan(
-                                        alignment:
-                                            PlaceholderAlignment.baseline,
-                                        baseline: TextBaseline.alphabetic,
-                                        child: Text(
-                                          'month',
-                                          style: GoogleFonts.dmSans(
-                                            fontSize: 20.sp,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Spacer(),
-                                Container(
-                                  width: 88.w,
-                                  height: 28.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(40.r),
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset("assets/vector.png"),
-                                      SizedBox(width: 6.w),
-                                      Text(
-                                        "Premium",
-                                        style: GoogleFonts.dmSans(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color.fromARGB(
-                                            255,
-                                            213,
-                                            139,
-                                            29,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 30.h),
-                            Text(
-                              "All-in-one Plan",
+                        indicatorWeight: 6.w,
+                        indicatorColor: Color.fromARGB(255, 137, 25, 255),
+                        tabs: [
+                          Tab(
+                            child: Text(
+                              "Single Listing ",
                               style: GoogleFonts.dmSans(
-                                fontSize: 20.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                                color: Color.fromARGB(255, 137, 25, 255),
                               ),
                             ),
-                            Text(
-                              "Discover amazing deals and connect with local sellers effortlessly. Your next great find is just a click away!",
+                          ),
+                          Tab(
+                            child: Text(
+                              "Multiple Listing ",
                               style: GoogleFonts.dmSans(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                                letterSpacing: -0.50,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 30, 30, 30),
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 30.h),
+                    Column(
+                      children: [
+                        PlanBody(
+                          bgColor: Colors.white,
+                          plan: Colors.black,
+                          month: Colors.black,
+                          name: Colors.black,
+                          title: Colors.black,
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 40.h),
-                    Text(
-                      "Feature & Benefits",
-                      style: GoogleFonts.dmSans(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 33, 36, 38),
-                      ),
-                    ),
-                    SizedBox(height: 15.h),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 220.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 20.w, top: 20.h),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FeatureBody(
-                              txt: "Get 5x more views on your listings",
-                            ),
-                            FeatureBody(
-                              txt: "Appear at the top of search results",
-                            ),
-                            SizedBox(height: 10.h),
-                            FeatureBody(
-                              txt: "Highlighted ad tag for extra attention",
-                            ),
-                            SizedBox(height: 10.h),
-                            FeatureBody(
-                              txt: "Real-time insights on ad performance",
-                            ),
-                            SizedBox(height: 10.h),
-                            FeatureBody(
-                              txt:
-                                  "Priority support for faster issue resolution",
-                            ),
-                          ],
+                        SizedBox(height: 10.h),
+                        PlanBody(
+                          bgColor: Color.fromARGB(255, 137, 25, 255),
+                          plan: Colors.white,
+                          month: Colors.white,
+                          name: Colors.white,
+                          title: Colors.white,
                         ),
-                      ),
+                        SizedBox(height: 10.h),
+                        PlanBody(
+                          bgColor: Colors.white,
+                          plan: Colors.black,
+                          month: Colors.black,
+                          name: Colors.black,
+                          title: Colors.black,
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 40.h),
+                    SizedBox(height: 30.h),
                     Text(
-                      "Ideal For",
+                      "Ads Visibility ",
                       style: GoogleFonts.dmSans(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
@@ -230,19 +151,14 @@ class _PlanPageState extends State<PlanPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            FeatureBody(
-                              txt: "Sellers who want to close deals quickly",
-                            ),
+                            FeatureBody(txt: "15 days listing for Free Plan"),
+                            FeatureBody(txt: "30 days listing for Paid Plan"),
                             SizedBox(height: 10.h),
-                            FeatureBody(
-                              txt:
-                                  "Businesses looking to promote multiple products",
-                            ),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 50.h),
+                    SizedBox(height: 40.h),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 49.h,
@@ -261,9 +177,93 @@ class _PlanPageState extends State<PlanPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 40.h),
+                    SizedBox(height: 60.h),
                   ],
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PlanBody extends StatefulWidget {
+  final Color bgColor;
+  final Color plan;
+  final Color month;
+  final Color name;
+  final Color title;
+
+  const PlanBody({
+    super.key,
+    required this.bgColor,
+    required this.plan,
+    required this.month,
+    required this.name,
+    required this.title,
+  });
+
+  @override
+  State<PlanBody> createState() => _PlanBodyState();
+}
+
+class _PlanBodyState extends State<PlanBody> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 166.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.r),
+        color: widget.bgColor,
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(left: 30.w, right: 30.w, top: 25.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+              text: TextSpan(
+                style: GoogleFonts.dmSans(
+                  fontSize: 30.sp,
+                  fontWeight: FontWeight.w600,
+                  color: widget.plan,
+                ),
+                children: [
+                  TextSpan(text: '₹1540.00/'),
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.baseline,
+                    baseline: TextBaseline.alphabetic,
+                    child: Text(
+                      'month',
+                      style: GoogleFonts.dmSans(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w600,
+                        color: widget.month,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              "Silver Plan",
+              style: GoogleFonts.dmSans(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w600,
+                color: widget.name,
+              ),
+            ),
+            Text(
+              "Include one city where you can easily buy and sell items on this platform. ",
+              style: GoogleFonts.dmSans(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+                color: widget.title,
+                letterSpacing: -0.50,
               ),
             ),
           ],
