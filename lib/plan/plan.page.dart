@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/payment/payment.page.dart';
 
 class PlanPage extends StatefulWidget {
   const PlanPage({super.key});
@@ -159,20 +160,30 @@ class _PlanPageState extends State<PlanPage> {
                       ),
                     ),
                     SizedBox(height: 40.h),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 49.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(35.45.r),
-                        color: Color.fromARGB(255, 137, 26, 255),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Upgrade to this plan",
-                          style: GoogleFonts.dmSans(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => PaymentPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 49.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35.45.r),
+                          color: Color.fromARGB(255, 137, 26, 255),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Upgrade to this plan",
+                            style: GoogleFonts.dmSans(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

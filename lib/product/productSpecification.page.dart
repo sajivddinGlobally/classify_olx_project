@@ -140,7 +140,7 @@ class _ProductspecificationPageState extends State<ProductspecificationPage> {
                       ),
                       child: Center(
                         child: Text(
-                          "Upgrade to this plan",
+                          "Upload your products",
                           style: GoogleFonts.dmSans(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w500,
