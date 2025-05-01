@@ -100,19 +100,22 @@ class _ClothingPageState extends State<ClothingPage> {
               ),
               SizedBox(width: 10.w),
               Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(40.r),
-                      borderSide: BorderSide.none,
+                child: SizedBox(
+                  height: 46.h,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(40.r),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(40.r),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: "Clothing",
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(40.r),
-                      borderSide: BorderSide.none,
-                    ),
-                    hintText: "Clothing",
                   ),
                 ),
               ),

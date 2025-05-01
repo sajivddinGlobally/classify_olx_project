@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/product/productSpecification.page.dart';
 
 class UploadPage extends StatefulWidget {
   const UploadPage({super.key});
@@ -213,12 +215,13 @@ class _UploadPageState extends State<UploadPage> {
                         padding: EdgeInsets.only(left: 20.w, right: 20.r),
                         child: GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   CupertinoPageRoute(
-                            //     builder: (context) => UploadPage(),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder:
+                                    (context) => ProductspecificationPage(),
+                              ),
+                            );
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
