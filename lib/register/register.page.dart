@@ -148,7 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   TextFormField(
                                     maxLength: 6,
                                     keyboardType: TextInputType.number,
-                                    controller: phoneController,
+                                    controller: pincodeController,
                                     decoration: InputDecoration(
                                       counterText: '',
                                       filled: true,
@@ -190,7 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             );
                           },
                           child: Text(
-                            "Resiger",
+                            "Register",
                             style: GoogleFonts.dmSans(
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w500,

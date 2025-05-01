@@ -1,0 +1,170 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class PlanPage extends StatefulWidget {
+  const PlanPage({super.key});
+
+  @override
+  State<PlanPage> createState() => _PlanPageState();
+}
+
+class _PlanPageState extends State<PlanPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xFFECD7FD), Color(0xFFF5F2F7)],
+                    ),
+                  ),
+                ),
+                Image.asset("assets/bgimage.png"),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.w, top: 60.h),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 46.w,
+                      height: 46.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: Icon(Icons.arrow_back),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 100.h,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.w, right: 20.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Text(
+                            "Paid Plan",
+                            style: GoogleFonts.dmSans(
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 33, 36, 38),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 40.h),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 191.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.r),
+                            color: Color.fromARGB(255, 137, 26, 255),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 30.w,
+                              right: 30.w,
+                              top: 30.h,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                        style: GoogleFonts.dmSans(
+                                          fontSize: 30.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                        children: [
+                                          TextSpan(text: '₹1540.00/'),
+                                          WidgetSpan(
+                                            alignment:
+                                                PlaceholderAlignment.baseline,
+                                            baseline: TextBaseline.alphabetic,
+                                            child: Text(
+                                              'month',
+                                              style: GoogleFonts.dmSans(
+                                                fontSize: 20.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    Spacer(),
+                                    Container(
+                                      width: 88.w,
+                                      height: 28.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          40.r,
+                                        ),
+                                        color: Color.fromARGB(
+                                          255,
+                                          255,
+                                          255,
+                                          255,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset("assets/vector.png"),
+                                          SizedBox(width: 6.w),
+                                          Text(
+                                            "Premium",
+                                            style: GoogleFonts.dmSans(
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromARGB(
+                                                255,
+                                                213,
+                                                139,
+                                                29,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

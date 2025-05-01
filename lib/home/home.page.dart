@@ -658,7 +658,6 @@ class _HomePageState extends State<HomePage> {
               ? ListingPage()
               : ProfilePage(),
       bottomNavigationBar: Container(
-        
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [

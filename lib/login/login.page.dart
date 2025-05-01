@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/login/otp.page.dart';
+import 'package:shopping_app_olx/register/register.page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -134,12 +135,22 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Color(0xFF615B68),
                               ),
                             ),
-                            Text(
-                              "Register",
-                              style: GoogleFonts.dmSans(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF891AFF),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => RegisterPage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "Register",
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFF891AFF),
+                                ),
                               ),
                             ),
                           ],
