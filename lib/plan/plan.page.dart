@@ -173,6 +173,86 @@ class _PlanPageState extends State<PlanPage> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 40.h),
+                        Text(
+                          "Feature & Benefits",
+                          style: GoogleFonts.dmSans(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 33, 36, 38),
+                          ),
+                        ),
+                        SizedBox(height: 15.h),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 220.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20.w, top: 20.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FeatureBody(
+                                  txt: "Get 5x more views on your listings",
+                                ),
+                                FeatureBody(
+                                  txt: "Appear at the top of search results",
+                                ),
+                                SizedBox(height: 10.h),
+                                FeatureBody(
+                                  txt: "Highlighted ad tag for extra attention",
+                                ),
+                                SizedBox(height: 10.h),
+                                FeatureBody(
+                                  txt: "Real-time insights on ad performance",
+                                ),
+                                SizedBox(height: 10.h),
+                                FeatureBody(
+                                  txt:
+                                      "Priority support for faster issue resolution",
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 40.h),
+                        Text(
+                          "Ideal For",
+                          style: GoogleFonts.dmSans(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 33, 36, 38),
+                          ),
+                        ),
+                        SizedBox(height: 15.h),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 106.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20.w, top: 20.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FeatureBody(
+                                  txt:
+                                      "Sellers who want to close deals quickly",
+                                ),
+                                SizedBox(height: 10.h),
+                                FeatureBody(
+                                  txt:
+                                      "Businesses looking to promote multiple products",
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -182,6 +262,38 @@ class _PlanPageState extends State<PlanPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class FeatureBody extends StatefulWidget {
+  final String txt;
+  const FeatureBody({super.key, required this.txt});
+
+  @override
+  State<FeatureBody> createState() => _FeatureBodyState();
+}
+
+class _FeatureBodyState extends State<FeatureBody> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(Icons.check, color: Color.fromARGB(255, 97, 91, 104)),
+        SizedBox(width: 10.w),
+        SizedBox(
+          width: 330.w,
+          child: Text(
+            overflow: TextOverflow.ellipsis,
+            widget.txt,
+            style: GoogleFonts.dmSans(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w500,
+              color: Color.fromARGB(255, 97, 91, 104),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
