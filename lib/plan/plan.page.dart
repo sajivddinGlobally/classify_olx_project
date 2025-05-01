@@ -110,7 +110,6 @@ class _PlanPageState extends State<PlanPage> {
                                         ],
                                       ),
                                     ),
-
                                     Spacer(),
                                     Container(
                                       width: 88.w,
@@ -151,6 +150,24 @@ class _PlanPageState extends State<PlanPage> {
                                       ),
                                     ),
                                   ],
+                                ),
+                                SizedBox(height: 30.h),
+                                Text(
+                                  "All-in-one Plan",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Discover amazing deals and connect with local sellers effortlessly. Your next great find is just a click away!",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                    letterSpacing: -0.50,
+                                  ),
                                 ),
                               ],
                             ),
