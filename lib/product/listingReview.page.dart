@@ -41,7 +41,11 @@ class _ListingReviewPageState extends State<ListingReviewPage> {
                   padding: EdgeInsets.only(top: 20.h),
                   child: Column(
                     children: [
-                      Image.asset("assets/reviewimage.png"),
+                      Image.asset(
+                        "assets/reviewimage.png",
+                        height: 145.h,
+                        fit: BoxFit.cover,
+                      ),
                       SizedBox(height: 10.h),
                       Text(
                         "Your Listing is Under Review",
