@@ -30,7 +30,7 @@ class _RetingPageState extends State<RetingPage> {
               ),
               child: Column(
                 children: [
-                  Image.asset("assets/ratingimage.png", height: 200.h),
+                  Image.asset("assets/ratingimage.png", height: 180.h),
                   RatingBar.builder(
                     initialRating: 0,
                     minRating: 1,
