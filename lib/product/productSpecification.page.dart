@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/product/listingReview.page.dart';
 import 'package:shopping_app_olx/register/register.page.dart';
 
 class ProductspecificationPage extends StatefulWidget {
@@ -131,20 +132,30 @@ class _ProductspecificationPageState extends State<ProductspecificationPage> {
                   SizedBox(height: 40.h),
                   Padding(
                     padding: EdgeInsets.only(left: 20.w, right: 20.h),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 49.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(35.45.r),
-                        color: Color.fromARGB(255, 137, 26, 255),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Upload your products",
-                          style: GoogleFonts.dmSans(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ListingReviewPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 49.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35.45.r),
+                          color: Color.fromARGB(255, 137, 26, 255),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Upload your products",
+                            style: GoogleFonts.dmSans(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
