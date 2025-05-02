@@ -28,72 +28,75 @@ class _ChatingPageState extends State<ChatingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 60.h),
-          Row(
-            children: [
-              SizedBox(width: 20.w),
-              Container(
-                width: 46.w,
-                height: 46.h,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 60.h),
+            Row(
+              children: [
+                SizedBox(width: 20.w),
+                Container(
+                  width: 46.w,
+                  height: 46.h,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: Center(child: Icon(Icons.arrow_back)),
                 ),
-                child: Center(child: Icon(Icons.arrow_back)),
-              ),
-              SizedBox(width: 100.w),
-              Container(
-                width: 132.w,
-                height: 34.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35.45.r),
-                  color: Color.fromARGB(25, 137, 26, 255),
-                ),
-                child: Center(
-                  child: Text(
-                    "Robert Jackson",
-                    style: GoogleFonts.dmSans(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Color.fromARGB(255, 137, 26, 255),
+                SizedBox(width: 100.w),
+                Container(
+                  width: 132.w,
+                  height: 34.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35.45.r),
+                    color: Color.fromARGB(25, 137, 26, 255),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Robert Jackson",
+                      style: GoogleFonts.dmSans(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 137, 26, 255),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          ListView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              ChatBubble(isUserMessage: true, message: "Hello, how are you?"),
-              ChatBubble(
-                isUserMessage: true,
-                message:
-                    "I wanted to check in about the shoe listing I saw. Could you let me know how old the shoes are and what condition they're in? I'm really interested and would love to get more details before making a decision. Thanks!",
-              ),
-            ],
-          ),
-          ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: messages.length,
-            itemBuilder: (context, index) {
-              final mess = messages[index];
-              return ChatScreen(
-                text: mess["txt"],
-                isMe: mess['isMe'],
-                time: mess['time'],
-              );
-            },
-          ),
-        ],
+              ],
+            ),
+            ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                ChatBubble(isUserMessage: true, message: "Hello, how are you?"),
+                ChatBubble(
+                  isUserMessage: true,
+                  message:
+                      "I wanted to check in about the shoe listing I saw. Could you let me know how old the shoes are and what condition they're in? I'm really interested and would love to get more details before making a decision. Thanks!",
+                ),
+              ],
+            ),
+            ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: messages.length,
+              itemBuilder: (context, index) {
+                final mess = messages[index];
+                return ChatScreen(
+                  text: mess["txt"],
+                  isMe: mess['isMe'],
+                  time: mess['time'],
+                );
+              },
+            ),
+            SizedBox(height: 60.h),
+          ],
+        ),
       ),
       bottomSheet: Container(
-        height: 80.w,
+        height: 60.w,
         child: MessageInput(controller: controller, onSend: onSend),
       ),
     );
