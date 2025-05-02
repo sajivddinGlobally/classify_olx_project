@@ -136,7 +136,9 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
-                                  builder: (context) => OtpPage(),
+                                  builder:
+                                      (context) =>
+                                          OtpPage(phone: phoneController.text),
                                 ),
                               );
                             } catch (e) {
