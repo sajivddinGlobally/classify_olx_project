@@ -1,8 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/login/Model/loginBodyModel.dart';
 import 'package:shopping_app_olx/login/otp.page.dart';
+import 'package:shopping_app_olx/login/service/loginService.dart';
 import 'package:shopping_app_olx/register/register.page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,6 +20,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final phoneController = TextEditingController();
+  bool islogin = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,22 +112,59 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             backgroundColor: Color.fromARGB(255, 137, 26, 255),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => OtpPage(),
-                              ),
-                            );
+                          onPressed: () async {
+                            if (phoneController.text.isEmpty) {
+                              Fluttertoast.showToast(
+                                msg: "Please enter valid phone number",
+                              );
+                            }
+                            setState(() {
+                              islogin = true;
+                            });
+
+                            try {
+                              final body = LoginBodyModel(
+                                phoneNumber: phoneController.text,
+                              );
+                              final loginservice = LoginService(
+                                await createDio(),
+                              );
+                              final response = await loginservice.login(body);
+                              Fluttertoast.showToast(
+                                msg: "OTP sent to your phone number",
+                              );
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => OtpPage(),
+                                ),
+                              );
+                            } catch (e) {
+                              setState(() {
+                                islogin = false;
+                              });
+                              log(e.toString());
+                              Fluttertoast.showToast(msg: "Login failed");
+                            }
                           },
-                          child: Text(
-                            "Login",
-                            style: GoogleFonts.dmSans(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child:
+                              islogin == false
+                                  ? Text(
+                                    "Login",
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                         ),
                         SizedBox(height: 50.h),
                         Row(

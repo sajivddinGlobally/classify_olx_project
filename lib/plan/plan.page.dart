@@ -106,12 +106,12 @@ class _PlanPageState extends State<PlanPage> {
                     SizedBox(height: 30.h),
                     GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   CupertinoPageRoute(
-                        //     builder: (context) => PaymentPage(),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => RetingPage(),
+                          ),
+                        );
                       },
                       child: Column(
                         children: [
