@@ -77,6 +77,10 @@ class _ChatingPageState extends State<ChatingPage> {
               children: [
                 ChatBubble(isUserMessage: true, message: "Hello, how are you?"),
                 ChatBubble(
+                  isUserMessage: false,
+                  message: "Hello, I’m well, How can i help you?",
+                ),
+                ChatBubble(
                   isUserMessage: true,
                   message:
                       "I wanted to check in about the shoe listing I saw. Could you let me know how old the shoes are and what condition they're in? I'm really interested and would love to get more details before making a decision. Thanks!",
@@ -100,7 +104,7 @@ class _ChatingPageState extends State<ChatingPage> {
           ],
         ),
       ),
-      bottomSheet: Container(
+      bottomSheet: SizedBox(
         height: 60.w,
         child: MessageInput(controller: controller, onSend: onSend),
       ),

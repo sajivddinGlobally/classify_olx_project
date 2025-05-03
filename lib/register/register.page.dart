@@ -295,7 +295,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       ),
                                     ),
                           ),
-                          SizedBox(height: 75.h),
+                          SizedBox(height: 50.h),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -308,12 +308,22 @@ class _RegisterPageState extends State<RegisterPage> {
                                   color: Color(0xFF615B68),
                                 ),
                               ),
-                              Text(
-                                "Login",
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF891AFF),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => LoginPage(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "Login",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFF891AFF),
+                                  ),
                                 ),
                               ),
                             ],
