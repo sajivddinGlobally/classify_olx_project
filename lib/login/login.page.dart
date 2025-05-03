@@ -118,10 +118,6 @@ class _LoginPageState extends State<LoginPage> {
                                 msg: "Please enter valid phone number",
                               );
                               return;
-                            } else {
-                              Fluttertoast.showToast(
-                                msg: "Enter valid phone number",
-                              );
                             }
                             setState(() {
                               islogin = true;

@@ -211,8 +211,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                           }
                         },
                       ),
-
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
