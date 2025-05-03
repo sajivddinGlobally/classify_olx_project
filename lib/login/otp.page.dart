@@ -196,7 +196,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             final response = await ref.watch(
                               otpProvider(otpBody).future,
                             );
-
+                            Fluttertoast.showToast(msg: "Login Successful");
                             Navigator.pushAndRemoveUntil(
                               context,
                               CupertinoPageRoute(
@@ -204,7 +204,6 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                               ),
                               (route) => false,
                             );
-                            Fluttertoast.showToast(msg: "Login Successful");
                           } catch (e) {
                             log("otp failed ${e.toString()}");
                             Fluttertoast.showToast(msg: "Invalid OTP");
