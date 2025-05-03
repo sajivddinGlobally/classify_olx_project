@@ -16,7 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
-
+    var token = box.get("token");
     return Scaffold(
       body: Stack(
         children: [
@@ -163,33 +163,63 @@ class _ProfilePageState extends State<ProfilePage> {
                           name: 'Terms & Condition',
                         ),
                         SizedBox(height: 10.h),
-                        Padding(
-                          padding: EdgeInsets.only(left: 25.w, right: 25.w),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.logout,
-                                color: Color.fromARGB(255, 97, 91, 104),
-                                size: 26.sp,
-                              ),
-                              SizedBox(width: 8.w),
-                              Text(
-                                "Logout",
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
+                        if (token == null) ...[
+                          Padding(
+                            padding: EdgeInsets.only(left: 25.w, right: 25.w),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.logout,
                                   color: Color.fromARGB(255, 97, 91, 104),
+                                  size: 26.sp,
                                 ),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color.fromARGB(255, 97, 91, 104),
-                                size: 20.sp,
-                              ),
-                            ],
+                                SizedBox(width: 8.w),
+                                Text(
+                                  "Login",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 97, 91, 104),
+                                  ),
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Color.fromARGB(255, 97, 91, 104),
+                                  size: 20.sp,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                        ] else ...[
+                          Padding(
+                            padding: EdgeInsets.only(left: 25.w, right: 25.w),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.logout,
+                                  color: Color.fromARGB(255, 97, 91, 104),
+                                  size: 26.sp,
+                                ),
+                                SizedBox(width: 8.w),
+                                Text(
+                                  "Logout",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color.fromARGB(255, 97, 91, 104),
+                                  ),
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Color.fromARGB(255, 97, 91, 104),
+                                  size: 20.sp,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),

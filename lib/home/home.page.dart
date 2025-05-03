@@ -7,6 +7,7 @@ import 'package:shopping_app_olx/cagetory/category.page.dart';
 import 'package:shopping_app_olx/chat/chat.page.dart';
 import 'package:shopping_app_olx/cloth/clothing.page.dart';
 import 'package:shopping_app_olx/listing/listing.page.dart';
+import 'package:shopping_app_olx/map/map.page.dart';
 import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 import 'package:shopping_app_olx/profile/profile.page.dart';
 
@@ -102,37 +103,47 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ),
                                   SizedBox(width: 6.w),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Your Location",
-                                        style: GoogleFonts.dmSans(
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color.fromARGB(
-                                            255,
-                                            97,
-                                            91,
-                                            104,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => MapPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Your Location",
+                                          style: GoogleFonts.dmSans(
+                                            fontSize: 13.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color.fromARGB(
+                                              255,
+                                              97,
+                                              91,
+                                              104,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Text(
-                                        "Jaipur, rajasthan",
-                                        style: GoogleFonts.dmSans(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color.fromARGB(
-                                            255,
-                                            137,
-                                            26,
-                                            255,
+                                        Text(
+                                          "Jaipur, rajasthan",
+                                          style: GoogleFonts.dmSans(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color.fromARGB(
+                                              255,
+                                              137,
+                                              26,
+                                              255,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                   Spacer(),
                                   Container(
