@@ -49,12 +49,12 @@ class _ChatPageState extends State<ChatPage> {
               padding: EdgeInsets.only(left: 20.w, right: 20.w),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                height: 46.h,
+                height: 49.h,
                 child: TextField(
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
-                      vertical: 12.h,
-                      horizontal: 10.w,
+                      vertical: 13.h,
+                      horizontal: 13.w,
                     ),
                     prefixIcon: Icon(Icons.search, size: 20.sp),
 
@@ -69,6 +69,7 @@ class _ChatPageState extends State<ChatPage> {
                       borderSide: BorderSide.none,
                     ),
                     hintText: "Search chats...",
+                    hintStyle: GoogleFonts.dmSans(fontSize: 19.sp),
                   ),
                 ),
               ),
