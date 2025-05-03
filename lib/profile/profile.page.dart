@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_app_olx/plan/plan.page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -14,6 +15,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box("data");
+
     return Scaffold(
       body: Stack(
         children: [
@@ -72,7 +75,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  "Robert Jackson",
+                  // "Robert Jackson",
+                  box.get("city"),
                   style: GoogleFonts.dmSans(
                     fontSize: 22.sp,
                     fontWeight: FontWeight.w600,

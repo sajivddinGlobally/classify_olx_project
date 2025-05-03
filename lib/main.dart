@@ -1,9 +1,17 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:shopping_app_olx/splash.page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  if (!Hive.isBoxOpen("data")) {
+    await Hive.openBox("data");
+  }
+
   runApp(ProviderScope(child: const MyApp()));
 }
 
@@ -13,6 +21,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box("data");
+    var token = box.get("token");
+    log("///////////////////////////////////");
+
+    log(token.toString());
     return ScreenUtilInit(
       designSize: Size(440, 956),
       minTextAdapt: true,

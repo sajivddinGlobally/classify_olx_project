@@ -49,6 +49,9 @@ dependencies:
   riverpod: ^2.6.1
   flutter_riverpod: ^2.6.1
   fluttertoast: ^8.2.12
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  otp_pin_field: ^1.4.1
 
 
 dev_dependencies:

@@ -1,10 +1,10 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/login/Model/loginBodyModel.dart';
 import 'package:shopping_app_olx/login/otp.page.dart';
@@ -130,6 +130,27 @@ class _LoginPageState extends State<LoginPage> {
                                 await createDio(),
                               );
                               final response = await loginservice.login(body);
+
+                              log(response.toString());
+
+                              if (!Hive.isBoxOpen("data")) {
+                                await Hive.openBox("data");
+                              }
+                              var box = Hive.box("data");
+                              await box.put("token", response.token.toString());
+                              await box.put("id", response.user.id.toString());
+                              await box.put(
+                                "fullName",
+                                response.user.fullName.toString(),
+                              );
+                              await box.put(
+                                "address",
+                                response.user.address.toString(),
+                              );
+                              await box.put(
+                                "city",
+                                response.user.city.toString(),
+                              );
                               Fluttertoast.showToast(
                                 msg: "OTP sent to your phone number",
                               );
@@ -159,11 +180,13 @@ class _LoginPageState extends State<LoginPage> {
                                       color: Colors.white,
                                     ),
                                   )
-                                  : Padding(
-                                    padding: EdgeInsets.all(8.0),
+                                  : SizedBox(
+                                    height: 20,
+                                    width: 20,
                                     child: Center(
                                       child: CircularProgressIndicator(
                                         color: Colors.white,
+                                        strokeWidth: 2.0,
                                       ),
                                     ),
                                   ),
