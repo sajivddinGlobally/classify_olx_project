@@ -275,14 +275,25 @@ class _RegisterPageState extends State<RegisterPage> {
                                 }
                               }
                             },
-                            child: Text(
-                              "Register",
-                              style: GoogleFonts.dmSans(
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
-                            ),
+                            child:
+                                isRegister == false
+                                    ? Text(
+                                      "Register",
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                    : Center(
+                                      child: SizedBox(
+                                        width: 30.w,
+                                        height: 30.h,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
                           ),
                           SizedBox(height: 75.h),
                           Row(

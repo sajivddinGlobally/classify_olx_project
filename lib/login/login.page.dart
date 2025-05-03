@@ -117,6 +117,11 @@ class _LoginPageState extends State<LoginPage> {
                               Fluttertoast.showToast(
                                 msg: "Please enter valid phone number",
                               );
+                              return;
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: "Enter valid phone number",
+                              );
                             }
                             setState(() {
                               islogin = true;
@@ -130,8 +135,6 @@ class _LoginPageState extends State<LoginPage> {
                                 await createDio(),
                               );
                               final response = await loginservice.login(body);
-
-                              log(response.toString());
 
                               if (!Hive.isBoxOpen("data")) {
                                 await Hive.openBox("data");
@@ -167,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                                 islogin = false;
                               });
                               log(e.toString());
-                              Fluttertoast.showToast(msg: "Login failed");
+                              // Fluttertoast.showToast(msg: "dddd");
                             }
                           },
                           child:
@@ -181,12 +184,11 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   )
                                   : SizedBox(
-                                    height: 20,
-                                    width: 20,
+                                    height: 30,
+                                    width: 30,
                                     child: Center(
                                       child: CircularProgressIndicator(
                                         color: Colors.white,
-                                        strokeWidth: 2.0,
                                       ),
                                     ),
                                   ),
