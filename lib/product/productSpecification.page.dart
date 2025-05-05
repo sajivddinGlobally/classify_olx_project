@@ -1,25 +1,34 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/product/listingReview.page.dart';
+import 'package:shopping_app_olx/product/model.addproduct/specificationBodyModel.dart';
+import 'package:shopping_app_olx/product/service.addproduct/specificationController.dart';
 import 'package:shopping_app_olx/register/register.page.dart';
 
-class ProductspecificationPage extends StatefulWidget {
+class ProductspecificationPage extends ConsumerStatefulWidget {
   const ProductspecificationPage({super.key});
 
   @override
-  State<ProductspecificationPage> createState() =>
+  ConsumerState<ProductspecificationPage> createState() =>
       _ProductspecificationPageState();
 }
 
-class _ProductspecificationPageState extends State<ProductspecificationPage> {
+class _ProductspecificationPageState
+    extends ConsumerState<ProductspecificationPage> {
   final materialController = TextEditingController();
   final shoeNumberController = TextEditingController();
   final ageController = TextEditingController();
   final modelController = TextEditingController();
   final idealController = TextEditingController();
   final styleController = TextEditingController();
+
+  bool isSpecification = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +132,7 @@ class _ProductspecificationPageState extends State<ProductspecificationPage> {
                         SizedBox(height: 20.h),
                         RegisterBody(
                           title: "Style",
-                          controller: idealController,
+                          controller: styleController,
                           type: TextInputType.text,
                         ),
                       ],
@@ -133,13 +142,41 @@ class _ProductspecificationPageState extends State<ProductspecificationPage> {
                   Padding(
                     padding: EdgeInsets.only(left: 20.w, right: 20.h),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => ListingReviewPage(),
-                          ),
-                        );
+                      onTap: () async {
+                        try {
+                          setState(() {
+                            isSpecification = true;
+                          });
+                          await ref.read(
+                            specificationProvider(
+                              ProductSpecificationBodyModel(
+                                productId: "",
+                                material: materialController.text,
+                                sizeOrShoeNumber: shoeNumberController.text,
+                                ageOrHowOld: ageController.text,
+                                model: modelController.text,
+                                idealFor: idealController.text,
+                                style: styleController.text,
+                              ),
+                            ).future,
+                          );
+
+                          Fluttertoast.showToast(msg: "complete");
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => ListingReviewPage(),
+                            ),
+                          );
+                        } catch (e) {
+                          setState(() {
+                            isSpecification = false;
+                          });
+                          log(e.toString());
+                          Fluttertoast.showToast(
+                            msg: "Add Product Specification Failed",
+                          );
+                        }
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -149,14 +186,19 @@ class _ProductspecificationPageState extends State<ProductspecificationPage> {
                           color: Color.fromARGB(255, 137, 26, 255),
                         ),
                         child: Center(
-                          child: Text(
-                            "Upload your products",
-                            style: GoogleFonts.dmSans(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child:
+                              isSpecification == false
+                                  ? Text(
+                                    "Upload your products",
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
                         ),
                       ),
                     ),

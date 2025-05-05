@@ -236,7 +236,9 @@ class _UploadPageState extends State<UploadPage> {
                                 "Upload Response: $upload",
                               ); // Confirm success
 
-                              Fluttertoast.showToast(msg: "Upload successful");
+                              Fluttertoast.showToast(
+                                msg: "Image Upload successful",
+                              );
                               if (!mounted) return;
                               print(
                                 "Navigating to ProductspecificationPage...",
