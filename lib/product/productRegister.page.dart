@@ -1,7 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/product/model.addproduct/addProductBodyModel.dart';
+import 'package:shopping_app_olx/product/service.addproduct/addproductService.dart';
 import 'package:shopping_app_olx/product/upload.page.dart';
 import 'package:shopping_app_olx/register/register.page.dart';
 
@@ -19,6 +25,8 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
   final numberController = TextEditingController();
   final pincodeController = TextEditingController();
   final productDesController = TextEditingController();
+
+  bool isAddProduct = false;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +95,7 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                   ),
                   SizedBox(height: 40.h),
                   Padding(
-                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -105,13 +113,7 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                         SizedBox(height: 20.h),
                         RegisterBody(
                           title: "Price",
-                          controller: productNameController,
-                          type: TextInputType.number,
-                        ),
-                        SizedBox(height: 20.h),
-                        RegisterBody(
-                          title: "Price",
-                          controller: productNameController,
+                          controller: priceController,
                           type: TextInputType.number,
                         ),
                         SizedBox(height: 20.h),
@@ -196,8 +198,12 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                             TextFormField(
                               maxLines: 6,
                               keyboardType: TextInputType.text,
-                              controller: pincodeController,
+                              controller: productDesController,
                               decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                  top: 20.h,
+                                  left: 20.w,
+                                ),
                                 filled: true,
                                 fillColor: Color(0xFFFFFFFF),
                                 enabledBorder: UnderlineInputBorder(
@@ -216,13 +222,45 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                         Padding(
                           padding: EdgeInsets.only(left: 20.w, right: 20.r),
                           child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => UploadPage(),
-                                ),
-                              );
+                            onTap: () async {
+                              setState(() {
+                                isAddProduct = true;
+                              });
+                              try {
+                                final body = AddproductBodyModel(
+                                  category: categoryController.text,
+                                  name: productNameController.text,
+                                  price: priceController.text,
+                                  contact: numberController.text,
+                                  pincode: pincodeController.text,
+                                  description: productDesController.text,
+                                );
+                                final addproductservice = AddproductService(
+                                  await createDio(),
+                                );
+                                final response = await addproductservice
+                                    .addProduct(body);
+                                Fluttertoast.showToast(
+                                  msg: "Product add successful",
+                                );
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder:
+                                        (context) => UploadPage(
+                                          productId:
+                                              response.product.id.toString(),
+                                        ),
+                                  ),
+                                );
+                              } catch (e) {
+                                setState(() {
+                                  isAddProduct = false;
+                                });
+                                log(e.toString());
+
+                                Fluttertoast.showToast(msg: "Failed");
+                              }
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
@@ -235,14 +273,29 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                                 ),
                               ),
                               child: Center(
-                                child: Text(
-                                  "Next",
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 137, 26, 255),
-                                  ),
-                                ),
+                                child:
+                                    isAddProduct == false
+                                        ? Text(
+                                          "Next",
+                                          style: GoogleFonts.dmSans(
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color.fromARGB(
+                                              255,
+                                              137,
+                                              26,
+                                              255,
+                                            ),
+                                          ),
+                                        )
+                                        : CircularProgressIndicator(
+                                          color: Color.fromARGB(
+                                            255,
+                                            137,
+                                            26,
+                                            255,
+                                          ),
+                                        ),
                               ),
                             ),
                           ),

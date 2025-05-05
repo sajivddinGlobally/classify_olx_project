@@ -1,14 +1,18 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/product/productSpecification.page.dart';
+import 'package:shopping_app_olx/product/uploadproductimagecontroller.dart';
 
 class UploadPage extends StatefulWidget {
-  const UploadPage({super.key});
+  final String productId;
+  const UploadPage({super.key, required this.productId});
 
   @override
   State<UploadPage> createState() => _UploadPageState();
@@ -28,6 +32,8 @@ class _UploadPageState extends State<UploadPage> {
       });
     }
   }
+
+  bool isUpload = false;
 
   @override
   Widget build(BuildContext context) {
@@ -214,14 +220,40 @@ class _UploadPageState extends State<UploadPage> {
                       Padding(
                         padding: EdgeInsets.only(left: 20.w, right: 20.r),
                         child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder:
-                                    (context) => ProductspecificationPage(),
-                              ),
-                            );
+                          onTap: () async {
+                            try {
+                              setState(() {
+                                isUpload = true;
+                              });
+
+                              final upload =
+                                  await Uploadproductimagecontroller.uploadProductImages(
+                                    productId: widget.productId,
+                                    images: images,
+                                  );
+
+                              print(
+                                "Upload Response: $upload",
+                              ); // Confirm success
+
+                              Fluttertoast.showToast(msg: "Upload successful");
+                              if (!mounted) return;
+                              print(
+                                "Navigating to ProductspecificationPage...",
+                              );
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder:
+                                      (context) => ProductspecificationPage(),
+                                ),
+                              );
+                            } catch (e) {
+                              Fluttertoast.showToast(msg: "Upload failed: $e");
+                              setState(() {
+                                isUpload = false;
+                              });
+                            }
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
@@ -234,14 +266,29 @@ class _UploadPageState extends State<UploadPage> {
                               ),
                             ),
                             child: Center(
-                              child: Text(
-                                "Next",
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 15.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 137, 26, 255),
-                                ),
-                              ),
+                              child:
+                                  isUpload == false
+                                      ? Text(
+                                        "Next",
+                                        style: GoogleFonts.dmSans(
+                                          fontSize: 15.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color.fromARGB(
+                                            255,
+                                            137,
+                                            26,
+                                            255,
+                                          ),
+                                        ),
+                                      )
+                                      : CircularProgressIndicator(
+                                        color: Color.fromARGB(
+                                          255,
+                                          137,
+                                          26,
+                                          255,
+                                        ),
+                                      ),
                             ),
                           ),
                         ),

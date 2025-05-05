@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_app_olx/plan/plan.page.dart';
+import 'package:shopping_app_olx/splash.page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -167,9 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Padding(
                             padding: EdgeInsets.only(left: 25.w, right: 25.w),
                             child: GestureDetector(
-                              onTap: () {
-                                
-                              },
+                              onTap: () {},
                               child: Row(
                                 children: [
                                   Icon(
@@ -201,7 +200,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             padding: EdgeInsets.only(left: 25.w, right: 25.w),
                             child: GestureDetector(
                               onTap: () {
-                                
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => SplashPage(),
+                                  ),
+                                );
                               },
                               child: Row(
                                 children: [
@@ -212,7 +216,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   SizedBox(width: 8.w),
                                   Text(
-                                    "Logout",
+                                    "Login",
                                     style: GoogleFonts.dmSans(
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w500,
