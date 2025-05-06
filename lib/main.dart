@@ -4,13 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/login/login.page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  if (!Hive.isBoxOpen("data")) {
-    await Hive.openBox("data");
-  }
+  // if (!Hive.isBoxOpen("data")) {
+  //   await Hive.openBox("data");
+  // }
+  await Hive.openBox("data");
 
   runApp(ProviderScope(child: const MyApp()));
 }
@@ -24,7 +26,6 @@ class MyApp extends StatelessWidget {
     var box = Hive.box("data");
     var token = box.get("token");
     log("///////////////////////////////////");
-
     log(token.toString());
     return ScreenUtilInit(
       designSize: Size(440, 956),

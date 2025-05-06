@@ -132,27 +132,8 @@ class _LoginPageState extends State<LoginPage> {
                               );
                               final response = await loginservice.login(body);
 
-                              if (!Hive.isBoxOpen("data")) {
-                                await Hive.openBox("data");
-                              }
-                              var box = Hive.box("data");
-                              await box.put("token", response.token.toString());
-                              await box.put("id", response.user.id.toString());
-                              await box.put(
-                                "fullName",
-                                response.user.fullName.toString(),
-                              );
-                              await box.put(
-                                "address",
-                                response.user.address.toString(),
-                              );
-                              await box.put(
-                                "city",
-                                response.user.city.toString(),
-                              );
-                              Fluttertoast.showToast(
-                                msg: "OTP sent to your phone number",
-                              );
+                              log("TOKEN SAVED: ${response.token}");
+
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
@@ -160,6 +141,9 @@ class _LoginPageState extends State<LoginPage> {
                                       (context) =>
                                           OtpPage(phone: phoneController.text),
                                 ),
+                              );
+                              Fluttertoast.showToast(
+                                msg: "OTP sent to your phone number",
                               );
                             } catch (e) {
                               setState(() {

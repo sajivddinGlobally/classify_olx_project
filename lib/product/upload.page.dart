@@ -232,9 +232,9 @@ class _UploadPageState extends State<UploadPage> {
                                     images: images,
                                   );
 
-                              print(
-                                "Upload Response: $upload",
-                              ); // Confirm success
+                              // print(
+                              //   "Upload Response: $upload",
+                              // ); // Confirm success
 
                               Fluttertoast.showToast(
                                 msg: "Image Upload successful",
@@ -247,7 +247,9 @@ class _UploadPageState extends State<UploadPage> {
                                 context,
                                 CupertinoPageRoute(
                                   builder:
-                                      (context) => ProductspecificationPage(),
+                                      (context) => ProductspecificationPage(
+                                        id: widget.productId.toString(),
+                                      ),
                                 ),
                               );
                             } catch (e) {

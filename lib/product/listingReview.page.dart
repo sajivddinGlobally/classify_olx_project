@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/home/home.page.dart';
 
 class ListingReviewPage extends StatefulWidget {
   const ListingReviewPage({super.key});
@@ -76,7 +77,14 @@ class _ListingReviewPageState extends State<ListingReviewPage> {
                           top: 10.h,
                         ),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size(
                               MediaQuery.of(context).size.width,

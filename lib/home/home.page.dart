@@ -1,24 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:shopping_app_olx/cagetory/category.page.dart';
 import 'package:shopping_app_olx/chat/chat.page.dart';
 import 'package:shopping_app_olx/cloth/clothing.page.dart';
+import 'package:shopping_app_olx/home/service/getAllProductController.dart';
 import 'package:shopping_app_olx/listing/listing.page.dart';
 import 'package:shopping_app_olx/map/map.page.dart';
 import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 import 'package:shopping_app_olx/profile/profile.page.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   final List<String> imageList = [
     'assets/image1.jpg',
     'assets/image2.jpg',
@@ -60,6 +63,8 @@ class _HomePageState extends State<HomePage> {
   int tabBottom = 0;
   @override
   Widget build(BuildContext context) {
+    final homeAllProduct = ref.watch(getAllProductControler);
+    var box = Hive.box("data");
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 240, 228, 250),
       body:
@@ -344,155 +349,184 @@ class _HomePageState extends State<HomePage> {
                               ),
                               SizedBox(
                                 height: 300.h,
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: dealsList.length,
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          CupertinoPageRoute(
-                                            builder:
-                                                (context) =>
-                                                    ParticularDealsPage(),
-                                          ),
-                                        );
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          top: 21.h,
-                                          left: 20.w,
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        15.r,
-                                                      ),
-                                                  child: Image.asset(
-                                                    // "assets/shoes1.png",
-                                                    dealsList[index]["imageUrl"]
-                                                        .toString(),
-                                                    width: 240.w,
-                                                    height: 160.h,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  right: 15.w,
-                                                  top: 15.h,
-                                                  child: Container(
-                                                    width: 30.w,
-                                                    height: 30.h,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.white,
-                                                    ),
-                                                    child: Center(
-                                                      child: Icon(
-                                                        Icons.favorite_border,
-                                                        size: 18.sp,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 15.h),
-                                            Container(
-                                              // width: 135.w,
-                                              height: 25.h,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(30.r),
-                                                color: Color.fromARGB(
-                                                  25,
-                                                  137,
-                                                  26,
-                                                  255,
-                                                ),
+                                child: homeAllProduct.when(
+                                  data: (product) {
+                                    return ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: product.data.length,
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              CupertinoPageRoute(
+                                                builder:
+                                                    (context) =>
+                                                        ParticularDealsPage(
+                                                          id:
+                                                              product
+                                                                  .data[index]
+                                                                  .id
+                                                                  .toString(),
+                                                        ),
                                               ),
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                  left: 6.w,
-                                                  right: 6.w,
-                                                ),
-                                                child: Row(
+                                            );
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                              top: 21.h,
+                                              left: 20.w,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Stack(
                                                   children: [
-                                                    Icon(
-                                                      Icons.location_on,
-                                                      size: 15.sp,
-                                                      color: Color.fromARGB(
-                                                        255,
-                                                        137,
-                                                        26,
-                                                        255,
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            15.r,
+                                                          ),
+                                                      child: Image.asset(
+                                                        // "assets/shoes1.png",
+                                                        dealsList[index]["imageUrl"]
+                                                            .toString(),
+                                                        width: 240.w,
+                                                        height: 160.h,
+                                                        fit: BoxFit.cover,
                                                       ),
                                                     ),
-                                                    Text(
-                                                      // "Udaipur, rajasthan",
-                                                      dealsList[index]["location"]
-                                                          .toString(),
-                                                      style: GoogleFonts.dmSans(
-                                                        fontSize: 12.sp,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          137,
-                                                          26,
-                                                          255,
+                                                    Positioned(
+                                                      right: 15.w,
+                                                      top: 15.h,
+                                                      child: Container(
+                                                        width: 30.w,
+                                                        height: 30.h,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                              shape:
+                                                                  BoxShape
+                                                                      .circle,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                        child: Center(
+                                                          child: Icon(
+                                                            Icons
+                                                                .favorite_border,
+                                                            size: 18.sp,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 8.h),
-                                            Text(
-                                              // "Nike Air Jorden 55 Medium",
-                                              dealsList[index]["title"]
-                                                  .toString(),
-                                              style: GoogleFonts.dmSans(
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Color.fromARGB(
-                                                  255,
-                                                  97,
-                                                  91,
-                                                  104,
+                                                SizedBox(height: 15.h),
+                                                Container(
+                                                  // width: 135.w,
+                                                  height: 25.h,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          30.r,
+                                                        ),
+                                                    color: Color.fromARGB(
+                                                      25,
+                                                      137,
+                                                      26,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                      left: 6.w,
+                                                      right: 6.w,
+                                                    ),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.location_on,
+                                                          size: 15.sp,
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            137,
+                                                            26,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          // "Udaipur, rajasthan",
+                                                          dealsList[index]["location"]
+                                                              .toString(),
+                                                          style: GoogleFonts.dmSans(
+                                                            fontSize: 12.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                  255,
+                                                                  137,
+                                                                  26,
+                                                                  255,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
-                                                letterSpacing: -0.80,
-                                              ),
-                                            ),
-                                            Text(
-                                              // "\$450.00",
-                                              dealsList[index]["price"]
-                                                  .toString(),
-                                              style: GoogleFonts.dmSans(
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: Color.fromARGB(
-                                                  255,
-                                                  137,
-                                                  26,
-                                                  255,
+                                                SizedBox(height: 8.h),
+                                                Text(
+                                                  // "Nike Air Jorden 55 Medium",
+                                                  // dealsList[index]["title"]
+                                                  //     .toString(),
+                                                  product.data[index].name,
+
+                                                  style: GoogleFonts.dmSans(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      97,
+                                                      91,
+                                                      104,
+                                                    ),
+                                                    letterSpacing: -0.80,
+                                                  ),
                                                 ),
-                                              ),
+                                                Text(
+                                                  // "\$450.00",
+                                                  // dealsList[index]["price"]
+                                                  //     .toString(),
+                                                  product.data[index].price
+                                                      .toString(),
+                                                  style: GoogleFonts.dmSans(
+                                                    fontSize: 18.sp,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      137,
+                                                      26,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      ),
+                                          ),
+                                        );
+                                      },
                                     );
                                   },
+                                  error:
+                                      (error, stackTrace) =>
+                                          Center(child: Text(error.toString())),
+                                  loading:
+                                      () => Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
                                 ),
                               ),
                               Padding(
@@ -612,62 +646,224 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               SizedBox(height: 20.h),
-                              LatestBody(),
-                              SizedBox(height: 30.h),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 20.w,
-                                  right: 20.w,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Trending Products",
-                                      style: GoogleFonts.dmSans(
-                                        fontSize: 26.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color.fromARGB(255, 36, 33, 38),
-                                        letterSpacing: -1,
+                              // LatestBody(),
+                              SizedBox(
+                                // height: MediaQuery.of(context).size.height,
+                                child: homeAllProduct.when(
+                                  data: (data) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 20.w,
+                                        right: 20.w,
                                       ),
-                                    ),
-                                    Container(
-                                      width: 65.w,
-                                      height: 26.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          35.45.r,
-                                        ),
-                                        color: Color.fromARGB(
-                                          255,
-                                          255,
-                                          255,
-                                          255,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "View all",
-                                          style: GoogleFonts.dmSans(
-                                            fontSize: 11.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: Color.fromARGB(
-                                              255,
-                                              97,
-                                              91,
-                                              104,
+                                      child: GridView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        padding: EdgeInsets.zero,
+                                        itemCount: data.data.length,
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 10.w,
+                                              mainAxisSpacing: 0.h,
+                                              childAspectRatio: 0.75,
                                             ),
-                                          ),
-                                        ),
+                                        itemBuilder: (context, index) {
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          15.r,
+                                                        ),
+                                                    child: Image.asset(
+                                                      "assets/shoes1.png",
+
+                                                      width: 196.w,
+                                                      height: 160.h,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    right: 15.w,
+                                                    top: 15.h,
+                                                    child: Container(
+                                                      width: 30.w,
+                                                      height: 30.h,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: Colors.white,
+                                                      ),
+                                                      child: Center(
+                                                        child: Icon(
+                                                          Icons.favorite_border,
+                                                          size: 18.sp,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 15.h),
+                                              Container(
+                                                width: 155.w,
+                                                height: 25.h,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        30.r,
+                                                      ),
+                                                  color: Color.fromARGB(
+                                                    25,
+                                                    137,
+                                                    26,
+                                                    255,
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: 6.w,
+                                                    right: 6.w,
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.location_on,
+                                                        size: 15.sp,
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          137,
+                                                          26,
+                                                          255,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "Udaipur, rajasthan",
+                                                        style:
+                                                            GoogleFonts.dmSans(
+                                                              fontSize: 12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color:
+                                                                  Color.fromARGB(
+                                                                    255,
+                                                                    137,
+                                                                    26,
+                                                                    255,
+                                                                  ),
+                                                            ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 8.h),
+                                              Text(
+                                                // "Nike Air Jorden 55 Medium",
+                                                data.data[index].name,
+                                                style: GoogleFonts.dmSans(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    97,
+                                                    91,
+                                                    104,
+                                                  ),
+                                                  letterSpacing: -0.80,
+                                                ),
+                                              ),
+                                              Text(
+                                                // "\$450.00",
+                                                data.data[index].price
+                                                    .toString(),
+                                                style: GoogleFonts.dmSans(
+                                                  fontSize: 18.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    137,
+                                                    26,
+                                                    255,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       ),
-                                    ),
-                                  ],
+                                    );
+                                  },
+                                  error:
+                                      (error, stackTrace) =>
+                                          Center(child: Text(error.toString())),
+                                  loading:
+                                      () => Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
                                 ),
                               ),
-                              SizedBox(height: 20.h),
-                              ProductBody(),
-                              SizedBox(height: 10.h),
+                              // SizedBox(height: 30.h),
+                              //   Padding(
+                              //     padding: EdgeInsets.only(
+                              //       left: 20.w,
+                              //       right: 20.w,
+                              //     ),
+                              //     child: Row(
+                              //       mainAxisAlignment:
+                              //           MainAxisAlignment.spaceBetween,
+                              //       children: [
+                              //         Text(
+                              //           "Trending Products",
+                              //           style: GoogleFonts.dmSans(
+                              //             fontSize: 26.sp,
+                              //             fontWeight: FontWeight.w600,
+                              //             color: Color.fromARGB(255, 36, 33, 38),
+                              //             letterSpacing: -1,
+                              //           ),
+                              //         ),
+                              //         Container(
+                              //           width: 65.w,
+                              //           height: 26.h,
+                              //           decoration: BoxDecoration(
+                              //             borderRadius: BorderRadius.circular(
+                              //               35.45.r,
+                              //             ),
+                              //             color: Color.fromARGB(
+                              //               255,
+                              //               255,
+                              //               255,
+                              //               255,
+                              //             ),
+                              //           ),
+                              //           child: Center(
+                              //             child: Text(
+                              //               "View all",
+                              //               style: GoogleFonts.dmSans(
+                              //                 fontSize: 11.sp,
+                              //                 fontWeight: FontWeight.w500,
+                              //                 color: Color.fromARGB(
+                              //                   255,
+                              //                   97,
+                              //                   91,
+                              //                   104,
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              //   SizedBox(height: 20.h),
+                              //   ProductBody(),
+
+                              //   SizedBox(height: 10.h),
                             ],
                           ),
                         ),

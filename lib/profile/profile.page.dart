@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shopping_app_olx/home/home.page.dart';
+
 import 'package:shopping_app_olx/plan/plan.page.dart';
 import 'package:shopping_app_olx/splash.page.dart';
 
@@ -65,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   child: Center(
                     child: Text(
-                      "RJ",
+                      box.get("image") ?? "RJ",
                       style: GoogleFonts.dmSans(
                         fontSize: 40.sp,
                         fontWeight: FontWeight.w600,
@@ -76,8 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  // "Robert Jackson",
-                  box.get("city"),
+                  box.get("fullName") ?? "sajivddin",
                   style: GoogleFonts.dmSans(
                     fontSize: 22.sp,
                     fontWeight: FontWeight.w600,
@@ -164,11 +165,19 @@ class _ProfilePageState extends State<ProfilePage> {
                           name: 'Terms & Condition',
                         ),
                         SizedBox(height: 10.h),
-                        if (token == null) ...[
+                        if (token != null) ...[
                           Padding(
                             padding: EdgeInsets.only(left: 25.w, right: 25.w),
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                box.clear();
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => HomePage(),
+                                  ),
+                                );
+                              },
                               child: Row(
                                 children: [
                                   Icon(
@@ -178,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   SizedBox(width: 8.w),
                                   Text(
-                                    "Login",
+                                    "Logout",
                                     style: GoogleFonts.dmSans(
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w500,

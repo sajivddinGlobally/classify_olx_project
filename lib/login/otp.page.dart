@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
 import 'package:otpify/otpify.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
@@ -195,6 +196,31 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                           try {
                             final response = await ref.watch(
                               otpProvider(otpBody).future,
+                            );
+                            // if (!Hive.isBoxOpen("data")) {
+                            //   await Hive.openBox("data");
+                            // }
+
+                            log("TOKEN SAVED: ${response.token}");
+
+                            var box = await Hive.box("data");
+                            await box.put("token", response.token.toString());
+                            await box.put("id", response.user.id.toString());
+                            await box.put(
+                              "fullName",
+                              response.user.fullName.toString(),
+                            );
+                            await box.put(
+                              "address",
+                              response.user.address.toString(),
+                            );
+                            await box.put(
+                              "city",
+                              response.user.city.toString(),
+                            );
+                            await box.put(
+                              "phoneNumber",
+                              response.user.phoneNumber,
                             );
                             Fluttertoast.showToast(msg: "Login Successful");
                             Navigator.pushAndRemoveUntil(
