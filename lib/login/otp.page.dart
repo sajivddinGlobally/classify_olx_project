@@ -197,9 +197,6 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             final response = await ref.watch(
                               otpProvider(otpBody).future,
                             );
-                            // if (!Hive.isBoxOpen("data")) {
-                            //   await Hive.openBox("data");
-                            // }
 
                             log("TOKEN SAVED: ${response.token}");
 

@@ -534,71 +534,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   left: 20.w,
                                   right: 20.w,
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SelectBody(
-                                          image: "assets/Starbucks.png",
-                                          text: "Starbucks",
-                                        ),
-                                        SelectBody(
-                                          image: "assets/Honda.png",
-                                          text: "Honda",
-                                        ),
-                                        SelectBody(
-                                          image: "assets/Adidas.png",
-                                          text: "Adidas",
-                                        ),
-                                        SelectBody(
-                                          image: "assets/MacDonalds.png",
-                                          text: "MacDonalds",
-                                        ),
-                                        SelectBody(
-                                          image: "assets/Redbull.png",
-                                          text: "Redbull",
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 25.h),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SelectBody(
-                                          image: "assets/Aston martin.png",
-                                          text: "Aston martin",
-                                        ),
-                                        SelectBody(
-                                          image: "assets/Peugeot.png",
-                                          text: "Peugeot",
-                                        ),
-                                        SelectBody(
-                                          image: "assets/Lacerte.png",
-                                          text: "Lacerte",
-                                        ),
-                                        SelectBody(
-                                          image: "assets/Gucci.png",
-                                          text: "Gucci",
-                                        ),
-                                        SelectBody(
-                                          image: "assets/Marshall.png",
-                                          text: "Marshall",
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 30.h),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 20.w,
-                                  right: 20.w,
-                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -646,224 +581,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
                               ),
                               SizedBox(height: 20.h),
-                              // LatestBody(),
-                              SizedBox(
-                                // height: MediaQuery.of(context).size.height,
-                                child: homeAllProduct.when(
-                                  data: (data) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 20.w,
-                                        right: 20.w,
-                                      ),
-                                      child: GridView.builder(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        padding: EdgeInsets.zero,
-                                        itemCount: data.data.length,
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              crossAxisSpacing: 10.w,
-                                              mainAxisSpacing: 0.h,
-                                              childAspectRatio: 0.75,
-                                            ),
-                                        itemBuilder: (context, index) {
-                                          return Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Stack(
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          15.r,
-                                                        ),
-                                                    child: Image.asset(
-                                                      "assets/shoes1.png",
-
-                                                      width: 196.w,
-                                                      height: 160.h,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    right: 15.w,
-                                                    top: 15.h,
-                                                    child: Container(
-                                                      width: 30.w,
-                                                      height: 30.h,
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color: Colors.white,
-                                                      ),
-                                                      child: Center(
-                                                        child: Icon(
-                                                          Icons.favorite_border,
-                                                          size: 18.sp,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 15.h),
-                                              Container(
-                                                width: 155.w,
-                                                height: 25.h,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        30.r,
-                                                      ),
-                                                  color: Color.fromARGB(
-                                                    25,
-                                                    137,
-                                                    26,
-                                                    255,
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 6.w,
-                                                    right: 6.w,
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.location_on,
-                                                        size: 15.sp,
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          137,
-                                                          26,
-                                                          255,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "Udaipur, rajasthan",
-                                                        style:
-                                                            GoogleFonts.dmSans(
-                                                              fontSize: 12.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color:
-                                                                  Color.fromARGB(
-                                                                    255,
-                                                                    137,
-                                                                    26,
-                                                                    255,
-                                                                  ),
-                                                            ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(height: 8.h),
-                                              Text(
-                                                // "Nike Air Jorden 55 Medium",
-                                                data.data[index].name,
-                                                style: GoogleFonts.dmSans(
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    97,
-                                                    91,
-                                                    104,
-                                                  ),
-                                                  letterSpacing: -0.80,
-                                                ),
-                                              ),
-                                              Text(
-                                                // "\$450.00",
-                                                data.data[index].price
-                                                    .toString(),
-                                                style: GoogleFonts.dmSans(
-                                                  fontSize: 18.sp,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    137,
-                                                    26,
-                                                    255,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  error:
-                                      (error, stackTrace) =>
-                                          Center(child: Text(error.toString())),
-                                  loading:
-                                      () => Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                ),
-                              ),
-                              // SizedBox(height: 30.h),
-                              //   Padding(
-                              //     padding: EdgeInsets.only(
-                              //       left: 20.w,
-                              //       right: 20.w,
-                              //     ),
-                              //     child: Row(
-                              //       mainAxisAlignment:
-                              //           MainAxisAlignment.spaceBetween,
-                              //       children: [
-                              //         Text(
-                              //           "Trending Products",
-                              //           style: GoogleFonts.dmSans(
-                              //             fontSize: 26.sp,
-                              //             fontWeight: FontWeight.w600,
-                              //             color: Color.fromARGB(255, 36, 33, 38),
-                              //             letterSpacing: -1,
-                              //           ),
-                              //         ),
-                              //         Container(
-                              //           width: 65.w,
-                              //           height: 26.h,
-                              //           decoration: BoxDecoration(
-                              //             borderRadius: BorderRadius.circular(
-                              //               35.45.r,
-                              //             ),
-                              //             color: Color.fromARGB(
-                              //               255,
-                              //               255,
-                              //               255,
-                              //               255,
-                              //             ),
-                              //           ),
-                              //           child: Center(
-                              //             child: Text(
-                              //               "View all",
-                              //               style: GoogleFonts.dmSans(
-                              //                 fontSize: 11.sp,
-                              //                 fontWeight: FontWeight.w500,
-                              //                 color: Color.fromARGB(
-                              //                   255,
-                              //                   97,
-                              //                   91,
-                              //                   104,
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ),
-                              //   SizedBox(height: 20.h),
-                              //   ProductBody(),
-
-                              //   SizedBox(height: 10.h),
+                              LatestBody(),
                             ],
                           ),
                         ),
@@ -977,119 +695,105 @@ class _ProductBodyState extends State<ProductBody> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: productList.length,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 10.h),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 108.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.r),
-              color: Colors.white,
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10.w),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.r),
+    return Padding(
+      padding: EdgeInsets.only(left: 20.w, right: 20.w),
+      child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        itemCount: 6,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10.w,
+          mainAxisSpacing: 0.h,
+          childAspectRatio: 0.75,
+        ),
+        itemBuilder: (context, index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15.r),
                     child: Image.asset(
-                      // "assets/car1.png",
-                      productList[index]["imageUrl"].toString(),
-                      width: 120.w,
-                      height: 84.h,
+                      "assets/shoes1.png",
+
+                      width: 196.w,
+                      height: 160.h,
                       fit: BoxFit.cover,
                     ),
                   ),
+                  Positioned(
+                    right: 15.w,
+                    top: 15.h,
+                    child: Container(
+                      width: 30.w,
+                      height: 30.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: Center(
+                        child: Icon(Icons.favorite_border, size: 18.sp),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 15.h),
+              Container(
+                width: 155.w,
+                height: 25.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.r),
+                  color: Color.fromARGB(25, 137, 26, 255),
                 ),
-                SizedBox(width: 15.w),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 6.w, right: 6.w),
+                  child: Row(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            // width: 135.w,
-                            height: 20.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.r),
-                              color: Color.fromARGB(25, 137, 26, 255),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 6.w, right: 6.w),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    size: 15.sp,
-                                    color: Color.fromARGB(255, 137, 26, 255),
-                                  ),
-                                  Text(
-                                    // "Udaipur, rajasthan",
-                                    productList[index]["location"].toString(),
-                                    style: GoogleFonts.dmSans(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 137, 26, 255),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Spacer(),
-                          Container(
-                            width: 30.w,
-                            height: 30.h,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(25, 137, 26, 255),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.favorite_border,
-                                size: 15.sp,
-                                color: Color.fromARGB(255, 137, 26, 255),
-                              ),
-                            ),
-                          ),
-                        ],
+                      Icon(
+                        Icons.location_on,
+                        size: 15.sp,
+                        color: Color.fromARGB(255, 137, 26, 255),
                       ),
                       Text(
-                        // "Raymond's Silk Shirts with red coller",
-                        productList[index]["title"].toString(),
+                        "Udaipur, rajasthan",
                         style: GoogleFonts.dmSans(
-                          fontSize: 14.sp,
+                          fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 97, 91, 104),
-                          letterSpacing: -0.80,
-                        ),
-                      ),
-                      Text(
-                        // "\$250.00",
-                        productList[index]["price"].toString(),
-                        style: GoogleFonts.dmSans(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
                           color: Color.fromARGB(255, 137, 26, 255),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(width: 14.w),
-              ],
-            ),
-          ),
-        );
-      },
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                "Nike Air Jorden 55 Medium",
+
+                style: GoogleFonts.dmSans(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromARGB(255, 97, 91, 104),
+                  letterSpacing: -0.80,
+                ),
+              ),
+              Text(
+                "\$450.00",
+
+                style: GoogleFonts.dmSans(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(255, 137, 26, 255),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
@@ -1103,220 +807,166 @@ class LatestBody extends StatefulWidget {
 
 class _LatestBodyState extends State<LatestBody> {
   List<Map<String, String>> latestList = [
-    {"imageUrl": "assets/shirt1.png"},
-    {"imageUrl": "assets/shirt2.png"},
-    {"imageUrl": "assets/shirt3.png"},
-    {"imageUrl": "assets/shirt4.png"},
-    {"imageUrl": "assets/shirt5.png"},
-    {"imageUrl": "assets/shirt6.png"},
-    {"imageUrl": "assets/shirt7.png"},
-    {"imageUrl": "assets/shirt8.png"},
+    {
+      "imageUrl": "assets/1.png",
+      "location": "Udaipur, rajasthan",
+      "title": "Nike Air Jorden 55 Medium",
+      "price": "\$450.00",
+    },
+    {
+      "imageUrl": "assets/2.png",
+      "location": "Jaipur, Rajasthan",
+      "title": "Adidas Ultraboost 21",
+      "price": "\$180.00",
+    },
+    {
+      "imageUrl": "assets/3.png",
+      "location": "Mumbai, Maharashtra",
+      "title": "Puma RS-X3",
+      "price": "\$120.00",
+    },
+    {
+      "imageUrl": "assets/4.png",
+      "location": "Bengaluru, Karnataka",
+      "title": "Reebok Nano X1",
+      "price": "\$140.00",
+    },
+    {
+      "imageUrl": "assets/5.png",
+      "location": "Delhi",
+      "title": "Under Armour Charged Escape 3",
+      "price": "\$450.00",
+    },
+    {
+      "imageUrl": "assets/6.png",
+      "location": "Udaipur, rajasthan",
+      "title": "Nike Air Jorden 55 Medium",
+      "price": "\$110.00",
+    },
+    {
+      "imageUrl": "assets/7.png",
+      "location": "Chennai, Tamil Nadu",
+      "title": "New Balance Fresh Foam 1080v11",
+      "price": "\$160.00",
+    },
+    {
+      "imageUrl": "assets/8.png",
+      "location": "Ahmedabad, Gujarat",
+      "title": "Asics Gel-Kayano 27",
+      "price": "\$200.00",
+    },
+    {
+      "imageUrl": "assets/9.png",
+      "location": "Udaipur, rajasthan",
+      "title": "Hoka One One Clifton 7",
+      "price": "\$180.00",
+    },
+    {
+      "imageUrl": "assets/10.png",
+      "location": "Pune, Maharashtra",
+      "title": "Nike Air Jorden 55 Medium",
+      "price": "\$450.00",
+    },
   ];
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200.h,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        // itemCount: latestList.length,
-        itemCount: (latestList.length / 2).ceil(),
+    return Padding(
+      padding: EdgeInsets.only(left: 20.w, right: 20.w),
+      child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        itemCount: latestList.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10.w,
+          mainAxisSpacing: 0.h,
+          childAspectRatio: 0.75,
+        ),
         itemBuilder: (context, index) {
-          int topIndex = index * 2;
-          int bottomIndex = topIndex + 1;
-          return Padding(
-            padding: EdgeInsets.only(left: 20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 250.w,
-                  height: 90.h,
-                  decoration: BoxDecoration(
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  ClipRRect(
                     borderRadius: BorderRadius.circular(15.r),
-                    color: Colors.white,
+                    child: Image.asset(
+                      // "assets/shoes1.png",
+                      latestList[index]["imageUrl"].toString(),
+                      width: 196.w,
+                      height: 160.h,
+                      fit: BoxFit.cover,
+                    ),
                   ),
+                  Positioned(
+                    right: 15.w,
+                    top: 15.h,
+                    child: Container(
+                      width: 30.w,
+                      height: 30.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: Center(
+                        child: Icon(Icons.favorite_border, size: 18.sp),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 15.h),
+              Container(
+                width: 155.w,
+                height: 25.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.r),
+                  color: Color.fromARGB(25, 137, 26, 255),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 6.w, right: 6.w),
                   child: Row(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 6.w,
-                          top: 6.h,
-                          bottom: 6.h,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.r),
-                          child: Image.asset(
-                            // "assets/shirt1.png",
-                            // latestList[index]["imageUrl"].toString(),
-                            latestList[topIndex]["imageUrl"]!,
-                            width: 70.w,
-                            height: 78.h,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                      Icon(
+                        Icons.location_on,
+                        size: 15.sp,
+                        color: Color.fromARGB(255, 137, 26, 255),
                       ),
-                      SizedBox(width: 8.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            // width: 135.w,
-                            height: 20.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.r),
-                              color: Color.fromARGB(25, 137, 26, 255),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 6.w, right: 6.w),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    size: 15.sp,
-                                    color: Color.fromARGB(255, 137, 26, 255),
-                                  ),
-                                  Text(
-                                    "Udaipur, rajasthan",
-                                    style: GoogleFonts.dmSans(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 137, 26, 255),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Text(
-                            "Nike Air Jorden 55 Medium",
-
-                            style: GoogleFonts.dmSans(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 97, 91, 104),
-                              letterSpacing: -0.80,
-                            ),
-                          ),
-                          Text(
-                            "\$450.00",
-
-                            style: GoogleFonts.dmSans(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(255, 137, 26, 255),
-                            ),
-                          ),
-                        ],
+                      Text(
+                        // "Udaipur, rajasthan",
+                        latestList[index]["location"].toString(),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 137, 26, 255),
+                        ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 8.h),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 250.w,
-                      height: 90.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.r),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 6.w,
-                              top: 6.h,
-                              bottom: 6.h,
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.r),
-                              child: Image.asset(
-                                // "assets/shirt1.png",
-                                // latestList[index]["imageUrl"].toString(),
-                                latestList[bottomIndex]["imageUrl"]!,
-                                width: 70.w,
-                                height: 78.h,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                // width: 135.w,
-                                height: 20.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.r),
-                                  color: Color.fromARGB(25, 137, 26, 255),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 6.w,
-                                    right: 6.w,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        size: 15.sp,
-                                        color: Color.fromARGB(
-                                          255,
-                                          137,
-                                          26,
-                                          255,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Udaipur, rajasthan",
-                                        style: GoogleFonts.dmSans(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color.fromARGB(
-                                            255,
-                                            137,
-                                            26,
-                                            255,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                "Nike Air Jorden 55 Medium",
-
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 97, 91, 104),
-                                  letterSpacing: -0.80,
-                                ),
-                              ),
-                              Text(
-                                "\$450.00",
-
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 137, 26, 255),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                // "Nike Air Jorden 55 Medium",
+                latestList[index]["title"].toString(),
+                style: GoogleFonts.dmSans(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromARGB(255, 97, 91, 104),
+                  letterSpacing: -0.80,
                 ),
-              ],
-            ),
+              ),
+              Text(
+                // "\$450.00",
+                latestList[index]["price"].toString(),
+                style: GoogleFonts.dmSans(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Color.fromARGB(255, 137, 26, 255),
+                ),
+              ),
+            ],
           );
         },
       ),

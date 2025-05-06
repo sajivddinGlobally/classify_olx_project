@@ -132,8 +132,6 @@ class _LoginPageState extends State<LoginPage> {
                               );
                               final response = await loginservice.login(body);
 
-                              log("TOKEN SAVED: ${response.token}");
-
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
