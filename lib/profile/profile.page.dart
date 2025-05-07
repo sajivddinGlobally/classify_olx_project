@@ -28,7 +28,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     final profileData = ref.watch(
       profileController("${box.get("id").toString()}"),
     );
-    log(box.get('id').toString());
+
     return Scaffold(
       body: Stack(
         children: [
@@ -91,7 +91,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     SizedBox(height: 20.h),
                     Text(
                       // box.get("fullName") ?? "sajivddin",
-                      data.data.fullName,
+                      data.data.fullName ?? "Your Name",
                       style: GoogleFonts.dmSans(
                         fontSize: 22.sp,
                         fontWeight: FontWeight.w600,
