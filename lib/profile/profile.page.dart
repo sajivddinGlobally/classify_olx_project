@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shopping_app_olx/edit/editProfile.dart';
+import 'package:shopping_app_olx/globalkey/navigatorkey.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/login/login.page.dart';
 import 'package:shopping_app_olx/plan/plan.page.dart';
@@ -75,10 +77,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         color: Colors.blueGrey,
                       ),
                       child: Center(
-                        child: Image.network(
-                          "${data.data.image}" ??
-                              "https://placehold.co/800?text=Hello+World&font=roboto",
-                          fit: BoxFit.cover,
+                        child: ClipOval(
+                          child: Image.network(
+                            "${data.data.image}" ??
+                                "https://placehold.co/800?text=Hello+World&font=roboto",
+                            width: 126.w,
+                            height: 126.h,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
@@ -93,7 +99,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       ),
                     ),
                     Text(
-                      "jacksonrobert@gmail.com",
+                      // "jacksonrobert@gmail.com",
+                      "+91 ${data.data.phoneNumber}",
                       style: GoogleFonts.dmSans(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
@@ -108,25 +115,35 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         borderRadius: BorderRadius.circular(40.r),
                         color: Color.fromARGB(25, 137, 26, 255),
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.edit,
-                            color: Color.fromARGB(255, 137, 26, 255),
-                            size: 20.sp,
-                          ),
-                          SizedBox(width: 6.w),
-                          Text(
-                            "Edit Profile",
-                            style: GoogleFonts.dmSans(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 137, 26, 255),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => EditProfile(),
                             ),
-                          ),
-                        ],
+                          );
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.edit,
+                              color: Color.fromARGB(255, 137, 26, 255),
+                              size: 20.sp,
+                            ),
+                            SizedBox(width: 6.w),
+                            Text(
+                              "Edit Profile",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 137, 26, 255),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(height: 40.h),
