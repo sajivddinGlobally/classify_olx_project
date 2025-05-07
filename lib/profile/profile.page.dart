@@ -1,25 +1,32 @@
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
-
+import 'package:shopping_app_olx/login/login.page.dart';
 import 'package:shopping_app_olx/plan/plan.page.dart';
+import 'package:shopping_app_olx/profile/service/profileController.dart';
 import 'package:shopping_app_olx/splash.page.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  ConsumerState<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
     var token = box.get("token");
+    final profileData = ref.watch(
+      profileController("${box.get("id").toString()}"),
+    );
+    log(box.get('id').toString());
     return Scaffold(
       body: Stack(
         children: [
@@ -34,221 +41,241 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           Image.asset("assets/bgimage.png"),
-          Padding(
-            padding: EdgeInsets.only(left: 20.w, top: 60.h),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                width: 46.w,
-                height: 46.h,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: Icon(Icons.arrow_back),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 120.h,
-            left: 0,
-            right: 0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 126.w,
-                  height: 126.h,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 137, 26, 255),
-                  ),
-                  child: Center(
-                    child: Text(
-                      box.get("image") ?? "RJ",
+          // Padding(
+          //   padding: EdgeInsets.only(left: 20.w, top: 60.h),
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       Navigator.pop(context);
+          //     },
+          //     child: Container(
+          //       width: 46.w,
+          //       height: 46.h,
+          //       decoration: BoxDecoration(
+          //         shape: BoxShape.circle,
+          //         color: Colors.white,
+          //       ),
+          //       child: Icon(Icons.arrow_back),
+          //     ),
+          //   ),
+          // ),
+          profileData.when(
+            data: (data) {
+              return Positioned(
+                top: 120.h,
+                left: 0,
+                right: 0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 126.w,
+                      height: 126.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blueGrey,
+                      ),
+                      child: Center(
+                        child: Image.network(
+                          "${data.data.image}" ??
+                              "https://placehold.co/800?text=Hello+World&font=roboto",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    Text(
+                      // box.get("fullName") ?? "sajivddin",
+                      data.data.fullName,
                       style: GoogleFonts.dmSans(
-                        fontSize: 40.sp,
+                        fontSize: 22.sp,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 33, 36, 38),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                Text(
-                  box.get("fullName") ?? "sajivddin",
-                  style: GoogleFonts.dmSans(
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 33, 36, 38),
-                  ),
-                ),
-                Text(
-                  "jacksonrobert@gmail.com",
-                  style: GoogleFonts.dmSans(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Color.fromARGB(255, 97, 91, 104),
-                  ),
-                ),
-                SizedBox(height: 25.h),
-                Container(
-                  width: 120.w,
-                  height: 36.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40.r),
-                    color: Color.fromARGB(25, 137, 26, 255),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        color: Color.fromARGB(255, 137, 26, 255),
-                        size: 20.sp,
+                    Text(
+                      "jacksonrobert@gmail.com",
+                      style: GoogleFonts.dmSans(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromARGB(255, 97, 91, 104),
                       ),
-                      SizedBox(width: 6.w),
-                      Text(
-                        "Edit Profile",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 137, 26, 255),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 40.h),
-                Padding(
-                  padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 350.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.r),
-                      color: Colors.white,
                     ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 30.h),
-                        EditProfileBody(
-                          icon: Icons.person_outlined,
-                          name: 'Edit Profile',
-                        ),
-                        SizedBox(height: 10.h),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => PlanPage(),
-                              ),
-                            );
-                          },
-                          child: EditProfileBody(
-                            icon: Icons.menu,
-                            name: 'Paid Plan',
+                    SizedBox(height: 25.h),
+                    Container(
+                      width: 120.w,
+                      height: 36.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40.r),
+                        color: Color.fromARGB(25, 137, 26, 255),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.edit,
+                            color: Color.fromARGB(255, 137, 26, 255),
+                            size: 20.sp,
                           ),
-                        ),
-                        SizedBox(height: 10.h),
-                        EditProfileBody(
-                          icon: Icons.description_outlined,
-                          name: 'Privacy Policy',
-                        ),
-                        SizedBox(height: 10.h),
-                        EditProfileBody(
-                          icon: Icons.insert_drive_file_outlined,
-                          name: 'Terms & Condition',
-                        ),
-                        SizedBox(height: 10.h),
-                        if (token != null) ...[
-                          Padding(
-                            padding: EdgeInsets.only(left: 25.w, right: 25.w),
-                            child: GestureDetector(
-                              onTap: () {
-                                box.clear();
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => HomePage(),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.logout,
-                                    color: Color.fromARGB(255, 97, 91, 104),
-                                    size: 26.sp,
-                                  ),
-                                  SizedBox(width: 8.w),
-                                  Text(
-                                    "Logout",
-                                    style: GoogleFonts.dmSans(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 97, 91, 104),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Color.fromARGB(255, 97, 91, 104),
-                                    size: 20.sp,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ] else ...[
-                          Padding(
-                            padding: EdgeInsets.only(left: 25.w, right: 25.w),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder: (context) => SplashPage(),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.logout,
-                                    color: Color.fromARGB(255, 97, 91, 104),
-                                    size: 26.sp,
-                                  ),
-                                  SizedBox(width: 8.w),
-                                  Text(
-                                    "Login",
-                                    style: GoogleFonts.dmSans(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 97, 91, 104),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Color.fromARGB(255, 97, 91, 104),
-                                    size: 20.sp,
-                                  ),
-                                ],
-                              ),
+                          SizedBox(width: 6.w),
+                          Text(
+                            "Edit Profile",
+                            style: GoogleFonts.dmSans(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromARGB(255, 137, 26, 255),
                             ),
                           ),
                         ],
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(height: 40.h),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 350.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.r),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 30.h),
+                            EditProfileBody(
+                              icon: Icons.person_outlined,
+                              name: 'Edit Profile',
+                            ),
+                            SizedBox(height: 10.h),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => PlanPage(),
+                                  ),
+                                );
+                              },
+                              child: EditProfileBody(
+                                icon: Icons.menu,
+                                name: 'Paid Plan',
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            EditProfileBody(
+                              icon: Icons.description_outlined,
+                              name: 'Privacy Policy',
+                            ),
+                            SizedBox(height: 10.h),
+                            EditProfileBody(
+                              icon: Icons.insert_drive_file_outlined,
+                              name: 'Terms & Condition',
+                            ),
+                            SizedBox(height: 10.h),
+                            if (token != null) ...[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: 25.w,
+                                  right: 25.w,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    box.clear();
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) => HomePage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.logout,
+                                        color: Color.fromARGB(255, 97, 91, 104),
+                                        size: 26.sp,
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      Text(
+                                        "Logout",
+                                        style: GoogleFonts.dmSans(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color.fromARGB(
+                                            255,
+                                            97,
+                                            91,
+                                            104,
+                                          ),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Color.fromARGB(255, 97, 91, 104),
+                                        size: 20.sp,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ] else ...[
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: 25.w,
+                                  right: 25.w,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) => SplashPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.logout,
+                                        color: Color.fromARGB(255, 97, 91, 104),
+                                        size: 26.sp,
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      Text(
+                                        "Login",
+                                        style: GoogleFonts.dmSans(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color.fromARGB(
+                                            255,
+                                            97,
+                                            91,
+                                            104,
+                                          ),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Color.fromARGB(255, 97, 91, 104),
+                                        size: 20.sp,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
+            error: (error, stackTrace) => Center(child: Text(error.toString())),
+            loading: () => Center(child: CircularProgressIndicator()),
           ),
         ],
       ),

@@ -215,7 +215,6 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                       Text(
                         // "Nike Air Jorden 55 Medium",
                         clothsList[index]["title"].toString(),
-
                         style: GoogleFonts.dmSans(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -226,7 +225,6 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                       Text(
                         //"\$450.00",
                         clothsList[index]["price"].toString(),
-
                         style: GoogleFonts.dmSans(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
