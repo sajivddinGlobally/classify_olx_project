@@ -159,9 +159,18 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         child: Column(
                           children: [
                             SizedBox(height: 30.h),
-                            EditProfileBody(
-                              icon: Icons.person_outlined,
-                              name: 'Edit Profile',
+                            GestureDetector(
+                              onTap: () {
+                                navigatorKey.currentState?.push(
+                                  CupertinoPageRoute(
+                                    builder: (context) => EditProfile(),
+                                  ),
+                                );
+                              },
+                              child: EditProfileBody(
+                                icon: Icons.person_outlined,
+                                name: 'Edit Profile',
+                              ),
                             ),
                             SizedBox(height: 10.h),
                             GestureDetector(
