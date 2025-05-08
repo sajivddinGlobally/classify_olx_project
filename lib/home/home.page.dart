@@ -615,18 +615,41 @@ class _HomePageState extends ConsumerState<HomePage> {
         // color: Colors.yellow,
         shape: CircularNotchedRectangle(),
         notchMargin: 6.0,
-        child: Row(
-          children: [
-            _buildTab(icon: Icons.home_outlined, label: "Home", index: 0),
-            _buildTab(icon: Icons.messenger_outline, label: "Chat", index: 1),
-            SizedBox(width: 8.w),
-            _buildTab(
-              icon: Icons.layers_outlined,
-              label: "My Listings",
-              index: 2,
-            ),
-            _buildTab(icon: Icons.person_outline, label: "Profile", index: 3),
-          ],
+        child: Padding(
+          padding: EdgeInsets.zero,
+          child: Row(
+            children: [
+              Expanded(
+                child: _buildTab(
+                  icon: Icons.home_outlined,
+                  label: "Home",
+                  index: 0,
+                ),
+              ),
+              Expanded(
+                child: _buildTab(
+                  icon: Icons.messenger_outline,
+                  label: "Chat",
+                  index: 1,
+                ),
+              ),
+              SizedBox(width: 24.w),
+              Expanded(
+                child: _buildTab(
+                  icon: Icons.layers_outlined,
+                  label: "My Listings",
+                  index: 2,
+                ),
+              ),
+              Expanded(
+                child: _buildTab(
+                  icon: Icons.person_outline,
+                  label: "Profile",
+                  index: 3,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
