@@ -1,17 +1,24 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/product/model.addproduct/reviewBodyModel.dart';
+import 'package:shopping_app_olx/product/service.addproduct/reviewController.dart';
 
-class ListingReviewPage extends StatefulWidget {
+class ListingReviewPage extends ConsumerStatefulWidget {
   const ListingReviewPage({super.key});
 
   @override
-  State<ListingReviewPage> createState() => _ListingReviewPageState();
+  ConsumerState<ListingReviewPage> createState() => _ListingReviewPageState();
 }
 
-class _ListingReviewPageState extends State<ListingReviewPage> {
+class _ListingReviewPageState extends ConsumerState<ListingReviewPage> {
+  bool isReview = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,13 +84,36 @@ class _ListingReviewPageState extends State<ListingReviewPage> {
                           top: 10.h,
                         ),
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => HomePage(),
-                              ),
-                            );
+                          onPressed: () async {
+                            try {
+                              setState(() {
+                                isReview = true;
+                              });
+                              final review = await ref.watch(
+                                reviewController(
+                                  ReviewBodyModel(
+                                    productId: "2",
+                                    buyerId: "4",
+                                    sellerId: "3",
+                                    rating: 5,
+                                    comment: "Great experience",
+                                  ),
+                                ),
+                              );
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
+                              Fluttertoast.showToast(msg: "Review Add");
+                            } catch (e) {
+                              setState(() {
+                                isReview = false;
+                              });
+                              Fluttertoast.showToast(msg: "Review Failed");
+                              log(e.toString());
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size(
@@ -95,10 +125,18 @@ class _ListingReviewPageState extends State<ListingReviewPage> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          child: Text(
-                            "Back to home",
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
+                          child:
+                              isReview == false
+                                  ? Text(
+                                    "Back to home",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
                         ),
                       ),
                     ],
