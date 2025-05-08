@@ -596,64 +596,74 @@ class _HomePageState extends ConsumerState<HomePage> {
               : tabBottom == 2
               ? ListingPage()
               : ProfilePage(),
-      bottomNavigationBar: Container(
-        child: Stack(
-          alignment: Alignment.bottomCenter,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            CupertinoPageRoute(builder: (context) => CategoryPage()),
+          );
+        },
+        shape: CircleBorder(),
+        backgroundColor: Color.fromARGB(255, 137, 26, 255),
+        child: Icon(Icons.add, size: 32.sp, color: Colors.white),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        padding: EdgeInsets.zero,
+        // color: Colors.yellow,
+        shape: CircularNotchedRectangle(),
+        notchMargin: 6.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            BottomNavigationBar(
-              onTap: (value) {
-                setState(() {
-                  tabBottom = value;
-                });
-              },
-              currentIndex: tabBottom,
-              type: BottomNavigationBarType.fixed,
-              selectedItemColor: Color.fromARGB(255, 137, 26, 255),
-              unselectedItemColor: Color.fromARGB(255, 97, 91, 104),
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined),
-                  label: "Home",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.messenger_outline),
-                  label: "Chat",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.layers_outlined),
-                  label: "My Listings",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outline),
-                  label: "Profile",
-                ),
-              ],
+            _buildTab(icon: Icons.home_outlined, label: "Home", index: 0),
+            _buildTab(icon: Icons.messenger_outline, label: "Chat", index: 1),
+            SizedBox(width: 25.w),
+            _buildTab(
+              icon: Icons.layers_outlined,
+              label: "My Listings",
+              index: 2,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(builder: (context) => CategoryPage()),
-                    );
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 50.h),
-                    width: 64.w,
-                    height: 64.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromARGB(255, 137, 26, 255),
-                    ),
-                    child: Center(child: Icon(Icons.add, color: Colors.white)),
-                  ),
-                ),
-              ],
-            ),
+            _buildTab(icon: Icons.person_outline, label: "Profile", index: 3),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildTab({
+    required IconData icon,
+    required String label,
+    required int index,
+  }) {
+    final isSelected = tabBottom == index;
+    return MaterialButton(
+      onPressed: () {
+        setState(() {
+          tabBottom = index;
+        });
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color:
+                isSelected
+                    ? const Color.fromARGB(255, 137, 26, 255)
+                    : const Color.fromARGB(255, 97, 91, 104),
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              color:
+                  isSelected
+                      ? const Color.fromARGB(255, 137, 26, 255)
+                      : const Color.fromARGB(255, 97, 91, 104),
+              fontSize: 12,
+            ),
+          ),
+        ],
       ),
     );
   }
