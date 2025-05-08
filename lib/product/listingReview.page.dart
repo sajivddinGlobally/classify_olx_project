@@ -106,7 +106,7 @@ class _ListingReviewPageState extends ConsumerState<ListingReviewPage> {
                                   builder: (context) => HomePage(),
                                 ),
                               );
-                              Fluttertoast.showToast(msg: "Review Add");
+                              Fluttertoast.showToast(msg: "Review Add $review");
                             } catch (e) {
                               setState(() {
                                 isReview = false;

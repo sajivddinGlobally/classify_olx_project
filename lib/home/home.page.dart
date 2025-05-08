@@ -607,18 +607,19 @@ class _HomePageState extends ConsumerState<HomePage> {
         backgroundColor: Color.fromARGB(255, 137, 26, 255),
         child: Icon(Icons.add, size: 32.sp, color: Colors.white),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: BottomAppBar(
+        height: 80.h,
         padding: EdgeInsets.zero,
         // color: Colors.yellow,
         shape: CircularNotchedRectangle(),
         notchMargin: 6.0,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildTab(icon: Icons.home_outlined, label: "Home", index: 0),
             _buildTab(icon: Icons.messenger_outline, label: "Chat", index: 1),
-            SizedBox(width: 25.w),
+            SizedBox(width: 8.w),
             _buildTab(
               icon: Icons.layers_outlined,
               label: "My Listings",
@@ -652,15 +653,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                 isSelected
                     ? const Color.fromARGB(255, 137, 26, 255)
                     : const Color.fromARGB(255, 97, 91, 104),
+            size: 26.sp,
           ),
           Text(
             label,
-            style: TextStyle(
+            style: GoogleFonts.dmSans(
               color:
                   isSelected
                       ? const Color.fromARGB(255, 137, 26, 255)
                       : const Color.fromARGB(255, 97, 91, 104),
-              fontSize: 12,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
