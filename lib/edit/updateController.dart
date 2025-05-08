@@ -27,7 +27,7 @@ class UpdateController {
       //"Content-Type": "application/json",
       "Accept": "application/json", // Ensure content type is correct
       // You can add other custom headers here
-       "Authorization": "Bearer $token", // 🔥 Add this
+      "Authorization": "Bearer $token", // 🔥 Add this
     });
     request.files.add(await http.MultipartFile.fromPath('image', images.path));
     request.fields.addAll({"user_id": user_id, "full_name": full_name});
@@ -42,8 +42,9 @@ class UpdateController {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         Fluttertoast.showToast(msg: "Profile Update Successful");
-        navigatorKey.currentState?.push(
+        navigatorKey.currentState?.pushAndRemoveUntil(
           CupertinoPageRoute(builder: (context) => ProfilePage()),
+          (route) => false,
         );
         return data;
       } else {

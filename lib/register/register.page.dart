@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +9,7 @@ import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/login/login.page.dart';
 import 'package:shopping_app_olx/register/model/registerBodyModel.dart';
 import 'package:shopping_app_olx/register/model/registerResModel.dart';
+import 'package:shopping_app_olx/register/service/registerController.dart';
 import 'package:shopping_app_olx/register/service/registerService.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -239,39 +242,59 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                if (isRegister == false) {
+                                // if (isRegister == false) {
+                                //   setState(() {
+                                //     isRegister = true;
+                                //   });
+                                //   final service = RegisterService(createDio());
+                                //   try {
+                                //     RegisterResModel res = await service
+                                //         .register(
+                                //           RegisterBodyModel(
+                                //             fullName: nameController.text,
+                                //             phoneNumber: phoneController.text,
+                                //             address: addController.text,
+                                //             city: cityController.text,
+                                //             pincode: pincodeController.text,
+                                //           ),
+                                //         );
+
+                                //     Fluttertoast.showToast(
+                                //       msg: res.message.toString(),
+                                //     );
+                                //     Navigator.pushAndRemoveUntil(
+                                //       context,
+                                //       CupertinoPageRoute(
+                                //         builder: (context) => LoginPage(),
+                                //       ),
+                                //       (route) => false,
+                                //     );
+                                //   } catch (e) {
+                                //     Fluttertoast.showToast(msg: e.toString());
+                                //     setState(() {
+                                //       isRegister = false;
+                                //     });
+                                //   }
+                                // }
+
+                                try {
                                   setState(() {
                                     isRegister = true;
                                   });
-                                  final service = RegisterService(createDio());
-                                  try {
-                                    RegisterResModel res = await service
-                                        .register(
-                                          RegisterBodyModel(
-                                            fullName: nameController.text,
-                                            phoneNumber: phoneController.text,
-                                            address: addController.text,
-                                            city: cityController.text,
-                                            pincode: pincodeController.text,
-                                          ),
-                                        );
 
-                                    Fluttertoast.showToast(
-                                      msg: res.message.toString(),
-                                    );
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      CupertinoPageRoute(
-                                        builder: (context) => LoginPage(),
-                                      ),
-                                      (route) => false,
-                                    );
-                                  } catch (e) {
-                                    Fluttertoast.showToast(msg: e.toString());
-                                    setState(() {
-                                      isRegister = false;
-                                    });
-                                  }
+                                  await RegisterController.register(
+                                    context: context,
+                                    full_name: nameController.text,
+                                    phone_number: phoneController.text,
+                                    address: addController.text,
+                                    city: cityController.text,
+                                    pincode: pincodeController.text,
+                                  );
+                                } catch (e) {
+                                  setState(() {
+                                    isRegister = false;
+                                  });
+                                  log(e.toString());
                                 }
                               }
                             },
@@ -286,12 +309,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       ),
                                     )
                                     : Center(
-                                      child: SizedBox(
-                                        width: 30.w,
-                                        height: 30.h,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                        ),
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
                                       ),
                                     ),
                           ),
