@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),
-          home: SplashPage(), // Check if token exists
+          home: HomePage(), // Check if token exists
         );
       },
     );
