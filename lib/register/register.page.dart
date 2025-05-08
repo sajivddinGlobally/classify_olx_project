@@ -86,11 +86,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             type: TextInputType.text,
                           ),
                           SizedBox(height: 20.h),
-                          RegisterBody(
-                            title: "Email",
-                            controller: emailController,
-                            type: TextInputType.text,
-                          ),
+                          // RegisterBody(
+                          //   title: "Email",
+                          //   controller: emailController,
+                          //   type: TextInputType.text,
+                          // ),
                           SizedBox(height: 20.h),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_app_olx/globalkey/navigatorkey.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/login/login.page.dart';
+import 'package:shopping_app_olx/splash.page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),
-          home: HomePage(), // Check if token exists
+          home: SplashPage(), // Check if token exists
         );
       },
     );
