@@ -7,11 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:shopping_app_olx/globalkey/navigatorkey.dart';
-import 'package:shopping_app_olx/profile/profile.page.dart';
 
 class UpdateController {
   static Future<Map<String, dynamic>> UpdateProfile({
+    required BuildContext context,
     required String user_id,
     required String full_name,
     required File images,
@@ -42,10 +41,7 @@ class UpdateController {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         Fluttertoast.showToast(msg: "Profile Update Successful");
-        navigatorKey.currentState?.pushAndRemoveUntil(
-          CupertinoPageRoute(builder: (context) => ProfilePage()),
-          (route) => false,
-        );
+        Navigator.pop(context, true);
         return data;
       } else {
         throw Exception("Failed to Upload:${response.reasonPhrase}");

@@ -116,13 +116,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         color: Color.fromARGB(25, 137, 26, 255),
                       ),
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
+                        onTap: () async {
+                          final result = await Navigator.push(
                             context,
                             CupertinoPageRoute(
                               builder: (context) => EditProfile(),
                             ),
                           );
+
+                          if (result == true) {
+                            var box = Hive.box("data");
+                            ref.invalidate(
+                              profileController("${box.get("id").toString()}"),
+                            );
+                          }
                         },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,

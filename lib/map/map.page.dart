@@ -52,19 +52,29 @@ class _MapPageState extends ConsumerState<MapPage> {
   }
 
   Future<void> _getAddressFromLatLng(LatLng latLng) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(
-      latLng.latitude,
-      latLng.longitude,
-    );
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        latLng.latitude,
+        latLng.longitude,
+      );
 
-    Placemark place = placemarks[0];
+      if (placemarks.isNotEmpty) {
+        /// ye ek line pin code nikalne ke liye
+        Placemark place = placemarks[0];
 
-    setState(() {
-      manuelLAt = latLng.latitude;
-      manuelLong = latLng.longitude;
-      _address =
-          "${place.name}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
-    });
+        setState(() {
+          manuelLAt = latLng.latitude;
+          manuelLong = latLng.longitude;
+          _address =
+              "${place.name}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
+        });
+      }
+    } catch (e) {
+      log("Error fetching address: $e");
+      setState(() {
+        _address = "Address not found";
+      });
+    }
   }
 
   Set<Polyline> _polylines = {};
@@ -187,7 +197,10 @@ class _MapPageState extends ConsumerState<MapPage> {
                           borderRadius: BorderRadius.circular(30.45.r),
                           borderSide: BorderSide.none,
                         ),
-                        hintText: "456123",
+                        hintText:
+                            _address.isNotEmpty
+                                ? _address
+                                : "Fetching address...",
                         hintStyle: GoogleFonts.dmSans(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,

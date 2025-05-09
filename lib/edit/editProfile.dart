@@ -201,10 +201,10 @@ class _EditProfileState extends State<EditProfile> {
                             isUpdate = true;
                           });
 
-                          final Update = UpdateController.UpdateProfile(
+                          final Update = await UpdateController.UpdateProfile(
                             user_id: box.get("id").toString(),
                             full_name: nameController.text,
-                            images: image!,
+                            images: image!, context: context,
                           );
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(

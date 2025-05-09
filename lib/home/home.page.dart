@@ -104,16 +104,26 @@ class _HomePageState extends ConsumerState<HomePage> {
                               Row(
                                 children: [
                                   SizedBox(width: 20.w),
-                                  Container(
-                                    width: 50.w,
-                                    height: 50.h,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color(0xFFFFFFFF),
-                                    ),
-                                    child: Icon(
-                                      Icons.location_on,
-                                      color: Color(0xFF891AFF),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => MapPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 50.w,
+                                      height: 50.h,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(0xFFFFFFFF),
+                                      ),
+                                      child: Icon(
+                                        Icons.location_on,
+                                        color: Color(0xFF891AFF),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(width: 6.w),
@@ -146,6 +156,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         Text(
                                           // "Jaipur, rajasthan",
                                           "${widget.address ?? 'Jaipur rajsthan'}",
+                                          overflow: TextOverflow.ellipsis,
                                           style: GoogleFonts.dmSans(
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w500,
