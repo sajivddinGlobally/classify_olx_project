@@ -153,18 +153,22 @@ class _HomePageState extends ConsumerState<HomePage> {
                                             ),
                                           ),
                                         ),
-                                        Text(
-                                          // "Jaipur, rajasthan",
-                                          "${widget.address ?? 'Jaipur rajsthan'}",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.dmSans(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: Color.fromARGB(
-                                              255,
-                                              137,
-                                              26,
-                                              255,
+                                        SizedBox(
+                                          width: 220.w,
+                                          //color: Colors.yellow,
+                                          child: Text(
+                                            // "Jaipur, rajasthan",
+                                            "${widget.address ?? 'Jaipur rajsthan'}",
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.dmSans(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromARGB(
+                                                255,
+                                                137,
+                                                26,
+                                                255,
+                                              ),
                                             ),
                                           ),
                                         ),
