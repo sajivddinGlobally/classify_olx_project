@@ -29,37 +29,37 @@ class LocationResModel {
 }
 
 class Location {
-    String userId;
+    int id;
+    int userId;
     double latitude;
     double longitude;
-    DateTime updatedAt;
     DateTime createdAt;
-    int id;
+    DateTime updatedAt;
 
     Location({
+        required this.id,
         required this.userId,
         required this.latitude,
         required this.longitude,
-        required this.updatedAt,
         required this.createdAt,
-        required this.id,
+        required this.updatedAt,
     });
 
     factory Location.fromJson(Map<String, dynamic> json) => Location(
+        id: json["id"],
         userId: json["user_id"],
         latitude: json["latitude"]?.toDouble(),
         longitude: json["longitude"]?.toDouble(),
-        updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
-        id: json["id"],
+        updatedAt: DateTime.parse(json["updated_at"]),
     );
 
     Map<String, dynamic> toJson() => {
+        "id": id,
         "user_id": userId,
         "latitude": latitude,
         "longitude": longitude,
-        "updated_at": updatedAt.toIso8601String(),
         "created_at": createdAt.toIso8601String(),
-        "id": id,
+        "updated_at": updatedAt.toIso8601String(),
     };
 }

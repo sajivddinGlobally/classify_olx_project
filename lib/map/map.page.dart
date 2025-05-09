@@ -8,6 +8,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/map/model/locationBodyModel.dart';
@@ -107,8 +108,11 @@ class _MapPageState extends ConsumerState<MapPage> {
     });
   }
 
+  bool isLocation = false;
+
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box("data");
     return Scaffold(
       body: Column(
         children: [
@@ -196,12 +200,15 @@ class _MapPageState extends ConsumerState<MapPage> {
                     SizedBox(height: 30.h),
                     GestureDetector(
                       onTap: () async {
+                        setState(() {
+                          isLocation = true;
+                        });
                         if (_CurrentLocatiion != null) {
                           final pickedLat = _CurrentLocatiion!.latitude;
                           final pickedLng = _CurrentLocatiion!.longitude;
                           final pickedAddress = _address;
                           final locationbody = LocationBodyModel(
-                            userId: _address,
+                            userId: box.get("id").toString(),
                             latitude: pickedLat,
                             longitude: pickedLng,
                           );
@@ -219,6 +226,10 @@ class _MapPageState extends ConsumerState<MapPage> {
                                 );
                               })
                               .catchError((e) {
+                                setState(() {
+                                  isLocation = false;
+                                });
+                                log(e.toString());
                                 Fluttertoast.showToast(
                                   msg: "Failed: ${e.toString()}",
                                 );
@@ -236,14 +247,21 @@ class _MapPageState extends ConsumerState<MapPage> {
                           ),
                         ),
                         child: Center(
-                          child: Text(
-                            "Confirm Location",
-                            style: GoogleFonts.dmSans(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 137, 26, 255),
-                            ),
-                          ),
+                          child:
+                              isLocation == false
+                                  ? Text(
+                                    "Confirm Location",
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromARGB(255, 137, 26, 255),
+                                    ),
+                                  )
+                                  : Center(
+                                    child: CircularProgressIndicator(
+                                      color: Color.fromARGB(255, 137, 26, 255),
+                                    ),
+                                  ),
                         ),
                       ),
                     ),
