@@ -15,7 +15,15 @@ import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 import 'package:shopping_app_olx/profile/profile.page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+  final double? latitude;
+  final double? longitude;
+  final String? address;
+  const HomePage({
+    super.key,
+    required this.latitude,
+    required this.longitude,
+    required this.address,
+  });
 
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
@@ -136,7 +144,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                           ),
                                         ),
                                         Text(
-                                          "Jaipur, rajasthan",
+                                          // "Jaipur, rajasthan",
+                                          "${widget.address ?? 'Jaipur rajsthan'}",
                                           style: GoogleFonts.dmSans(
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w500,
@@ -605,7 +614,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         },
         shape: CircleBorder(),
         backgroundColor: Color.fromARGB(255, 137, 26, 255),
-        child: Icon(Icons.add, size: 32.sp, color: Colors.white),
+        child: Icon(Icons.add, color: Colors.white),
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,

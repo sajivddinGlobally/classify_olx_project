@@ -223,7 +223,12 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             Navigator.pushAndRemoveUntil(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => HomePage(),
+                                builder:
+                                    (context) => HomePage(
+                                      latitude: null,
+                                      longitude: null,
+                                      address: '',
+                                    ),
                               ),
                               (route) => false,
                             );

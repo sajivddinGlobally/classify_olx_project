@@ -103,7 +103,7 @@ class _ListingReviewPageState extends ConsumerState<ListingReviewPage> {
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
-                                  builder: (context) => HomePage(),
+                                  builder: (context) => HomePage(latitude: null, longitude: null, address: '',),
                                 ),
                               );
                               Fluttertoast.showToast(msg: "Review Add $review");

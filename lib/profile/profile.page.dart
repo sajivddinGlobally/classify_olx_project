@@ -210,7 +210,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                     Navigator.push(
                                       context,
                                       CupertinoPageRoute(
-                                        builder: (context) => HomePage(),
+                                        builder:
+                                            (context) => HomePage(
+                                              latitude: null,
+                                              longitude: null,
+                                              address: '',
+                                            ),
                                       ),
                                     );
                                   },

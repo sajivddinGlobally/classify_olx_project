@@ -42,9 +42,12 @@ class _MapPageState extends ConsumerState<MapPage> {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
+      LatLng latLng = LatLng(position.latitude, position.longitude);
       setState(() {
         _CurrentLocatiion = LatLng(position.latitude, position.longitude);
       });
+
+      _getAddressFromLatLng(latLng);
     }
   }
 
@@ -221,7 +224,12 @@ class _MapPageState extends ConsumerState<MapPage> {
                                 Navigator.push(
                                   context,
                                   CupertinoPageRoute(
-                                    builder: (context) => HomePage(),
+                                    builder:
+                                        (context) => HomePage(
+                                          latitude: pickedLat,
+                                          longitude: pickedLng,
+                                          address: pickedAddress,
+                                        ),
                                   ),
                                 );
                               })
