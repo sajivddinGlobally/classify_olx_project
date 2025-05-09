@@ -123,7 +123,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                               builder: (context) => EditProfile(),
                             ),
                           );
-
                           if (result == true) {
                             var box = Hive.box("data");
                             ref.invalidate(
@@ -167,12 +166,21 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           children: [
                             SizedBox(height: 30.h),
                             GestureDetector(
-                              onTap: () {
-                                navigatorKey.currentState?.push(
+                              onTap: () async {
+                                final result = await Navigator.push(
+                                  context,
                                   CupertinoPageRoute(
                                     builder: (context) => EditProfile(),
                                   ),
                                 );
+                                if (result == true) {
+                                  var box = Hive.box("data");
+                                  ref.invalidate(
+                                    profileController(
+                                      "${box.get("id").toString()}",
+                                    ),
+                                  );
+                                }
                               },
                               child: EditProfileBody(
                                 icon: Icons.person_outlined,
