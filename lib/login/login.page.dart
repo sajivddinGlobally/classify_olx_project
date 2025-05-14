@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                                 await createDio(),
                               );
                               final response = await loginservice.login(body);
-                              log(body.toString());
+
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(

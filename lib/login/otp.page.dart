@@ -174,18 +174,32 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                       //     ),
                       //   ],
                       // ),
+                      SizedBox(height: 30.h),
                       OtpPinField(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         fieldHeight: 45,
                         fieldWidth: 45,
                         otpPinFieldStyle: OtpPinFieldStyle(
                           defaultFieldBorderColor: Colors.grey,
-                          activeFieldBorderColor: Color(0xFF891AFF),
+                          activeFieldBorderColor: Color(0XFF891AFF),
                         ),
+                        otpPinFieldDecoration:
+                            OtpPinFieldDecoration.roundedPinBoxDecoration,
                         maxLength: 6,
                         onChange: (value) {
                           setState(() {
                             otp = value;
                           });
+                          // if (value.length == 6) {
+                          //   Fluttertoast.showToast(
+                          //     msg: "Entered OTP is: $value",
+                          //     toastLength: Toast.LENGTH_SHORT,
+                          //     gravity: ToastGravity.BOTTOM,
+                          //     backgroundColor: Colors.black87,
+                          //     textColor: Colors.white,
+                          //     fontSize: 16.0,
+                          //   );
+                          // }
                         },
                         onSubmit: (value) async {
                           final otpBody = OtpBodyModel(
