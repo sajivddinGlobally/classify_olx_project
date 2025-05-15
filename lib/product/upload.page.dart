@@ -248,7 +248,7 @@ class _UploadPageState extends State<UploadPage> {
                                 CupertinoPageRoute(
                                   builder:
                                       (context) => ProductspecificationPage(
-                                        id: widget.productId.toString(),
+                                        productId: widget.productId.toString(),
                                       ),
                                 ),
                               );

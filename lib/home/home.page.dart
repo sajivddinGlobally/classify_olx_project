@@ -459,7 +459,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                           BorderRadius.circular(
                                                             15.r,
                                                           ),
-                                                      child: Image.asset(
+                                                      child: Image.network(
                                                         // "assets/shoes1.png",
                                                         //dealsList[index]["imageUrl"]
                                                         listing
@@ -771,7 +771,6 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 }
 
-
 class AllProductBody extends ConsumerStatefulWidget {
   const AllProductBody({super.key});
 
@@ -780,7 +779,7 @@ class AllProductBody extends ConsumerStatefulWidget {
 }
 
 class _AllProductBodyState extends ConsumerState<AllProductBody> {
-  List<Map<String, String>> latestList = [
+  List<Map<String, String>> Allproductlist = [
     {
       "imageUrl": "assets/1.png",
       "location": "Udaipur, rajasthan",

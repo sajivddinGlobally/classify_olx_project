@@ -14,8 +14,8 @@ import 'package:shopping_app_olx/product/service.addproduct/specificationService
 import 'package:shopping_app_olx/register/register.page.dart';
 
 class ProductspecificationPage extends ConsumerStatefulWidget {
-  final String id;
-  const ProductspecificationPage({super.key, required this.id});
+  final String productId;
+  const ProductspecificationPage({super.key, required this.productId});
 
   @override
   ConsumerState<ProductspecificationPage> createState() =>
@@ -164,7 +164,7 @@ class _ProductspecificationPageState
                           //   ).future,
                           // );
                           final res = ProductSpecificationBodyModel(
-                            productId: widget.id,
+                            productId: widget.productId,
                             material: materialController.text,
                             sizeOrShoeNumber: shoeNumberController.text,
                             ageOrHowOld: ageController.text,
