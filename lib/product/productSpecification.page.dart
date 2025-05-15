@@ -6,9 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/product/listingReview.page.dart';
 import 'package:shopping_app_olx/product/model.addproduct/specificationBodyModel.dart';
 import 'package:shopping_app_olx/product/service.addproduct/specificationController.dart';
+import 'package:shopping_app_olx/product/service.addproduct/specificationService.dart';
 import 'package:shopping_app_olx/register/register.page.dart';
 
 class ProductspecificationPage extends ConsumerStatefulWidget {
@@ -148,21 +150,35 @@ class _ProductspecificationPageState
                           setState(() {
                             isSpecification = true;
                           });
-                          await ref.read(
-                            specificationProvider(
-                              ProductSpecificationBodyModel(
-                                productId: widget.id,
-                                material: materialController.text,
-                                sizeOrShoeNumber: shoeNumberController.text,
-                                ageOrHowOld: ageController.text,
-                                model: modelController.text,
-                                idealFor: idealController.text,
-                                style: styleController.text,
-                              ),
-                            ).future,
+                          // await ref.read(
+                          //   specificationProvider(
+                          //     ProductSpecificationBodyModel(
+                          //       productId: widget.id,
+                          //       material: materialController.text,
+                          //       sizeOrShoeNumber: shoeNumberController.text,
+                          //       ageOrHowOld: ageController.text,
+                          //       model: modelController.text,
+                          //       idealFor: idealController.text,
+                          //       style: styleController.text,
+                          //     ),
+                          //   ).future,
+                          // );
+                          final res = ProductSpecificationBodyModel(
+                            productId: widget.id,
+                            material: materialController.text,
+                            sizeOrShoeNumber: shoeNumberController.text,
+                            ageOrHowOld: ageController.text,
+                            model: modelController.text,
+                            idealFor: idealController.text,
+                            style: styleController.text,
                           );
-
+                          final specificationservice = SpecificationService(
+                            await createDio(),
+                          );
+                          final response = await specificationservice
+                              .addSpecificationProduct(res);
                           Fluttertoast.showToast(msg: "complete");
+                          log(res.productId.toString());
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
