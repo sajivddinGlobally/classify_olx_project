@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/product/model.addproduct/addProductBodyModel.dart';
+import 'package:shopping_app_olx/product/productSpecification.page.dart';
 import 'package:shopping_app_olx/product/service.addproduct/addproductController.dart';
 import 'package:shopping_app_olx/product/service.addproduct/addproductService.dart';
 import 'package:shopping_app_olx/product/upload.page.dart';
@@ -268,7 +269,7 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                               RegisterBody(
                                 title: "Address",
                                 controller: addressController,
-                                type: TextInputType.number,
+                                type: TextInputType.text,
                               ),
                             ],
                           ),
@@ -495,11 +496,12 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                                       context,
                                       CupertinoPageRoute(
                                         builder:
-                                            (context) => UploadPage(
-                                              productId:
-                                                  addprodut.product.id
-                                                      .toString(),
-                                            ),
+                                            (context) =>
+                                                ProductspecificationPage(
+                                                  productId:
+                                                      addprodut.product.id
+                                                          .toString(),
+                                                ),
                                       ),
                                     );
                                   } catch (e) {

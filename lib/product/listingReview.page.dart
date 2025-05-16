@@ -127,7 +127,7 @@ class _ListingReviewPageState extends ConsumerState<ListingReviewPage> {
                               final review = await ref.read(
                                 reviewController(
                                   ReviewBodyModel(
-                                    productId: "2",
+                                    productId: widget.proId,
                                     buyerId: "4",
                                     sellerId: "3",
                                     rating: 5,
@@ -135,9 +135,7 @@ class _ListingReviewPageState extends ConsumerState<ListingReviewPage> {
                                   ),
                                 ).future,
                               );
-                              Fluttertoast.showToast(
-                                msg: "Review Added: $review",
-                              );
+                              Fluttertoast.showToast(msg: "Review Added:");
                               Navigator.pushReplacement(
                                 context,
                                 CupertinoPageRoute(
