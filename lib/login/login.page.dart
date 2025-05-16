@@ -132,7 +132,9 @@ class _LoginPageState extends State<LoginPage> {
                                 await createDio(),
                               );
                               final response = await loginservice.login(body);
-                              
+                              Fluttertoast.showToast(
+                                msg: "${response.otpForTesting}",
+                              );
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
