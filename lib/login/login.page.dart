@@ -174,10 +174,10 @@ class _LoginPageState extends State<LoginPage> {
                                 await createDio(),
                               );
                               final response = await loginservice.login(body);
-
                               Fluttertoast.showToast(
-                                msg: "${response.otpForTesting}",
+                                msg: "OTP sent to your phone number",
                               );
+
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
@@ -187,7 +187,9 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               );
                               Fluttertoast.showToast(
-                                msg: "OTP sent to your phone number",
+                                msg: "${response.otpForTesting}",
+                                fontSize: 30.sp,
+                                timeInSecForIosWeb: 10,
                               );
                             } on DioException catch (e) {
                               setState(() {
