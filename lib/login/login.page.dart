@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/login/Model/loginBodyModel.dart';
+import 'package:shopping_app_olx/login/Model/loginResMdel.dart';
 import 'package:shopping_app_olx/login/otp.page.dart';
 import 'package:shopping_app_olx/login/service/loginService.dart';
 import 'package:shopping_app_olx/register/register.page.dart';
@@ -131,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                                 await createDio(),
                               );
                               final response = await loginservice.login(body);
-
+                              
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(

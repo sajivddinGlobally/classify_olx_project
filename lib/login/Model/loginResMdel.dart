@@ -85,3 +85,32 @@ class User {
     "updated_at": updatedAt.toIso8601String(),
   };
 }
+// To parse this JSON data, do
+//
+//     final otpmdodel = otpmdodelFromJson(jsonString);
+
+// import 'dart:convert';
+
+Otpmdodel otpmdodelFromJson(String str) => Otpmdodel.fromJson(json.decode(str));
+
+String otpmdodelToJson(Otpmdodel data) => json.encode(data.toJson());
+
+class Otpmdodel {
+    String message;
+    int otpForTesting;
+
+    Otpmdodel({
+        required this.message,
+        required this.otpForTesting,
+    });
+
+    factory Otpmdodel.fromJson(Map<String, dynamic> json) => Otpmdodel(
+        message: json["message"],
+        otpForTesting: json["otp_for_testing"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "message": message,
+        "otp_for_testing": otpForTesting,
+    };
+}

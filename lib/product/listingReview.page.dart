@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +10,8 @@ import 'package:shopping_app_olx/product/model.addproduct/reviewBodyModel.dart';
 import 'package:shopping_app_olx/product/service.addproduct/reviewController.dart';
 
 class ListingReviewPage extends ConsumerStatefulWidget {
-  const ListingReviewPage({super.key});
+  final String proId;
+  const ListingReviewPage({super.key, required this.proId});
 
   @override
   ConsumerState<ListingReviewPage> createState() => _ListingReviewPageState();
@@ -85,11 +85,46 @@ class _ListingReviewPageState extends ConsumerState<ListingReviewPage> {
                         ),
                         child: ElevatedButton(
                           onPressed: () async {
+                            // try {
+                            //   setState(() {
+                            //     isReview = true;
+                            //   });
+                            //   final review = await ref.watch(
+                            //     reviewController(
+                            //       ReviewBodyModel(
+                            //         productId: "2",
+                            //         buyerId: "4",
+                            //         sellerId: "3",
+                            //         rating: 5,
+                            //         comment: "Great experience",
+                            //       ),
+                            //     ),
+                            //   );
+                            //   Navigator.push(
+                            //     context,
+                            //     CupertinoPageRoute(
+                            //       builder:
+                            //           (context) => HomePage(
+                            //             latitude: null,
+                            //             longitude: null,
+                            //             address: '',
+                            //           ),
+                            //     ),
+                            //   );
+                            //   Fluttertoast.showToast(msg: "Review Add $review");
+                            // } catch (e) {
+                            //   setState(() {
+                            //     isReview = false;
+                            //   });
+                            //   Fluttertoast.showToast(msg: "Review Failed");
+                            //   log(e.toString());
+                            // }
+
                             try {
                               setState(() {
                                 isReview = true;
                               });
-                              final review = await ref.watch(
+                              final review = await ref.read(
                                 reviewController(
                                   ReviewBodyModel(
                                     productId: "2",
@@ -98,21 +133,29 @@ class _ListingReviewPageState extends ConsumerState<ListingReviewPage> {
                                     rating: 5,
                                     comment: "Great experience",
                                   ),
-                                ),
+                                ).future,
                               );
-                              Navigator.push(
+                              Fluttertoast.showToast(
+                                msg: "Review Added: $review",
+                              );
+                              Navigator.pushReplacement(
                                 context,
                                 CupertinoPageRoute(
-                                  builder: (context) => HomePage(latitude: null, longitude: null, address: '',),
+                                  builder:
+                                      (context) => HomePage(
+                                        latitude: null,
+                                        longitude: null,
+                                        address: '',
+                                      ),
                                 ),
                               );
-                              Fluttertoast.showToast(msg: "Review Add $review");
                             } catch (e) {
+                              Fluttertoast.showToast(msg: "Review Failed");
+                              log(e.toString());
+                            } finally {
                               setState(() {
                                 isReview = false;
                               });
-                              Fluttertoast.showToast(msg: "Review Failed");
-                              log(e.toString());
                             }
                           },
                           style: ElevatedButton.styleFrom(

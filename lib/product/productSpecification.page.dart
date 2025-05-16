@@ -182,7 +182,10 @@ class _ProductspecificationPageState
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                              builder: (context) => ListingReviewPage(),
+                              builder:
+                                  (context) => ListingReviewPage(
+                                    proId: widget.productId,
+                                  ),
                             ),
                           );
                         } catch (e) {
