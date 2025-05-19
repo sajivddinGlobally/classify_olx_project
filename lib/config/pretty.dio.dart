@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shopping_app_olx/globalkey/navigatorkey.dart';
@@ -37,6 +38,7 @@ Dio createDio() {
       onError: (DioException e, handler) async {
         if (e.response?.statusCode == 401) {
           log("Token expire refreshing");
+          Fluttertoast.showToast(msg: "Token expire please login");
           // ✅ Use the global navigator key
           navigatorKey.currentState?.pushAndRemoveUntil(
             CupertinoPageRoute(builder: (_) => LoginPage()),

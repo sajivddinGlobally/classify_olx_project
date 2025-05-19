@@ -189,7 +189,9 @@ class _LoginPageState extends State<LoginPage> {
                               Fluttertoast.showToast(
                                 msg: "${response.otpForTesting}",
                                 fontSize: 30.sp,
-                                timeInSecForIosWeb: 10,
+                                timeInSecForIosWeb: 30,
+                                gravity: ToastGravity.TOP,
+                                toastLength: Toast.LENGTH_LONG
                               );
                             } on DioException catch (e) {
                               setState(() {
