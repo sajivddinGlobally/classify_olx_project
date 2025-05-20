@@ -25,7 +25,7 @@ class _EditProfileState extends State<EditProfile> {
   final picker = ImagePicker();
 
   Future pickImageFromCamera() async {
-    var status = await Permission.photos.request();
+    var status = await Permission.camera.request();
     if (status.isGranted) {
       final PickedFile = await picker.pickImage(source: ImageSource.camera);
       if (PickedFile != null) {
@@ -39,7 +39,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future pickImageFromGallery() async {
-    var status = await Permission.photos.request();
+    var status = await Permission.camera.request();
     if (status.isGranted) {
       final PickedFile = await picker.pickImage(source: ImageSource.gallery);
       if (PickedFile != null) {
@@ -204,7 +204,8 @@ class _EditProfileState extends State<EditProfile> {
                           final Update = await UpdateController.UpdateProfile(
                             user_id: box.get("id").toString(),
                             full_name: nameController.text,
-                            images: image!, context: context,
+                            images: image!,
+                            context: context,
                           );
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
