@@ -1,124 +1,148 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/home/service/homepageController.dart';
 import 'package:shopping_app_olx/product/productRegister.page.dart';
 
-class CategoryPage extends StatefulWidget {
+class CategoryPage extends ConsumerStatefulWidget {
   const CategoryPage({super.key});
 
   @override
-  State<CategoryPage> createState() => _CategoryPageState();
+  ConsumerState<CategoryPage> createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
+class _CategoryPageState extends ConsumerState<CategoryPage> {
   @override
   Widget build(BuildContext context) {
+    final categoryProvider = ref.watch(allCategoryController);
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xFFECD7FD), Color(0xFFF5F2F7)],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFFECD7FD), Color(0xFFF5F2F7)],
+                ),
               ),
             ),
-          ),
-          Image.asset("assets/bgimage.png"),
-          Positioned(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 60.h),
-                Padding(
-                  padding: EdgeInsets.only(left: 20.w),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 46.w,
-                      height: 46.h,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                      child: Icon(Icons.arrow_back),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 100.h),
-                Center(
+            Image.asset("assets/bgimage.png"),
+            categoryProvider.when(
+              data: (category) {
+                return Positioned(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Choose your category",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 26.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      SizedBox(height: 60.h),
                       Padding(
-                        padding: EdgeInsets.only(left: 44.w, right: 44.w),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          "Select one of the categories to post your ad on, start with selecting category",
-                          style: GoogleFonts.dmSans(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: -1,
+                        padding: EdgeInsets.only(left: 20.w),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            width: 46.w,
+                            height: 46.h,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Icon(Icons.arrow_back),
                           ),
                         ),
                       ),
+                      SizedBox(height: 40.h),
+                      Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Choose your category",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 44.w, right: 44.w),
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                "Select one of the categories to post your ad on, start with selecting category",
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: -1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemCount: category.data.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => ProductRegisterPage(),
+                                ),
+                              );
+                            },
+                            child: CategorBody(
+                              bgColor: Color.fromARGB(255, 137, 26, 255),
+                              image: category.data[index].imageUrl,
+                              //'assets/electronic.png',
+                              txt: category.data[index].title,
+                              // 'Electronic',
+                              txtColor: Color.fromARGB(255, 255, 255, 255),
+                            ),
+                          );
+                        },
+                      ),
+
+                      // CategorBody(
+                      //   bgColor: Colors.white,
+                      //   image: 'assets/clothing.png',
+                      //   txt: 'Clothing',
+                      //   txtColor: Color.fromARGB(255, 97, 91, 104),
+                      // ),
+                      // SizedBox(height: 8.h),
+                      // CategorBody(
+                      //   bgColor: Colors.white,
+                      //   image: 'assets/furniture.png',
+                      //   txt: 'Furniture',
+                      //   txtColor: Color.fromARGB(255, 97, 91, 104),
+                      // ),
+                      // SizedBox(height: 8.h),
+                      // CategorBody(
+                      //   bgColor: Colors.white,
+                      //   image: 'assets/car.png',
+                      //   txt: 'Vehicles',
+                      //   txtColor: Color.fromARGB(255, 97, 91, 104),
+                      // ),
+                      SizedBox(height: 40.h),
                     ],
                   ),
-                ),
-                SizedBox(height: 40.h),
-                CategorBody(
-                  bgColor: Colors.white,
-                  image: 'assets/clothing.png',
-                  txt: 'Clothing',
-                  txtColor: Color.fromARGB(255, 97, 91, 104),
-                ),
-                SizedBox(height: 8.h),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (context) => ProductRegisterPage(),
-                      ),
-                    );
-                  },
-                  child: CategorBody(
-                    bgColor: Color.fromARGB(255, 137, 26, 255),
-                    image: 'assets/electronic.png',
-                    txt: 'Electronic',
-                    txtColor: Color.fromARGB(255, 255, 255, 255),
-                  ),
-                ),
-                SizedBox(height: 8.h),
-                CategorBody(
-                  bgColor: Colors.white,
-                  image: 'assets/furniture.png',
-                  txt: 'Furniture',
-                  txtColor: Color.fromARGB(255, 97, 91, 104),
-                ),
-                SizedBox(height: 8.h),
-                CategorBody(
-                  bgColor: Colors.white,
-                  image: 'assets/car.png',
-                  txt: 'Vehicles',
-                  txtColor: Color.fromARGB(255, 97, 91, 104),
-                ),
-              ],
+                );
+              },
+              error: (error, stackTrace) => Center(child: Text(e.toString())),
+              loading: () => Center(child: CircularProgressIndicator()),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -140,7 +164,7 @@ class CategorBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20.w, right: 20.w),
+      padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h),
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: 120.h,
@@ -152,7 +176,14 @@ class CategorBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(image),
+            SizedBox(
+              width: 50.w,
+              height: 50.h,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.r),
+                child: Image.network(image, fit: BoxFit.cover),
+              ),
+            ),
             Text(
               txt,
               style: GoogleFonts.dmSans(
