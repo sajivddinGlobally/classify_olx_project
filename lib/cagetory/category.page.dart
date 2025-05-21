@@ -16,6 +16,7 @@ class CategoryPage extends ConsumerStatefulWidget {
 }
 
 class _CategoryPageState extends ConsumerState<CategoryPage> {
+  int tab = 0;
   @override
   Widget build(BuildContext context) {
     final categoryProvider = ref.watch(allCategoryController);
@@ -94,6 +95,10 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
+                              setState(() {
+                                tab = index;
+                              });
+
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
@@ -102,12 +107,18 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                               );
                             },
                             child: CategorBody(
-                              bgColor: Color.fromARGB(255, 137, 26, 255),
+                              bgColor:
+                                  tab == index
+                                      ? Color.fromARGB(255, 137, 26, 255)
+                                      : Colors.white,
                               image: category.data[index].imageUrl,
                               //'assets/electronic.png',
                               txt: category.data[index].title,
                               // 'Electronic',
-                              txtColor: Color.fromARGB(255, 255, 255, 255),
+                              txtColor:
+                                  tab == index
+                                      ? Color.fromARGB(255, 255, 255, 255)
+                                      : Colors.black,
                             ),
                           );
                         },
@@ -184,6 +195,7 @@ class CategorBody extends StatelessWidget {
                 child: Image.network(image, fit: BoxFit.cover),
               ),
             ),
+            SizedBox(height: 10.h),
             Text(
               txt,
               style: GoogleFonts.dmSans(
