@@ -855,8 +855,8 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
             itemCount: allproduct.allProducts.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 10.w,
-              mainAxisSpacing: 0.h,
+              crossAxisSpacing: 20.w,
+              mainAxisSpacing: 10.h,
               childAspectRatio: 0.75,
             ),
             itemBuilder: (context, index) {

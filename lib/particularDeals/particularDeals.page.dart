@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class ParticularDealsPage extends ConsumerStatefulWidget {
   const ParticularDealsPage({super.key});
 
@@ -25,7 +24,6 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
               children: [
                 Image.asset(
                   "assets/particular.png",
-
                   width: MediaQuery.of(context).size.width,
                   height: 440.h,
                   fit: BoxFit.cover,
@@ -276,28 +274,28 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
                 ),
               ),
             ),
-            SizedBox(height: 13.h),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.r),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 49.h,
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 137, 26, 255),
-                  borderRadius: BorderRadius.circular(35.45.r),
-                ),
-                child: Center(
-                  child: Text(
-                    "Buy Now",
-                    style: GoogleFonts.dmSans(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // SizedBox(height: 13.h),
+            // Padding(
+            //   padding: EdgeInsets.only(left: 20.w, right: 20.r),
+            //   child: Container(
+            //     width: MediaQuery.of(context).size.width,
+            //     height: 49.h,
+            //     decoration: BoxDecoration(
+            //       color: Color.fromARGB(255, 137, 26, 255),
+            //       borderRadius: BorderRadius.circular(35.45.r),
+            //     ),
+            //     child: Center(
+            //       child: Text(
+            //         "Buy Now",
+            //         style: GoogleFonts.dmSans(
+            //           fontSize: 15.sp,
+            //           fontWeight: FontWeight.w500,
+            //           color: Color.fromARGB(255, 255, 255, 255),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: 40.h),
           ],
         ),
