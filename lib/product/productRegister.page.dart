@@ -8,12 +8,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shopping_app_olx/config/pretty.dio.dart';
-import 'package:shopping_app_olx/product/model.addproduct/addProductBodyModel.dart';
 import 'package:shopping_app_olx/product/productSpecification.page.dart';
 import 'package:shopping_app_olx/product/service.addproduct/addproductController.dart';
-import 'package:shopping_app_olx/product/service.addproduct/addproductService.dart';
-import 'package:shopping_app_olx/product/upload.page.dart';
+
 import 'package:shopping_app_olx/register/register.page.dart';
 
 class ProductRegisterPage extends StatefulWidget {

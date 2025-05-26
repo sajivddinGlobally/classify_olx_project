@@ -5,8 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_app_olx/globalkey/navigatorkey.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
-import 'package:shopping_app_olx/login/login.page.dart';
-import 'package:shopping_app_olx/splash.page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

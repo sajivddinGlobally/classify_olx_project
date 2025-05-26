@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/product/listingReview.page.dart';
 import 'package:shopping_app_olx/product/model.addproduct/specificationBodyModel.dart';
-import 'package:shopping_app_olx/product/service.addproduct/specificationController.dart';
 import 'package:shopping_app_olx/product/service.addproduct/specificationService.dart';
 import 'package:shopping_app_olx/register/register.page.dart';
 

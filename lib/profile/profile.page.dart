@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,9 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_app_olx/edit/editProfile.dart';
-import 'package:shopping_app_olx/globalkey/navigatorkey.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
-import 'package:shopping_app_olx/login/login.page.dart';
 import 'package:shopping_app_olx/plan/plan.page.dart';
 import 'package:shopping_app_olx/profile/service/profileController.dart';
 import 'package:shopping_app_olx/splash.page.dart';

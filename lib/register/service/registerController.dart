@@ -17,7 +17,6 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shopping_app_olx/globalkey/navigatorkey.dart';
 import 'package:shopping_app_olx/login/login.page.dart';

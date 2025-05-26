@@ -2,14 +2,10 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/login/login.page.dart';
-import 'package:shopping_app_olx/register/model/registerBodyModel.dart';
-import 'package:shopping_app_olx/register/model/registerResModel.dart';
 import 'package:shopping_app_olx/register/service/registerController.dart';
-import 'package:shopping_app_olx/register/service/registerService.dart';
+
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
