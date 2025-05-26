@@ -438,8 +438,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                                               context,
                                               CupertinoPageRoute(
                                                 builder:
-                                                    (context) =>
-                                                        ParticularDealsPage(),
+                                                    (
+                                                      context,
+                                                    ) => ParticularDealsPage(
+                                                      id:
+                                                          listing
+                                                              .latestListings[index]
+                                                              .id
+                                                              .toString(),
+                                                    ),
                                               ),
                                             );
                                           },
@@ -863,35 +870,48 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15.r),
-                        child: Image.network(
-                          // "assets/shoes1.png",
-                          // latestList[index]["imageUrl"].toString(),
-                          allproduct.allProducts[index].image,
-                          width: 196.w,
-                          height: 160.h,
-                          fit: BoxFit.cover,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder:
+                              (context) => ParticularDealsPage(
+                                id: allproduct.allProducts[index].id.toString(),
+                              ),
                         ),
-                      ),
-                      Positioned(
-                        right: 15.w,
-                        top: 15.h,
-                        child: Container(
-                          width: 30.w,
-                          height: 30.h,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Center(
-                            child: Icon(Icons.favorite_border, size: 18.sp),
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.r),
+                          child: Image.network(
+                            // "assets/shoes1.png",
+                            // latestList[index]["imageUrl"].toString(),
+                            allproduct.allProducts[index].image,
+                            width: 196.w,
+                            height: 160.h,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                    ],
+                        Positioned(
+                          right: 15.w,
+                          top: 15.h,
+                          child: Container(
+                            width: 30.w,
+                            height: 30.h,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Center(
+                              child: Icon(Icons.favorite_border, size: 18.sp),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 15.h),
                   Container(

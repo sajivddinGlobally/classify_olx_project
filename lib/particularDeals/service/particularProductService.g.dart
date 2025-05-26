@@ -29,7 +29,7 @@ class _ParticularProductService implements ParticularProductService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/api/ProductDetails?id=2',
+            '/api/ProductDetails?id=${id}',
             queryParameters: queryParameters,
             data: _data,
           )

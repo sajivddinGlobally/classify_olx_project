@@ -10,6 +10,6 @@ abstract class ParticularProductService {
   factory ParticularProductService(Dio dio, {String baseUrl}) =
       _ParticularProductService;
 
-  @GET('/api/ProductDetails?id=2')
+  @GET('/api/ProductDetails?id={id}')
   Future<ParticularProductModel> particularProduct(@Path() String id);
 }
