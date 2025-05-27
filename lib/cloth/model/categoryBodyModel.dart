@@ -1,25 +1,27 @@
-// // To parse this JSON data, do
-// //
-// //     final categoryBodyModel = categoryBodyModelFromJson(jsonString);
+// To parse this JSON data, do
+//
+//     final categoryBodyModel = categoryBodyModelFromJson(jsonString);
 
-// import 'dart:convert';
+import 'dart:convert';
 
-// CategoryBodyModel categoryBodyModelFromJson(String str) => CategoryBodyModel.fromJson(json.decode(str));
+CategoryBodyModel categoryBodyModelFromJson(String str) => CategoryBodyModel.fromJson(json.decode(str));
 
-// String categoryBodyModelToJson(CategoryBodyModel data) => json.encode(data.toJson());
+String categoryBodyModelToJson(CategoryBodyModel data) => json.encode(data.toJson());
 
-// class CategoryBodyModel {
-//     String category;
+class CategoryBodyModel {
+   final String category;
 
-//     CategoryBodyModel({
-//         required this.category,
-//     });
+    CategoryBodyModel({
+        required this.category,
+    });
 
-//     factory CategoryBodyModel.fromJson(Map<String, dynamic> json) => CategoryBodyModel(
-//         category: json["category"],
-//     );
+    factory CategoryBodyModel.fromJson(Map<String, dynamic> json) => CategoryBodyModel(
+        category: json["category"],
+    );
 
-//     Map<String, dynamic> toJson() => {
-//         "category": category,
-//     };
-// }
+    Map<String, dynamic> toJson() => {
+        "category": category,
+    };
+}
+
+
