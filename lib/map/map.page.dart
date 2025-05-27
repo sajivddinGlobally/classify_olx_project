@@ -234,17 +234,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                                 Fluttertoast.showToast(
                                   msg: "Location sent successfully!",
                                 );
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder:
-                                        (context) => HomePage(
-                                          latitude: pickedLat,
-                                          longitude: pickedLng,
-                                          address: pickedAddress,
-                                        ),
-                                  ),
-                                );
+                                Navigator.pop(context);
                               })
                               .catchError((e) {
                                 setState(() {

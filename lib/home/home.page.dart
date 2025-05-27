@@ -74,6 +74,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
+
     final categorProvider = ref.watch(allCategoryController);
     final homepageData = ref.watch(homepageController);
     if (homepageData.isLoading) {

@@ -115,46 +115,6 @@ class _LoginPageState extends State<LoginPage> {
                             backgroundColor: Color.fromARGB(255, 137, 26, 255),
                           ),
                           onPressed: () async {
-                            // if (phoneController.text.isEmpty) {
-                            //   Fluttertoast.showToast(
-                            //     msg: "Please enter valid phone number",
-                            //   );
-                            //   return;
-                            // }
-                            // setState(() {
-                            //   islogin = true;
-                            // });
-
-                            // try {
-                            //   final body = LoginBodyModel(
-                            //     phoneNumber: phoneController.text,
-                            //   );
-                            //   final loginservice = LoginService(
-                            //     await createDio(),
-                            //   );
-                            //   final response = await loginservice.login(body);
-                            //   Fluttertoast.showToast(
-                            //     msg: "${response.otpForTesting}",
-                            //   );
-                            //   Navigator.push(
-                            //     context,
-                            //     CupertinoPageRoute(
-                            //       builder:
-                            //           (context) =>
-                            //               OtpPage(phone: phoneController.text),
-                            //     ),
-                            //   );
-                            //   Fluttertoast.showToast(
-                            //     msg: "OTP sent to your phone number",
-                            //   );
-                            // } catch (e) {
-                            //   setState(() {
-                            //     islogin = false;
-                            //   });
-
-                            //   log(e.toString());
-                            //   // Fluttertoast.showToast(msg: "dddd");
-                            // }
                             if (phoneController.text.isEmpty ||
                                 phoneController.text.length != 10) {
                               Fluttertoast.showToast(
@@ -191,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                                 fontSize: 30.sp,
                                 timeInSecForIosWeb: 30,
                                 gravity: ToastGravity.TOP,
-                                toastLength: Toast.LENGTH_LONG
+                                toastLength: Toast.LENGTH_LONG,
                               );
                             } on DioException catch (e) {
                               setState(() {
