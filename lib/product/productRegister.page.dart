@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/product/productSpecification.page.dart';
@@ -424,44 +425,6 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                             padding: EdgeInsets.only(left: 20.w, right: 20.r),
                             child: GestureDetector(
                               onTap: () async {
-                                // setState(() {
-                                //   isAddProduct = true;
-                                // });
-                                // try {
-                                //   final body = AddproductBodyModel(
-                                //     category: categoryController.text,
-                                //     name: productNameController.text,
-                                //     price: priceController.text,
-                                //     contact: numberController.text,
-                                //     pincode: pincodeController.text,
-                                //     description: productDesController.text,
-                                //   );
-                                //   final addproductservice = AddproductService(
-                                //     await createDio(),
-                                //   );
-                                //   final response = await addproductservice
-                                //       .addProduct(body);
-                                //   Fluttertoast.showToast(
-                                //     msg: "Product add successful",
-                                //   );
-                                //   Navigator.push(
-                                //     context,
-                                //     CupertinoPageRoute(
-                                //       builder:
-                                //           (context) => UploadPage(
-                                //             productId:
-                                //                 response.product.id.toString(),
-                                //           ),
-                                //     ),
-                                //   );
-                                // } catch (e) {
-                                //   setState(() {
-                                //     isAddProduct = false;
-                                //   });
-                                //   log(e.toString());
-
-                                //   Fluttertoast.showToast(msg: "Failed");
-                                // }
                                 if (_formKey.currentState!.validate()) {
                                   if (image == null) {
                                     Fluttertoast.showToast(
@@ -473,6 +436,8 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                                     setState(() {
                                       isAddProduct = true;
                                     });
+                                    var box = await Hive.box("data");
+
                                     final addprodut =
                                         await AddproductRegisterController.Addregister(
                                           category: categoryController.text,
@@ -484,6 +449,7 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                                           description:
                                               productDesController.text,
                                           image: image!,
+                                          user_id: '${box.get("id")}',
                                         );
 
                                     Fluttertoast.showToast(

@@ -27,6 +27,7 @@ class AddproductRegisterController {
     required String pincode,
     required String address,
     required String description,
+    required String user_id,
     required File image,
   }) async {
     final Uri url = Uri.parse(
@@ -47,6 +48,7 @@ class AddproductRegisterController {
       "pincode": pincode,
       "address": address,
       "description": description,
+      "user_id" : user_id,
     });
 
     final http.StreamedResponse response = await request.send();

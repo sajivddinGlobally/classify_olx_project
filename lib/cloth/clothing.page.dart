@@ -136,9 +136,9 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FilterBody(name: "Category"),
-                FilterBody(name: "Price"),
-                FilterBody(name: "Recently Posted"),
+                // FilterBody(name: "Category"),
+                // FilterBody(name: "Price"),
+                // FilterBody(name: "Recently Posted"),
               ],
             ),
           ),

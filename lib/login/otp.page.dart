@@ -217,6 +217,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             var box = await Hive.box("data");
                             await box.put("token", response.token.toString());
                             await box.put("id", response.user.id.toString());
+                          
                             await box.put(
                               "fullName",
                               response.user.fullName.toString(),
