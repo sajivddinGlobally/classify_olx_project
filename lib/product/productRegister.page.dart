@@ -437,7 +437,6 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
                                       isAddProduct = true;
                                     });
                                     var box = await Hive.box("data");
-
                                     final addprodut =
                                         await AddproductRegisterController.Addregister(
                                           category: categoryController.text,
