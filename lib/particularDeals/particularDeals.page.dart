@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -23,26 +24,21 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
       body: particularprovider.when(
         data: (particular) {
+          final Map<String, dynamic> decodedJson = json.decode(
+            particular.data.jsonData,
+          );
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Stack(
                   children: [
-                    (particular.data.images.isNotEmpty &&
-                            particular.data.images[0].imageUrl.isNotEmpty)
-                        ? Image.network(
-                          particular.data.images[0].imageUrl,
-                          width: MediaQuery.of(context).size.width,
-                          height: 440.h,
-                          fit: BoxFit.cover,
-                        )
-                        : Image.asset(
-                          "assets/particular.png", // Placeholder image
-                          width: MediaQuery.of(context).size.width,
-                          height: 440.h,
-                          fit: BoxFit.cover,
-                        ),
+                    Image.network(
+                      particular.data.image.toString(),
+                      width: MediaQuery.of(context).size.width,
+                      // height: 300.h,
+                      fit: BoxFit.cover,
+                    ),
                     // Image.network(
                     //   //"assets/particular.png",
                     //   particular.data.images.isNotEmpty
@@ -147,7 +143,8 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
                     children: [
                       Text(
                         //"Nike Air Jorden 55 Medium",
-                        particular.data.name,
+                        //particular.data.jsonData,
+                        decodedJson["description"].toString(),
                         style: GoogleFonts.dmSans(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -156,7 +153,8 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
                       ),
                       Text(
                         //"\$450.00",
-                        particular.data.price.toString(),
+                        // particular.data.price.toString(),
+                        decodedJson['price'].toString(),
                         style: GoogleFonts.dmSans(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w600,
