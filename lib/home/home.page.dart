@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -439,6 +440,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       scrollDirection: Axis.horizontal,
                                       itemCount: listing.latestListings.length,
                                       itemBuilder: (context, index) {
+                                        final product =
+                                            listing.latestListings[index];
+                                        final Map<String, dynamic> jsonDetails =
+                                            jsonDecode(product.jsonData);
                                         return GestureDetector(
                                           onTap: () {
                                             Navigator.push(
@@ -478,7 +483,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                         //dealsList[index]["imageUrl"]
                                                         listing
                                                             .latestListings[index]
-                                                            .image,
+                                                            .image.toString(),
                                                         width: 240.w,
                                                         height: 160.h,
                                                         fit: BoxFit.cover,
@@ -569,9 +574,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   // "Nike Air Jorden 55 Medium",
                                                   // dealsList[index]["title"]
                                                   //     .toString(),
-                                                  listing
-                                                      .latestListings[index]
-                                                      .name,
+                                                  // listing
+                                                  //     .latestListings[index]
+                                                  //     .category,
+                                                  jsonDetails['name'].toString(),
                                                   style: GoogleFonts.dmSans(
                                                     fontSize: 14.sp,
                                                     fontWeight: FontWeight.w500,
@@ -588,11 +594,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   // "\$450.00",
                                                   // dealsList[index]["price"]
                                                   //     .toString(),
-                                                  listing
-                                                      .latestListings[index]
-                                                      .price
-                                                      .toString(),
-
+                                                  jsonDetails['price'].toString(),
                                                   style: GoogleFonts.dmSans(
                                                     fontSize: 18.sp,
                                                     fontWeight: FontWeight.w600,
@@ -874,6 +876,8 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
               childAspectRatio: 0.75,
             ),
             itemBuilder: (context, index) {
+              final data = allproduct.allProducts[index];
+              final Map<String, dynamic> jsonData = jsonDecode(data.jsonData);
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -955,7 +959,8 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
                   Text(
                     // "Nike Air Jorden 55 Medium",
                     // latestList[index]["title"].toString(),
-                    allproduct.allProducts[index].name,
+                    // allproduct.allProducts[index].name,
+                    jsonData['name'].toString(),
                     style: GoogleFonts.dmSans(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -966,7 +971,8 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
                   Text(
                     // "\$450.00",
                     // latestList[index]["price"].toString(),
-                    allproduct.allProducts[index].price.toString(),
+                    //allproduct.allProducts[index].price.toString(),
+                    jsonData['price'].toString(),
                     style: GoogleFonts.dmSans(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,
