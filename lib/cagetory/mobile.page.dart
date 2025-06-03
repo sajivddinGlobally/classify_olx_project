@@ -81,7 +81,7 @@ class _MobilePageState extends State<MobilePage> {
                       },
                       child: PropertyBody(txt: "Mobile Phones"),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -93,7 +93,7 @@ class _MobilePageState extends State<MobilePage> {
                       },
                       child: PropertyBody(txt: "Accessories"),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -105,7 +105,7 @@ class _MobilePageState extends State<MobilePage> {
                       },
                       child: PropertyBody(txt: "Tablets"),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 20.h),
                   ],
                 ),
               ),

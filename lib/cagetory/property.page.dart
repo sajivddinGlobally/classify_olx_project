@@ -81,7 +81,7 @@ class _PropertyPageState extends State<PropertyPage> {
                       },
                       child: PropertyBody(txt: "For Sale: Houses & Apartment"),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -93,7 +93,7 @@ class _PropertyPageState extends State<PropertyPage> {
                       },
                       child: PropertyBody(txt: "For Rent: Houses & Apartment"),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -105,7 +105,7 @@ class _PropertyPageState extends State<PropertyPage> {
                       },
                       child: PropertyBody(txt: "Lands & Plots"),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -117,9 +117,9 @@ class _PropertyPageState extends State<PropertyPage> {
                       },
                       child: PropertyBody(txt: "For Rent : Shops & Offices"),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 20.h),
                     PropertyBody(txt: "For Sale : Shops & Offices"),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -157,6 +157,7 @@ class PropertyBody extends StatelessWidget {
             fontSize: 18.sp,
             fontWeight: FontWeight.w500,
             color: Color(0xFF615B68),
+            letterSpacing: -1,
           ),
         ),
         Divider(color: Colors.black12),
