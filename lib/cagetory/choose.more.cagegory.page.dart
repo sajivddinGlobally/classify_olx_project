@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/cagetory/bike.page.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/job.page.dart';
 import 'package:shopping_app_olx/cagetory/mobile.page.dart';
@@ -133,7 +134,20 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      CategoryBody(image: "assets/motorbike.png", txt: "Bikes"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => BikePage(),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/motorbike.png",
+                          txt: "Bikes",
+                        ),
+                      ),
                       SizedBox(height: 20.h),
                       CategoryBody(
                         image: "assets/applience.png",

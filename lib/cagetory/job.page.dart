@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/cagetory/data.entry.form.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
 
 class JobPage extends StatefulWidget {
@@ -68,7 +69,17 @@ class _JobPageState extends State<JobPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      PropertyBody(txt: "Data entry & Back office"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Data entry & Back office"),
+                      ),
                       SizedBox(height: 20.h),
                       PropertyBody(txt: "Sales & Marketing"),
                       SizedBox(height: 20.h),
