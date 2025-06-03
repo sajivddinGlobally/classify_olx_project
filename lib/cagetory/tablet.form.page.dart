@@ -2,19 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shopping_app_olx/cagetory/accessory.form.page.dart';
-import 'package:shopping_app_olx/cagetory/mobile.form.page.dart';
-import 'package:shopping_app_olx/cagetory/property.page.dart';
-import 'package:shopping_app_olx/cagetory/tablet.form.page.dart';
+import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 
-class MobilePage extends StatefulWidget {
-  const MobilePage({super.key});
+class TabletFormPage extends StatefulWidget {
+  const TabletFormPage({super.key});
 
   @override
-  State<MobilePage> createState() => _MobilePageState();
+  State<TabletFormPage> createState() => _TabletFormPageState();
 }
 
-class _MobilePageState extends State<MobilePage> {
+class _TabletFormPageState extends State<TabletFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,40 +67,39 @@ class _MobilePageState extends State<MobilePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => MobileFormPage(),
-                          ),
-                        );
-                      },
-                      child: PropertyBody(txt: "Mobile Phones"),
-                    ),
                     SizedBox(height: 10.h),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => AccessoryFormPage(),
-                          ),
-                        );
-                      },
-                      child: PropertyBody(txt: "Accessories"),
+                    FormBody(labeltxt: "Type *"),
+                    SizedBox(height: 15.h),
+                    FormBody(
+                      labeltxt: "Ad title*",
+                      helper:
+                          "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                     ),
-                    SizedBox(height: 10.h),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => TabletFormPage(),
-                          ),
-                        );
-                      },
-                      child: PropertyBody(txt: "Tablets"),
+                    SizedBox(height: 15.h),
+                    FormBody(
+                      labeltxt: "Describe what you are selling *",
+                      helper:
+                          "Include condition, features and reason for selling\nRequired Fields",
+                      maxlenghts: 4096,
+                    ),
+                    SizedBox(height: 40.h),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(
+                          MediaQuery.of(context).size.width,
+                          49.h,
+                        ),
+                        backgroundColor: Color.fromARGB(255, 137, 26, 255),
+                      ),
+                      onPressed: () async {},
+                      child: Text(
+                        "Continue",
+                        style: GoogleFonts.dmSans(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     SizedBox(height: 10.h),
                   ],
