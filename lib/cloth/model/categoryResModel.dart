@@ -34,28 +34,20 @@ class CategoryResModel {
 
 class Datum {
     int id;
+    int userId;
     String category;
-    String name;
-    int price;
-    String contact;
-    String pincode;
-    String description;
     String image;
-    String address;
+    String jsonData;
     int status;
     DateTime createdAt;
     DateTime updatedAt;
 
     Datum({
         required this.id,
+        required this.userId,
         required this.category,
-        required this.name,
-        required this.price,
-        required this.contact,
-        required this.pincode,
-        required this.description,
         required this.image,
-        required this.address,
+        required this.jsonData,
         required this.status,
         required this.createdAt,
         required this.updatedAt,
@@ -63,14 +55,10 @@ class Datum {
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
+        userId: json["user_id"],
         category: json["category"],
-        name: json["name"],
-        price: json["price"],
-        contact: json["contact"],
-        pincode: json["pincode"],
-        description: json["description"],
         image: json["image"],
-        address: json["address"],
+        jsonData: json["json_data"],
         status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
@@ -78,14 +66,10 @@ class Datum {
 
     Map<String, dynamic> toJson() => {
         "id": id,
+        "user_id": userId,
         "category": category,
-        "name": name,
-        "price": price,
-        "contact": contact,
-        "pincode": pincode,
-        "description": description,
         "image": image,
-        "address": address,
+        "json_data": jsonData,
         "status": status,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),

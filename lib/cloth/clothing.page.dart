@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -169,6 +170,10 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                     childAspectRatio: 0.75,
                   ),
                   itemBuilder: (context, index) {
+                    final cate = productcategory.data[index];
+                    final Map<String, dynamic> jsonDetails = jsonDecode(
+                      cate.jsonData,
+                    );
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -223,9 +228,9 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                                   color: Color.fromARGB(255, 137, 26, 255),
                                 ),
                                 Text(
-                                  //"Udaipur, rajasthan",
+                                  "Udaipur, rajasthan",
                                   //clothsList[index]["location"].toString(),
-                                  productcategory.data[index].address,
+                                  //productcategory.data[index].address,
                                   style: GoogleFonts.dmSans(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
@@ -240,7 +245,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                         Text(
                           // "Nike Air Jorden 55 Medium",
                           //lothsList[index]["title"].toString(),
-                          productcategory.data[index].name,
+                         // productcategory.data[index].name,
+                         jsonDetails['name'].toString(),
                           style: GoogleFonts.dmSans(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
@@ -251,7 +257,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                         Text(
                           //"\$450.00",
                           //clothsList[index]["price"].toString(),
-                          productcategory.data[index].price.toString(),
+                         // productcategory.data[index].price.toString(),
+                         jsonDetails['price'].toString(),
                           style: GoogleFonts.dmSans(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w600,

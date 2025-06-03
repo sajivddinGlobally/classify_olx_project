@@ -76,8 +76,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       child: Center(
                         child: ClipOval(
                           child: Image.network(
-                            "${data.data.image}" ??
-                                "https://placehold.co/800?text=Hello+World&font=roboto",
+                            // "${data.data.image}" ??
+                            //     "https://placehold.co/800?text=Hello+World&font=roboto",
+                            data.data.image?.isNotEmpty == true
+                                ? data.data.image!
+                                : "https://placehold.co/400",
                             width: 126.w,
                             height: 126.h,
                             fit: BoxFit.cover,

@@ -144,7 +144,7 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
                       Text(
                         //"Nike Air Jorden 55 Medium",
                         //particular.data.jsonData,
-                        decodedJson["description"].toString(),
+                        decodedJson["name"].toString(),
                         style: GoogleFonts.dmSans(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -161,10 +161,27 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
                           color: Color.fromARGB(255, 137, 26, 255),
                         ),
                       ),
+                      SizedBox(height: 20.h),
+                      Text(
+                        "Product Description ",
+                        style: GoogleFonts.dmSans(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 36, 33, 38),
+                          letterSpacing: -1.5,
+                        ),
+                      ),
+                      Text(
+                        decodedJson["description"].toString(),
+                        style: GoogleFonts.dmSans(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 97, 91, 104),
+                        ),
+                      ),
                       SizedBox(height: 30.h),
                       Text(
-                        // "Product Specification ",
-                        particular.data.category,
+                        "Product Specification ",
                         style: GoogleFonts.dmSans(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w600,
