@@ -12,17 +12,15 @@ class ChooseCategoryPage extends StatefulWidget {
 }
 
 class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
-  late final List<_CategoryItem> categories;
+  List<_CategoryItem> get categories => _getCategories();
 
-  @override
-  void initState() {
-    super.initState();
-    categories = [
+  List<_CategoryItem> _getCategories() {
+    return [
       _CategoryItem('Cars', Icons.directions_car_filled_outlined, () {}),
       _CategoryItem('Properties', Icons.home_outlined, () {}),
       _CategoryItem('Mobiles', Icons.phone_android, () {}),
       _CategoryItem('Jobs', Icons.work_outline, () {}),
-      _CategoryItem('Bike', Icons.motorcycle_sharp, () {}),
+      _CategoryItem('Bikes', Icons.motorcycle_sharp, () {}),
       _CategoryItem('Electronics & Appliances', Icons.tv, () {}),
       _CategoryItem(
         'Commercial Vehicles & Spares',
