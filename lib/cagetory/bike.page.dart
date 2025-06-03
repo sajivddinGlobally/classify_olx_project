@@ -53,7 +53,7 @@ class _BikePageState extends State<BikePage> {
               SizedBox(height: 10.h),
               Center(
                 child: Text(
-                  "Mobile",
+                  "Bike",
                   style: GoogleFonts.dmSans(
                     fontSize: 25.sp,
                     fontWeight: FontWeight.w600,
