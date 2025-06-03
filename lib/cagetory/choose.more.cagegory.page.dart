@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/mobile.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
 
 class ChooseMoreCagegoryPage extends StatefulWidget {
@@ -103,7 +104,20 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      CategoryBody(image: "assets/phone.png", txt: "Mobiles"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => MobilePage(),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/phone.png",
+                          txt: "Mobiles",
+                        ),
+                      ),
                       SizedBox(height: 20.h),
                       CategoryBody(image: "assets/jobs.png", txt: "Jobs"),
                       SizedBox(height: 20.h),

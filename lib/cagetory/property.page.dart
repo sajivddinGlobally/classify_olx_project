@@ -2,6 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/cagetory/guesthouse.form.page.dart';
+import 'package:shopping_app_olx/cagetory/land.and.plot.form.page.dart';
+import 'package:shopping_app_olx/cagetory/rent.property.form.page.dart';
+import 'package:shopping_app_olx/cagetory/sale.property.form.page.dart';
+import 'package:shopping_app_olx/cagetory/shopsoffice.form.page.dart';
 
 class PropertyPage extends StatefulWidget {
   const PropertyPage({super.key});
@@ -60,22 +65,72 @@ class _PropertyPageState extends State<PropertyPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 40.h),
               Padding(
                 padding: EdgeInsets.only(left: 25.w, right: 25.w),
                 child: Column(
                   children: [
-                    PropertyBody(txt: "For Sale: Houses & Apartment"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => SalePropertyFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "For Sale: Houses & Apartment"),
+                    ),
                     SizedBox(height: 10.h),
-                    PropertyBody(txt: "For Rent: Houses & Apartment"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => RentPropertyFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "For Rent: Houses & Apartment"),
+                    ),
                     SizedBox(height: 10.h),
-                    PropertyBody(txt: "Lands & Plots"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => LandAndPlotFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Lands & Plots"),
+                    ),
                     SizedBox(height: 10.h),
-                    PropertyBody(txt: "For Rent : Shops & Offices"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ShopsOfficeFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "For Rent : Shops & Offices"),
+                    ),
                     SizedBox(height: 10.h),
                     PropertyBody(txt: "For Sale : Shops & Offices"),
                     SizedBox(height: 10.h),
-                    PropertyBody(txt: "PG & Guest Houses"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => GuesthouseFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "PG & Guest Houses"),
+                    ),
                   ],
                 ),
               ),

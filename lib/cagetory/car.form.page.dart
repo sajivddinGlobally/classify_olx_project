@@ -72,15 +72,15 @@ class _CarFormPageState extends State<CarFormPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FormField(labeltxt: "Car*"),
+                        FormBody(labeltxt: "Car*"),
                         SizedBox(height: 10.h),
-                        FormField(
+                        FormBody(
                           labeltxt: 'Year*',
                           helper: "Year has a minimum value of 1990.",
                           type: TextInputType.number,
                         ),
                         SizedBox(height: 10.h),
-                        FormField(labeltxt: 'Fuel*'),
+                        FormBody(labeltxt: 'Fuel*'),
                         SizedBox(height: 15.h),
                         Text(
                           "Transmission",
@@ -138,18 +138,18 @@ class _CarFormPageState extends State<CarFormPage> {
                           ],
                         ),
                         SizedBox(height: 10.h),
-                        FormField(labeltxt: 'KM driven *', maxlenghts: 6),
+                        FormBody(labeltxt: 'KM driven *', maxlenghts: 6),
                         SizedBox(height: 4.h),
-                        FormField(
+                        FormBody(
                           labeltxt: "No.of Owners*",
                           type: TextInputType.number,
                           maxlenghts: 10,
                           isCounter: '',
                         ),
                         SizedBox(height: 10.h),
-                        FormField(labeltxt: "Ad title *"),
+                        FormBody(labeltxt: "Ad title *"),
                         SizedBox(height: 10.h),
-                        FormField(
+                        FormBody(
                           labeltxt: "Describe what you are selling *",
                           helper:
                               'Include condition, features and reason for selling\nRequired Fields',
@@ -188,13 +188,13 @@ class _CarFormPageState extends State<CarFormPage> {
   }
 }
 
-class FormField extends StatelessWidget {
+class FormBody extends StatelessWidget {
   final String labeltxt;
   final String? helper;
   final int? maxlenghts;
   final TextInputType? type;
   final String? isCounter;
-  const FormField({
+  const FormBody({
     super.key,
     required this.labeltxt,
     this.helper,
@@ -220,6 +220,12 @@ class FormField extends StatelessWidget {
               color: Color(0xFF615B68),
             ),
             labelText: labeltxt,
+            labelStyle: GoogleFonts.dmSans(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF615B68),
+              letterSpacing: -1,
+            ),
             helperText: helper,
             helperStyle: GoogleFonts.dmSans(
               fontSize: 12.sp,
