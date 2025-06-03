@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/property.page.dart';
 
 class ChooseMoreCagegoryPage extends StatefulWidget {
   const ChooseMoreCagegoryPage({super.key});
@@ -71,54 +73,64 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CategoryBody(image: "assets/carses.png", txt: "Cars"),
-                      SizedBox(height: 20.h),
-                      CategoryBody(
-                        image: "assets/property.png",
-                        txt: "Properties",
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => CarFormPage(),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/carses.png",
+                          txt: "Cars",
+                        ),
                       ),
                       SizedBox(height: 20.h),
-                      CategoryBody(
-                        image: "assets/phone.png",
-                        txt: "Mobiles",
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => PropertyPage(),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/property.png",
+                          txt: "Properties",
+                        ),
                       ),
                       SizedBox(height: 20.h),
-                      CategoryBody(
-                        image: "assets/jobs.png",
-                        txt: "Jobs",
-                      ),
+                      CategoryBody(image: "assets/phone.png", txt: "Mobiles"),
                       SizedBox(height: 20.h),
-                      CategoryBody(
-                        image: "assets/motorbike.png",
-                        txt: "Bikes",
-                      ),
+                      CategoryBody(image: "assets/jobs.png", txt: "Jobs"),
+                      SizedBox(height: 20.h),
+                      CategoryBody(image: "assets/motorbike.png", txt: "Bikes"),
                       SizedBox(height: 20.h),
                       CategoryBody(
                         image: "assets/applience.png",
                         txt: "Electronics & Appliances",
                       ),
                       SizedBox(height: 20.h),
-                       CategoryBody(
+                      CategoryBody(
                         image: "assets/spears.png",
                         txt: "Commercial Vehicles & Spares",
                       ),
                       SizedBox(height: 20.h),
-                       CategoryBody(
+                      CategoryBody(
                         image: "assets/furniture.png",
                         txt: "Furniture",
                       ),
                       SizedBox(height: 20.h),
-                       CategoryBody(
-                        image: "assets/fashion.png",
-                        txt: "Fashion",
-                      ),
+                      CategoryBody(image: "assets/fashion.png", txt: "Fashion"),
                       SizedBox(height: 20.h),
-                       CategoryBody(
+                      CategoryBody(
                         image: "assets/support.png",
                         txt: "Books, Sports & Hobbies",
                       ),
                       SizedBox(height: 20.h),
-                      
                     ],
                   ),
                 ),
