@@ -120,9 +120,9 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             OtpPinFieldDecoration.roundedPinBoxDecoration,
                         maxLength: 6,
                         onChange: (value) {
-                          // setState(() {
-                          //   otp = value;
-                          // });
+                          setState(() {
+                            otp = value;
+                          });
                         },
                         onSubmit: (value) async {
                           final otpBody = OtpBodyModel(

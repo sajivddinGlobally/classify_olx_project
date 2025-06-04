@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/cagetory/bicycle.form.page.dart';
+import 'package:shopping_app_olx/cagetory/motorcycle.form.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
+import 'package:shopping_app_olx/cagetory/scotor.form.page.dart';
+import 'package:shopping_app_olx/cagetory/spare.parts.form.page.dart';
 
 class BikePage extends StatefulWidget {
   const BikePage({super.key});
@@ -67,13 +71,53 @@ class _BikePageState extends State<BikePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PropertyBody(txt: "Motorcycles"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => MotorcycleFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Motorcycles"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Scooters"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ScotorFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Scooters"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Spare Parts"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => SparePartsFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Spare Parts"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Bicycles"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => BicycleFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Bicycles"),
+                    ),
                     SizedBox(height: 20.h),
                   ],
                 ),
