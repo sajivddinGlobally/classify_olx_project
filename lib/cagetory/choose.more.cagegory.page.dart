@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/bike.page.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/commerical.page.dart';
+import 'package:shopping_app_olx/cagetory/elctronics.page.dart';
 import 'package:shopping_app_olx/cagetory/job.page.dart';
 import 'package:shopping_app_olx/cagetory/mobile.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
@@ -149,14 +151,34 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      CategoryBody(
-                        image: "assets/applience.png",
-                        txt: "Electronics & Appliances",
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => ElctronicsPage(),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/applience.png",
+                          txt: "Electronics & Appliances",
+                        ),
                       ),
                       SizedBox(height: 20.h),
-                      CategoryBody(
-                        image: "assets/spears.png",
-                        txt: "Commercial Vehicles & Spares",
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => CommericalPage(),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/spears.png",
+                          txt: "Commercial Vehicles & Spares",
+                        ),
                       ),
                       SizedBox(height: 20.h),
                       CategoryBody(
