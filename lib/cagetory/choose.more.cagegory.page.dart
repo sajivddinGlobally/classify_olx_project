@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/bike.page.dart';
+import 'package:shopping_app_olx/cagetory/books.page.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/commerical.page.dart';
 import 'package:shopping_app_olx/cagetory/elctronics.page.dart';
+import 'package:shopping_app_olx/cagetory/fashion.page.dart';
+import 'package:shopping_app_olx/cagetory/furniture.page.dart';
 import 'package:shopping_app_olx/cagetory/job.page.dart';
 import 'package:shopping_app_olx/cagetory/mobile.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
@@ -181,16 +184,49 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      CategoryBody(
-                        image: "assets/furniture.png",
-                        txt: "Furniture",
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => FurniturePage(),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/furniture.png",
+                          txt: "Furniture",
+                        ),
                       ),
                       SizedBox(height: 20.h),
-                      CategoryBody(image: "assets/fashion.png", txt: "Fashion"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => FashionPage(),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/fashion.png",
+                          txt: "Fashion",
+                        ),
+                      ),
                       SizedBox(height: 20.h),
-                      CategoryBody(
-                        image: "assets/support.png",
-                        txt: "Books, Sports & Hobbies",
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => BooksPage(),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/support.png",
+                          txt: "Books, Sports & Hobbies",
+                        ),
                       ),
                       SizedBox(height: 20.h),
                     ],
