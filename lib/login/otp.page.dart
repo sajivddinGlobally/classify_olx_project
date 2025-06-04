@@ -106,74 +106,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             ),
                           ),
                         ],
-                      ),
-
-                      // SizedBox(height: 20.h),
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                      //   child: Otpify(
-                      //     padding: EdgeInsets.zero,
-                      //     focusedBorderColor: Color(0xFF891AFF),
-                      //     fields: 6,
-                      //     fieldColor: Colors.white,
-                      //     width: 60.w,
-                      //     height: 60.h,
-                      //     borderRadius: BorderRadius.circular(30.r),
-                      //     borderColor: Colors.white,
-                      //     resendSecond: 10,
-                      //     showResendButton: false,
-                      //     fieldTextStyle: TextStyle(
-                      //       fontSize: 25.sp,
-                      //       fontWeight: FontWeight.w600,
-                      //     ),
-                      //     onCompleted: (value) async {
-                      //       final otpBody = OtpBodyModel(
-                      //         phoneNumber: widget.phone,
-                      //         otp: value,
-                      //       );
-                      //       try {
-                      //         final response = await ref.watch(
-                      //           otpProvider(otpBody).future,
-                      //         );
-                      //         Fluttertoast.showToast(msg: "Login Successful");
-                      //         Navigator.pushAndRemoveUntil(
-                      //           context,
-                      //           CupertinoPageRoute(
-                      //             builder: (context) => HomePage(),
-                      //           ),
-                      //           (route) => false,
-                      //         );
-                      //       } catch (e) {
-                      //         log("otp failed ${e.toString()}");
-                      //         Fluttertoast.showToast(msg: "Invalid OTP");
-                      //       }
-                      //     },
-                      //   ),
-                      // ),
-
-                      // // SizedBox(height: 50.h),
-                      // Row(
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     Text(
-                      //       "Edit your number?",
-                      //       style: GoogleFonts.dmSans(
-                      //         fontSize: 16.sp,
-                      //         fontWeight: FontWeight.w500,
-                      //         color: Color(0xFF615B68),
-                      //       ),
-                      //     ),
-                      //     Text(
-                      //       " Edit Number",
-                      //       style: GoogleFonts.dmSans(
-                      //         fontSize: 16.sp,
-                      //         fontWeight: FontWeight.w500,
-                      //         color: Color(0xFF891AFF),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
+                      ),                  
                       SizedBox(height: 30.h),
                       OtpPinField(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -187,19 +120,9 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             OtpPinFieldDecoration.roundedPinBoxDecoration,
                         maxLength: 6,
                         onChange: (value) {
-                          setState(() {
-                            otp = value;
-                          });
-                          // if (value.length == 6) {
-                          //   Fluttertoast.showToast(
-                          //     msg: "Entered OTP is: $value",
-                          //     toastLength: Toast.LENGTH_SHORT,
-                          //     gravity: ToastGravity.BOTTOM,
-                          //     backgroundColor: Colors.black87,
-                          //     textColor: Colors.white,
-                          //     fontSize: 16.0,
-                          //   );
-                          // }
+                          // setState(() {
+                          //   otp = value;
+                          // });
                         },
                         onSubmit: (value) async {
                           final otpBody = OtpBodyModel(
@@ -217,7 +140,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             var box = await Hive.box("data");
                             await box.put("token", response.token.toString());
                             await box.put("id", response.user.id.toString());
-                          
+
                             await box.put(
                               "fullName",
                               response.user.fullName.toString(),
@@ -249,6 +172,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             );
                           } catch (e) {
                             log("otp failed ${e.toString()}");
+                          
                             Fluttertoast.showToast(msg: "Invalid OTP");
                           }
                         },

@@ -38,6 +38,7 @@ Dio createDio() {
       onError: (DioException e, handler) async {
         if (e.response?.statusCode == 401) {
           log("Token expire refreshing");
+          //log(e.response?.data['message']);
           Fluttertoast.showToast(msg: "Token expire please login");
           // ✅ Use the global navigator key
           navigatorKey.currentState?.pushAndRemoveUntil(
