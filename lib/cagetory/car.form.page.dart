@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
 
 class CarFormPage extends StatefulWidget {
   const CarFormPage({super.key});
@@ -164,7 +165,14 @@ class _CarFormPageState extends State<CarFormPage> {
                             ),
                             backgroundColor: Color.fromARGB(255, 137, 26, 255),
                           ),
-                          onPressed: () async {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => NewPlanPage(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "Continue",
                             style: GoogleFonts.dmSans(
