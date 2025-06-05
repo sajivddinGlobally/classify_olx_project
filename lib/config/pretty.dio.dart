@@ -37,7 +37,8 @@ Dio createDio() {
       },
       onError: (DioException e, handler) async {
         if (e.response!.requestOptions.path.contains("/api/auth/verifyOtp")) {  // ye code sirf agar wrong otp dalne par navigat nhi hoga 
-          log("OTP verification failed - Invalid OTP");   
+          log("OTP verification failed - Invalid OTP"); 
+            
           handler.next(e); // Just forward the error, no navigation
           return;
         }

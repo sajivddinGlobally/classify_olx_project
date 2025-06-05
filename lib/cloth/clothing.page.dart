@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,8 +10,7 @@ import 'package:shopping_app_olx/cloth/model/categoryBodyModel.dart';
 import 'package:shopping_app_olx/cloth/service/categoryController.dart';
 
 class ClothingPage extends ConsumerStatefulWidget {
-  final String txt;
-  const ClothingPage({super.key, required this.txt});
+  const ClothingPage({super.key});
 
   @override
   ConsumerState<ClothingPage> createState() => _ClothingPageState();
@@ -81,8 +81,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
   ];
   @override
   Widget build(BuildContext context) {
-    final categoryProvider = ref.watch(
-      categoryController(CategoryBodyModel(category: widget.txt)),
+    final dataProvider = ref.watch(
+      categoryController(CategoryBodyModel(category: "Electronics")),
     );
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
@@ -144,25 +144,15 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
             ),
           ),
           SizedBox(height: 20.h),
-          categoryProvider.when(
-            data: (productcategory) {
-              if (productcategory.data.isEmpty) {
-                return Expanded(
-                  child: Center(
-                    child: Text(
-                      "Data is empty",
-                      style: TextStyle(fontSize: 18, color: Colors.grey),
-                    ),
-                  ),
-                );
-              }
+          dataProvider.when(
+            data: (data) {
               return Padding(
                 padding: EdgeInsets.only(left: 20.w, right: 20.w),
                 child: GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
-                  itemCount: productcategory.data.length,
+                  itemCount: data.data.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 20.w,
@@ -170,7 +160,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                     childAspectRatio: 0.75,
                   ),
                   itemBuilder: (context, index) {
-                    final cate = productcategory.data[index];
+                    final cate = data.data[index];
                     final Map<String, dynamic> jsonDetails = jsonDecode(
                       cate.jsonData,
                     );
@@ -184,7 +174,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                               child: Image.network(
                                 // "assets/shoes1.png",
                                 //clothsList[index]["imageUrl"].toString(),
-                                productcategory.data[index].image,
+                                //productcategory.data[index].image,
+                                data.data[index].image,
                                 width: 196.w,
                                 height: 160.h,
                                 fit: BoxFit.cover,
@@ -244,9 +235,9 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                         SizedBox(height: 8.h),
                         Text(
                           // "Nike Air Jorden 55 Medium",
-                          //lothsList[index]["title"].toString(),
-                         // productcategory.data[index].name,
-                         jsonDetails['name'].toString(),
+                          //clothsList[index]["title"].toString(),
+                          // productcategory.data[index].name,
+                          jsonDetails['name'].toString(),
                           style: GoogleFonts.dmSans(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
@@ -257,8 +248,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                         Text(
                           //"\$450.00",
                           //clothsList[index]["price"].toString(),
-                         // productcategory.data[index].price.toString(),
-                         jsonDetails['price'].toString(),
+                          // productcategory.data[index].price.toString(),
+                          jsonDetails['price'].toString(),
                           style: GoogleFonts.dmSans(
                             fontSize: 18.sp,
                             fontWeight: FontWeight.w600,
@@ -271,7 +262,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                 ),
               );
             },
-            error: (error, stackTrace) => Center(child: Text(error.toString())),
+            error: (error, stackTrace) => Center(child: Text(e.toString())),
             loading: () => Center(child: CircularProgressIndicator()),
           ),
         ],

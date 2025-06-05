@@ -106,7 +106,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             ),
                           ),
                         ],
-                      ),                  
+                      ),
                       SizedBox(height: 30.h),
                       OtpPinField(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -172,7 +172,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             );
                           } catch (e) {
                             log("otp failed ${e.toString()}");
-                          
+
                             Fluttertoast.showToast(msg: "Invalid OTP");
                           }
                         },

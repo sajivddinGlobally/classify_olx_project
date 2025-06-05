@@ -169,7 +169,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                           //color: Colors.yellow,
                                           child: Text(
                                             // "Jaipur, rajasthan",
-                                            "${widget.address ?? 'Jaipur rajsthan'}",
+                                            widget.address?? "Jaipur rajsthan",
                                             overflow: TextOverflow.ellipsis,
                                             style: GoogleFonts.dmSans(
                                               fontSize: 16.sp,
@@ -282,14 +282,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   context,
                                                   CupertinoPageRoute(
                                                     builder:
-                                                        (
-                                                          context,
-                                                        ) => ClothingPage(
-                                                          txt:
-                                                              category
-                                                                  .data[index]
-                                                                  .title,
-                                                        ),
+                                                        (context) =>
+                                                            ClothingPage(),
                                                   ),
                                                 );
                                               },
@@ -483,7 +477,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                         //dealsList[index]["imageUrl"]
                                                         listing
                                                             .latestListings[index]
-                                                            .image.toString(),
+                                                            .image
+                                                            .toString(),
                                                         width: 240.w,
                                                         height: 160.h,
                                                         fit: BoxFit.cover,
@@ -577,7 +572,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   // listing
                                                   //     .latestListings[index]
                                                   //     .category,
-                                                  jsonDetails['name'].toString(),
+                                                  jsonDetails['name']
+                                                      .toString(),
                                                   style: GoogleFonts.dmSans(
                                                     fontSize: 14.sp,
                                                     fontWeight: FontWeight.w500,
@@ -594,7 +590,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   // "\$450.00",
                                                   // dealsList[index]["price"]
                                                   //     .toString(),
-                                                  jsonDetails['price'].toString(),
+                                                  jsonDetails['price']
+                                                      .toString(),
                                                   style: GoogleFonts.dmSans(
                                                     fontSize: 18.sp,
                                                     fontWeight: FontWeight.w600,

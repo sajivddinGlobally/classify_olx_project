@@ -5,7 +5,7 @@ import 'package:shopping_app_olx/home/model/homepageModel.dart';
 
 part 'homepage.service.g.dart';
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'http://classified.globallywebsolutions.com',parser: Parser.FlutterCompute)
 abstract class HomePageService {
   factory HomePageService(Dio dio, {String baseUrl}) = _HomePageService;
 
@@ -15,3 +15,5 @@ abstract class HomePageService {
   @GET('/api/categories')
   Future<AllCategoryModel> allCategory();
 }
+ /// parser: parser.flutterComput  ise response fast call hogi
+ /// baseUrl : "http://classified.globallywebsolutions.com", parser:parser.flutterComput

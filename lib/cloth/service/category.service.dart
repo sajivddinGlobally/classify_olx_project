@@ -10,5 +10,5 @@ abstract class CategoryService {
   factory CategoryService(Dio dio, {String baseUrl}) = _CategoryService;
 
   @POST("/api/category-by-products")
-  Future<CategoryResModel> fetchCategory(@Body() CategoryBodyModel body);
+  Future<CategoryResModel> fetchCategory(@Path() CategoryBodyModel body);
 }
