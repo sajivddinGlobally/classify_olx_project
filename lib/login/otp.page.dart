@@ -7,7 +7,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
-
 import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/login/Model/otpBodyModel.dart';
 import 'package:shopping_app_olx/login/controller/otpController.dart';

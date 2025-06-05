@@ -5,9 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/choose.category.page.dart';
-import 'package:shopping_app_olx/cagetory/choose.more.cagegory.page.dart';
+
 import 'package:shopping_app_olx/home/service/homepageController.dart';
-import 'package:shopping_app_olx/product/productRegister.page.dart';
+
 
 class CategoryPage extends ConsumerStatefulWidget {
   const CategoryPage({super.key});
