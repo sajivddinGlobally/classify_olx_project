@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:riverpod/riverpod.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/map/model/locationBodyModel.dart';
@@ -32,7 +34,8 @@ final locationProvider = FutureProvider<String>((ref) async {
   if (placemarks.isNotEmpty) {
     final place = placemarks.first;
     // return "${place.locality}, ${place.administrativeArea}";
-    return "${place.name} , ${place.locality}, ${place.administrativeArea} , ${place.country}, ${place.street} ";
+    log(place.street.toString());
+    return "${place.name}, ${place.locality}, ${place.administrativeArea} , ${place.country}";
   } else {
     return "Location not found";
   }
