@@ -261,7 +261,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                 ),
               );
             },
-            error: (error, stackTrace) => Center(child: Text(e.toString())),
+            error: (error, stackTrace) => Center(child: Text(error.toString())),
             loading: () => Center(child: CircularProgressIndicator()),
           ),
         ],

@@ -9,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
-
 final locationController =
     FutureProvider.family<LocationResModel, LocationBodyModel>((
       ref,
@@ -18,8 +17,7 @@ final locationController =
       final locationservice = LocationService(await createDio());
       return locationservice.fetchLocation(body);
     });
-//////////////////////////////////   
-
+//////////////////////////////////
 
 final locationProvider = FutureProvider<String>((ref) async {
   Position position = await Geolocator.getCurrentPosition(
@@ -33,7 +31,8 @@ final locationProvider = FutureProvider<String>((ref) async {
 
   if (placemarks.isNotEmpty) {
     final place = placemarks.first;
-    return "${place.locality}, ${place.administrativeArea}";
+    // return "${place.locality}, ${place.administrativeArea}";
+    return "${place.name} , ${place.locality}, ${place.administrativeArea} , ${place.country}";
   } else {
     return "Location not found";
   }
