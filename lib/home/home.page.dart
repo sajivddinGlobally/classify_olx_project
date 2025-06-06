@@ -13,19 +13,13 @@ import 'package:shopping_app_olx/cloth/clothing.page.dart';
 import 'package:shopping_app_olx/home/service/homepageController.dart';
 import 'package:shopping_app_olx/listing/listing.page.dart';
 import 'package:shopping_app_olx/map/map.page.dart';
+import 'package:shopping_app_olx/map/model/locationBodyModel.dart';
+import 'package:shopping_app_olx/map/service/locationController.dart';
 import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 import 'package:shopping_app_olx/profile/profile.page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
-  final double? latitude;
-  final double? longitude;
-  final String? address;
-  const HomePage({
-    super.key,
-    required this.latitude,
-    required this.longitude,
-    required this.address,
-  });
+  const HomePage({super.key});
 
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
@@ -78,6 +72,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     final categorProvider = ref.watch(allCategoryController);
     final homepageData = ref.watch(homepageController);
+
+    final locationAsyncValue = ref.watch(locationProvider);
+
     if (homepageData.isLoading) {
       return Scaffold(body: Center(child: CircularProgressIndicator()));
     }
@@ -167,20 +164,45 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         SizedBox(
                                           width: 220.w,
                                           //color: Colors.yellow,
-                                          child: Text(
-                                            // "Jaipur, rajasthan",
-                                            widget.address?? "Jaipur rajsthan",
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.dmSans(
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color.fromARGB(
-                                                255,
-                                                137,
-                                                26,
-                                                255,
-                                              ),
-                                            ),
+                                          // child: Text(
+                                          //   // "Jaipur, rajasthan",
+                                          //   widget.address ?? "Jaipur rajsthan",
+                                          //   overflow: TextOverflow.ellipsis,
+                                          //   style: GoogleFonts.dmSans(
+                                          //     fontSize: 16.sp,
+                                          //     fontWeight: FontWeight.w500,
+                                          //     color: Color.fromARGB(
+                                          //       255,
+                                          //       137,
+                                          //       26,
+                                          //       255,
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                          child: locationAsyncValue.when(
+                                            data:
+                                                (location) => Text(
+                                                  location,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: GoogleFonts.dmSans(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      137,
+                                                      26,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
+                                            loading:
+                                                () =>
+                                                    const CircularProgressIndicator(),
+                                            error:
+                                                (err, stack) => Text(
+                                                  "Location unavailable",
+                                                ),
                                           ),
                                         ),
                                       ],

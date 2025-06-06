@@ -139,12 +139,7 @@ class _ListingReviewPageState extends ConsumerState<ListingReviewPage> {
                               Navigator.pushReplacement(
                                 context,
                                 CupertinoPageRoute(
-                                  builder:
-                                      (context) => HomePage(
-                                        latitude: null,
-                                        longitude: null,
-                                        address: '',
-                                      ),
+                                  builder: (context) => HomePage(),
                                 ),
                               );
                             } catch (e) {

@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/login/Model/loginBodyModel.dart';
-
 import 'package:shopping_app_olx/login/otp.page.dart';
 import 'package:shopping_app_olx/login/service/loginService.dart';
 import 'package:shopping_app_olx/register/register.page.dart';

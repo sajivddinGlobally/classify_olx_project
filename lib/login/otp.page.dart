@@ -11,7 +11,6 @@ import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/login/Model/otpBodyModel.dart';
 import 'package:shopping_app_olx/login/controller/otpController.dart';
 
-
 class OtpPage extends ConsumerStatefulWidget {
   final String phone;
   const OtpPage({super.key, required this.phone});
@@ -160,12 +159,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             Navigator.pushAndRemoveUntil(
                               context,
                               CupertinoPageRoute(
-                                builder:
-                                    (context) => HomePage(
-                                      latitude: null,
-                                      longitude: null,
-                                      address: '',
-                                    ),
+                                builder: (context) => HomePage(),
                               ),
                               (route) => false,
                             );
