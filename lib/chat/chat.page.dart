@@ -25,19 +25,19 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             Row(
               children: [
                 SizedBox(width: 20.w),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    width: 46.w,
-                    height: 46.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Center(child: Icon(Icons.arrow_back)),
-                  ),
-                ),
-                SizedBox(width: 100.w),
+                // GestureDetector(
+                //   onTap: () {},
+                //   child: Container(
+                //     width: 46.w,
+                //     height: 46.h,
+                //     decoration: BoxDecoration(
+                //       shape: BoxShape.circle,
+                //       color: Colors.white,
+                //     ),
+                //     child: Center(child: Icon(Icons.arrow_back)),
+                //   ),
+                // ),
+                // SizedBox(width: 100.w),
                 Text(
                   "Message",
                   style: GoogleFonts.dmSans(
@@ -61,7 +61,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                       horizontal: 13.w,
                     ),
                     prefixIcon: Icon(Icons.search, size: 20.sp),
-
                     filled: true,
                     fillColor: Colors.white,
                     enabledBorder: UnderlineInputBorder(

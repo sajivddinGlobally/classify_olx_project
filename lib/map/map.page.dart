@@ -10,7 +10,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/map/model/locationBodyModel.dart';
 import 'package:shopping_app_olx/map/service/locationController.dart';
 

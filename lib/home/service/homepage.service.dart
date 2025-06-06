@@ -5,7 +5,7 @@ import 'package:shopping_app_olx/home/model/homepageModel.dart';
 
 part 'homepage.service.g.dart';
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com',parser: Parser.FlutterCompute)
+@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
 abstract class HomePageService {
   factory HomePageService(Dio dio, {String baseUrl}) = _HomePageService;
 

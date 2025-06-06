@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -160,9 +159,9 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                     childAspectRatio: 0.75,
                   ),
                   itemBuilder: (context, index) {
-                    final cate = data.data[index];
+                    final categ = data.data[index];
                     final Map<String, dynamic> jsonDetails = jsonDecode(
-                      cate.jsonData,
+                      categ.jsonData,
                     );
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

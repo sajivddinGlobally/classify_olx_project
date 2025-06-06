@@ -13,7 +13,6 @@ import 'package:shopping_app_olx/cloth/clothing.page.dart';
 import 'package:shopping_app_olx/home/service/homepageController.dart';
 import 'package:shopping_app_olx/listing/listing.page.dart';
 import 'package:shopping_app_olx/map/map.page.dart';
-import 'package:shopping_app_olx/map/model/locationBodyModel.dart';
 import 'package:shopping_app_olx/map/service/locationController.dart';
 import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 import 'package:shopping_app_olx/profile/profile.page.dart';
@@ -186,7 +185,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: GoogleFonts.dmSans(
-                                                    fontSize: 16,
+                                                    fontSize: 16.sp,
                                                     fontWeight: FontWeight.w500,
                                                     color: Color.fromARGB(
                                                       255,
