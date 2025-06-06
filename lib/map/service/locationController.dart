@@ -32,7 +32,7 @@ final locationProvider = FutureProvider<String>((ref) async {
   if (placemarks.isNotEmpty) {
     final place = placemarks.first;
     // return "${place.locality}, ${place.administrativeArea}";
-    return "${place.name} , ${place.locality}, ${place.administrativeArea} , ${place.country}";
+    return "${place.name} , ${place.locality}, ${place.administrativeArea} , ${place.country}, ${place.street} ";
   } else {
     return "Location not found";
   }
