@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -218,6 +219,36 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                             } catch (e) {
                               log(e.toString());
                             }
+                            // try {
+                            //   final data = {
+                            //     "car": carControlelr.text,
+                            //     "year": yearController.text,
+                            //     "fuel": fuelControlelr.text,
+                            //     "kmDriven": kmDrivenController.text,
+                            //     "owner": ownerControleller.text,
+                            //     "title": titleController.text,
+                            //     "desc": descController.text,
+                            //   };
+
+                            //   log("Car : ${data["car"]}");
+                            //   log("YEAR : ${data["year"]}");
+                            //   log("fuel : ${data["fuel"]}");
+                            //   log("km : ${data["kmDriven"]}");
+                            //   log("owner : ${data["owner"]}");
+                            //   log("title : ${data["title"]}");
+
+                            //   final apiserce = APIService(await createDio());
+                            //   await apiserce.addProduct(data);
+
+                            //   Navigator.push(
+                            //     context,
+                            //     CupertinoPageRoute(
+                            //       builder: (context) => NewPlanPage(),
+                            //     ),
+                            //   );
+                            // } catch (e) {
+                            //   log(e.toString());
+                            // }
                           },
                           child: Text(
                             "Continue",
@@ -265,6 +296,7 @@ class FormBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextField(
+          controller: controller,
           keyboardType: type,
           maxLength: maxlenghts,
           decoration: InputDecoration(

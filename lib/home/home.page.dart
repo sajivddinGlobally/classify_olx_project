@@ -196,8 +196,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   ),
                                                 ),
                                             loading:
-                                                () =>
-                                                    const CircularProgressIndicator(),
+                                                () => Center(
+                                                  child: SizedBox(
+                                                    width: 50.w,
+                                                    height: 50.h,
+                                                    child:
+                                                        const CircularProgressIndicator(),
+                                                  ),
+                                                ),
                                             error:
                                                 (err, stack) => Text(
                                                   "Location unavailable",

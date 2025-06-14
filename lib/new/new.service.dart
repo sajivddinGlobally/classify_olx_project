@@ -7,7 +7,7 @@ part 'new.service.g.dart';
 abstract class APIService {
   factory APIService(Dio dio, {String baseUrl}) = _APIService;
   @MultiPart() // ✅ VERY IMPORTANT
-  @POST("/Add/product")
+  @POST("/api/Add/product")
   Future<HttpResponse<dynamic>> addProduct(@Part() Map<String, dynamic> parts);
 }
 

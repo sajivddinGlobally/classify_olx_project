@@ -34,7 +34,7 @@ class _APIService implements APIService {
           )
           .compose(
             _dio.options,
-            '/Add/product',
+            '/api/Add/product',
             queryParameters: queryParameters,
             data: _data,
           )
