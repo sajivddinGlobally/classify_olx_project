@@ -26,6 +26,8 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
   final titleController = TextEditingController();
   final descController = TextEditingController();
 
+  bool isloading = false;
+
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> data = {
@@ -200,6 +202,9 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                           ),
                           onPressed: () async {
                             try {
+                              setState(() {
+                                isloading = true;
+                              });
                               log("Car : ${carControlelr.text}");
                               log("YEAR : ${yearController.text}");
                               log("fuel : ${fuelControlelr.text}");
@@ -218,45 +223,28 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                               );
                             } catch (e) {
                               log(e.toString());
+                              setState(() {
+                                isloading = false;
+                              });
                             }
-                            // try {
-                            //   final data = {
-                            //     "car": carControlelr.text,
-                            //     "year": yearController.text,
-                            //     "fuel": fuelControlelr.text,
-                            //     "kmDriven": kmDrivenController.text,
-                            //     "owner": ownerControleller.text,
-                            //     "title": titleController.text,
-                            //     "desc": descController.text,
-                            //   };
-
-                            //   log("Car : ${data["car"]}");
-                            //   log("YEAR : ${data["year"]}");
-                            //   log("fuel : ${data["fuel"]}");
-                            //   log("km : ${data["kmDriven"]}");
-                            //   log("owner : ${data["owner"]}");
-                            //   log("title : ${data["title"]}");
-
-                            //   final apiserce = APIService(await createDio());
-                            //   await apiserce.addProduct(data);
-
-                            //   Navigator.push(
-                            //     context,
-                            //     CupertinoPageRoute(
-                            //       builder: (context) => NewPlanPage(),
-                            //     ),
-                            //   );
-                            // } catch (e) {
-                            //   log(e.toString());
-                            // }
                           },
-                          child: Text(
-                            "Continue",
-                            style: GoogleFonts.dmSans(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
+                          child: Center(
+                            child:
+                                isloading == false
+                                    ? Text(
+                                      "Continue",
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                    : Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ),
                           ),
                         ),
                         SizedBox(height: 10.h),
