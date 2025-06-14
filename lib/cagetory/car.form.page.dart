@@ -6,12 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
 class CarFormPage extends ConsumerStatefulWidget {
@@ -313,11 +315,28 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                               log("title : ${titleController.text}");
 
                               final apiserce = APIService(await createDio());
+                              // await apiserce.addProduct({
+                              //   "category": "text",
+                              //   "userId": "${box.get("id")}",
+                              //   "image": image?.path,
+                              //   "json_data": {
+                              //     "car": carControlelr.text,
+                              //     "Year": yearController.text,
+                              //     "fuel": fuelControlelr.text,
+                              //     "ko": kmDrivenController.text,
+                              //     "owner": ownerControleller.text,
+                              //     "title": titleController.text,
+                              //     "Des": descController.text,
+                              //   },
+                              // });
                               await apiserce.addProduct({
                                 "category": "text",
-                                "userId": "${box.get("id")}",
-                                "image": image?.path,
-                                "json_data": {
+                                "user_id": "${box.get("id")}",
+                                "image": await MultipartFile.fromFile(
+                                  image!.path,
+                                  filename: image!.path.split('/').last,
+                                ),
+                                "json_data": jsonEncode({
                                   "car": carControlelr.text,
                                   "Year": yearController.text,
                                   "fuel": fuelControlelr.text,
@@ -325,20 +344,30 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                                   "owner": ownerControleller.text,
                                   "title": titleController.text,
                                   "Des": descController.text,
-                                },
+                                }),
                               });
-
-                              Navigator.push(
+                              Fluttertoast.showToast(
+                                msg: "Product Add Successfull",
+                              );
+                              // Navigator.push(
+                              //   context,
+                              //   CupertinoPageRoute(
+                              //     builder: (context) => NewPlanPage(),
+                              //   ),
+                              // );
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 CupertinoPageRoute(
-                                  builder: (context) => NewPlanPage(),
+                                  builder: (context) => HomePage(),
                                 ),
+                                (route) => false,
                               );
                             } catch (e) {
                               log(e.toString());
                               setState(() {
                                 isloading = false;
                               });
+                              Fluttertoast.showToast(msg: "Product Add Failed");
                             }
                           },
                           child: Center(
