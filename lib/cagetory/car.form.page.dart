@@ -1,11 +1,15 @@
+import 'dart:convert';
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
@@ -28,8 +32,66 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
 
   bool isloading = false;
 
+  File? image;
+  final picker = ImagePicker();
+
+  Future<void> pickImageFormCamera() async {
+    var status = await Permission.camera.request();
+    if (status.isGranted) {
+      final PickedFile = await picker.pickImage(source: ImageSource.camera);
+      if (PickedFile != null) {
+        setState(() {
+          image = File(PickedFile.path);
+        });
+      }
+    } else {
+      print("Camera Permission isdenied");
+    }
+  }
+
+  Future<void> pickImageFromGallery() async {
+    var status = await Permission.camera.request();
+    if (status.isGranted) {
+      final PickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (PickedFile != null) {
+        setState(() {
+          image = File(PickedFile.path);
+        });
+      }
+    } else {
+      print("Gallery Permission isdenied");
+    }
+  }
+
+  Future showImage() async {
+    showCupertinoModalPopup(
+      context: context,
+      builder:
+          (context) => CupertinoActionSheet(
+            actions: [
+              CupertinoActionSheetAction(
+                onPressed: () {
+                  pickImageFormCamera();
+                  Navigator.pop(context);
+                },
+                child: Text("Camera"),
+              ),
+              CupertinoActionSheetAction(
+                onPressed: () {
+                  pickImageFromGallery();
+                  Navigator.pop(context);
+                },
+                child: Text("Gallery"),
+              ),
+            ],
+          ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box("data");
+
     Map<String, dynamic> data = {
       "car": carControlelr.text,
       "year": yearController.text,
@@ -191,6 +253,44 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                               'Include condition, features and reason for selling\nRequired Fields',
                           maxlenghts: 4096,
                         ),
+                        SizedBox(height: 20.h),
+                        GestureDetector(
+                          onTap: () {
+                            showImage();
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 216.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.r),
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Colors.grey,
+                                width: 1.w,
+                              ),
+                            ),
+                            child:
+                                image == null
+                                    ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.upload),
+                                        Text("Upload Image"),
+                                      ],
+                                    )
+                                    : ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.r),
+                                      child: Image.file(
+                                        image!,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 216.h,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                          ),
+                        ),
                         SizedBox(height: 40.h),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -213,7 +313,20 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                               log("title : ${titleController.text}");
 
                               final apiserce = APIService(await createDio());
-                              await apiserce.addProduct(data);
+                              await apiserce.addProduct({
+                                "category": "text",
+                                "userId": "${box.get("id")}",
+                                "image": image?.path,
+                                "json_data": {
+                                  "car": carControlelr.text,
+                                  "Year": yearController.text,
+                                  "fuel": fuelControlelr.text,
+                                  "ko": kmDrivenController.text,
+                                  "owner": ownerControleller.text,
+                                  "title": titleController.text,
+                                  "Des": descController.text,
+                                },
+                              });
 
                               Navigator.push(
                                 context,
