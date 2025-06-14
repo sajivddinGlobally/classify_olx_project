@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
 class ShopsOfficeFormPage extends StatefulWidget {
   const ShopsOfficeFormPage({super.key});
@@ -12,8 +15,29 @@ class ShopsOfficeFormPage extends StatefulWidget {
 }
 
 class _ShopsOfficeFormPageState extends State<ShopsOfficeFormPage> {
+  final fursingController = TextEditingController();
+  final listedController = TextEditingController();
+  final superbuildController = TextEditingController();
+  final maintnanceController = TextEditingController();
+  final carParContorlelr = TextEditingController();
+  final titleController = TextEditingController();
+  final descController = TextEditingController();
+  final wasroomController = TextEditingController();
+  final projectnameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "car": carParContorlelr.text,
+      "year": wasroomController.text,
+      "fuel": projectnameController.text,
+      "kmDriven": superbuildController.text,
+      "owner": maintnanceController.text,
+      "title": titleController.text,
+      "desc": descController.text,
+      "liseted": listedController.text,
+      "fur": fursingController.text,
+    };
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -69,27 +93,50 @@ class _ShopsOfficeFormPageState extends State<ShopsOfficeFormPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Furnishing"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Listed by"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Super Builtup area sqft *"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Maintenance (Monthly)"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Car Parking"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Washrooms"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Project Name"),
+                      FormBody(
+                        labeltxt: "Furnishing",
+                        controller: fursingController,
+                      ),
                       SizedBox(height: 10.h),
                       FormBody(
+                        labeltxt: "Listed by",
+                        controller: listedController,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Super Builtup area sqft *",
+                        controller: superbuildController,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Maintenance (Monthly)",
+                        controller: maintnanceController,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Car Parking",
+                        controller: carParContorlelr,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Washrooms",
+                        controller: wasroomController,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Project Name",
+                        controller: projectnameController,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        controller: titleController,
                         labeltxt: "Ad title*",
                         helper:
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
                       SizedBox(height: 10.h),
                       FormBody(
+                        controller: descController,
                         labeltxt: "Describe what you are selling *",
                         helper:
                             "Include condition, features and reason for selling\nRequired Fields",
@@ -104,7 +151,17 @@ class _ShopsOfficeFormPageState extends State<ShopsOfficeFormPage> {
                           ),
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          final apiserce = APIService(await createDio());
+                          await apiserce.addProduct(data);
+
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => NewPlanPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Continue",
                           style: GoogleFonts.dmSans(

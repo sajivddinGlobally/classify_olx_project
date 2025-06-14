@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
-
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
 class MobileFormPage extends StatefulWidget {
   const MobileFormPage({super.key});
@@ -13,8 +15,16 @@ class MobileFormPage extends StatefulWidget {
 }
 
 class _MobileFormPageState extends State<MobileFormPage> {
+  final titleController = TextEditingController();
+  final descController = TextEditingController();
+  final brandController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "owner": brandController.text,
+      "title": titleController.text,
+      "desc": descController.text,
+    };
     return Scaffold(
       body: Stack(
         children: [
@@ -69,15 +79,17 @@ class _MobileFormPageState extends State<MobileFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 10.h),
-                    FormBody(labeltxt: "Brand*"),
+                    FormBody(labeltxt: "Brand*", controller: brandController),
                     SizedBox(height: 15.h),
                     FormBody(
+                      controller: titleController,
                       labeltxt: "Ad title*",
                       helper:
                           "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                     ),
                     SizedBox(height: 15.h),
                     FormBody(
+                      controller: descController,
                       labeltxt: "Describe what you are selling *",
                       helper:
                           "Include condition, features and reason for selling\nRequired Fields",
@@ -92,7 +104,17 @@ class _MobileFormPageState extends State<MobileFormPage> {
                         ),
                         backgroundColor: Color.fromARGB(255, 137, 26, 255),
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        final apiserce = APIService(await createDio());
+                        await apiserce.addProduct(data);
+
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => NewPlanPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         "Continue",
                         style: GoogleFonts.dmSans(

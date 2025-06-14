@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
 class ScotorFormPage extends StatefulWidget {
   const ScotorFormPage({super.key});
@@ -12,8 +15,25 @@ class ScotorFormPage extends StatefulWidget {
 }
 
 class _ScotorFormPageState extends State<ScotorFormPage> {
+  final brandcontroller = TextEditingController();
+  final yearContorller = TextEditingController();
+  final fuelController = TextEditingController();
+  final kmdrivenController = TextEditingController();
+  final proejctnameControler = TextEditingController();
+  final titleControler = TextEditingController();
+  final desContrler = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "type": brandcontroller.text,
+      "bhk": yearContorller.text,
+      "bath": fuelController.text,
+      "furs": kmdrivenController.text,
+      "projectname": proejctnameControler.text,
+      "title": titleControler.text,
+      "des": desContrler.text,
+    };
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -69,21 +89,30 @@ class _ScotorFormPageState extends State<ScotorFormPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 15.h),
-                      FormBody(labeltxt: "Brand*"),
-                      SizedBox(height: 15.h),
-                      FormBody(labeltxt: "Year*", type: TextInputType.number),
-                      SizedBox(height: 15.h),
-                      FormBody(labeltxt: "Fuel*"),
-                      SizedBox(height: 15.h),
-                      FormBody(labeltxt: "KM driven*"),
+                      FormBody(labeltxt: "Brand*", controller: brandcontroller),
                       SizedBox(height: 15.h),
                       FormBody(
+                        labeltxt: "Year*",
+                        type: TextInputType.number,
+                        controller: yearContorller,
+                      ),
+                      SizedBox(height: 15.h),
+                      FormBody(labeltxt: "Fuel*", controller: fuelController),
+                      SizedBox(height: 15.h),
+                      FormBody(
+                        labeltxt: "KM driven*",
+                        controller: kmdrivenController,
+                      ),
+                      SizedBox(height: 15.h),
+                      FormBody(
+                        controller: titleControler,
                         labeltxt: "Ad title*",
                         helper:
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
                       SizedBox(height: 15.h),
                       FormBody(
+                        controller: desContrler,
                         labeltxt: "Describe what you are selling *",
                         helper:
                             "Include condition, features and reason for selling\nRequired Fields",
@@ -98,7 +127,16 @@ class _ScotorFormPageState extends State<ScotorFormPage> {
                           ),
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          final apiserce = APIService(await createDio());
+                          await apiserce.addProduct(data);
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => NewPlanPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Continue",
                           style: GoogleFonts.dmSans(
@@ -116,7 +154,7 @@ class _ScotorFormPageState extends State<ScotorFormPage> {
             ),
           ],
         ),
-      )
+      ),
     );
   }
 }

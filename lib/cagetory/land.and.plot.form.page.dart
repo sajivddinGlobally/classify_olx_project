@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
 class LandAndPlotFormPage extends StatefulWidget {
   const LandAndPlotFormPage({super.key});
@@ -12,8 +15,43 @@ class LandAndPlotFormPage extends StatefulWidget {
 }
 
 class _LandAndPlotFormPageState extends State<LandAndPlotFormPage> {
+  final plotAreaContorlelr = TextEditingController();
+  final breathControlelr = TextEditingController();
+  final lenghtControler = TextEditingController();
+  final furshingController = TextEditingController();
+  final projectControler = TextEditingController();
+  final listedControlelr = TextEditingController();
+  final superbuildController = TextEditingController();
+  final carpetControlelr = TextEditingController();
+  final mentationController = TextEditingController();
+  final florControlelr = TextEditingController();
+  final florNumberControler = TextEditingController();
+  final carparkingContrller = TextEditingController();
+  final facingcontroler = TextEditingController();
+  final proejctnameControler = TextEditingController();
+  final titleControler = TextEditingController();
+  final desContrler = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "type": plotAreaContorlelr.text,
+      "bhk": breathControlelr.text,
+      "bath": lenghtControler.text,
+      "furs": furshingController.text,
+      "project": projectControler.text,
+      "listed": listedControlelr.text,
+      "superbuild": superbuildController.text,
+      "carpet": carpetControlelr.text,
+      "mentation": mentationController.text,
+      "flor": florControlelr.text,
+      "florNumber": florNumberControler.text,
+      "carparking": carparkingContrller.text,
+      "facing": facingcontroler.text,
+      "projectname": proejctnameControler.text,
+      "title": titleControler.text,
+      "des": desContrler.text,
+    };
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -125,25 +163,39 @@ class _LandAndPlotFormPageState extends State<LandAndPlotFormPage> {
                         ],
                       ),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Listed by*"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Plot Area*"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Length"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Breadth"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Facing"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Project Name"),
+                      FormBody(
+                        labeltxt: "Listed by*",
+                        controller: listedControlelr,
+                      ),
                       SizedBox(height: 10.h),
                       FormBody(
+                        labeltxt: "Plot Area*",
+                        controller: plotAreaContorlelr,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(labeltxt: "Length", controller: lenghtControler),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Breadth",
+                        controller: breathControlelr,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(labeltxt: "Facing", controller: facingcontroler),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Project Name",
+                        controller: proejctnameControler,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        controller: titleControler,
                         labeltxt: "Ad title*",
                         helper:
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
                       SizedBox(height: 10.h),
                       FormBody(
+                        controller: desContrler,
                         labeltxt: "Describe what you are selling *",
                         helper:
                             "Include condition, features and reason for selling\nRequired Fields",
@@ -158,7 +210,16 @@ class _LandAndPlotFormPageState extends State<LandAndPlotFormPage> {
                           ),
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          final service = APIService(await createDio());
+                          await service.addProduct(data);
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => NewPlanPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Continue",
                           style: GoogleFonts.dmSans(

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
 class BooksFormPage extends StatefulWidget {
   const BooksFormPage({super.key});
@@ -12,8 +15,23 @@ class BooksFormPage extends StatefulWidget {
 }
 
 class _BooksFormPageState extends State<BooksFormPage> {
+  final typeController = TextEditingController();
+  final yearController = TextEditingController();
+  final kmDrivenController = TextEditingController();
+
+  final titleController = TextEditingController();
+  final descController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "year": yearController.text,
+      "fuel": typeController.text,
+      "kmDriven": kmDrivenController.text,
+
+      "title": titleController.text,
+      "desc": descController.text,
+    };
     return Scaffold(
       body: SingleChildScrollView(
         child: SingleChildScrollView(
@@ -71,19 +89,28 @@ class _BooksFormPageState extends State<BooksFormPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 15.h),
-                        FormBody(labeltxt: "Type*"),
-                        SizedBox(height: 15.h),
-                        FormBody(labeltxt: "Year*", type: TextInputType.number),
-                        SizedBox(height: 15.h),
-                        FormBody(labeltxt: "KM driven*"),
+                        FormBody(labeltxt: "Type*", controller: typeController),
                         SizedBox(height: 15.h),
                         FormBody(
+                          labeltxt: "Year*",
+                          type: TextInputType.number,
+                          controller: yearController,
+                        ),
+                        SizedBox(height: 15.h),
+                        FormBody(
+                          labeltxt: "KM driven*",
+                          controller: kmDrivenController,
+                        ),
+                        SizedBox(height: 15.h),
+                        FormBody(
+                          controller: titleController,
                           labeltxt: "Ad title*",
                           helper:
                               "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                         ),
                         SizedBox(height: 15.h),
                         FormBody(
+                          controller: descController,
                           labeltxt: "Describe what you are selling *",
                           helper:
                               "Include condition, features and reason for selling\nRequired Fields",
@@ -98,7 +125,17 @@ class _BooksFormPageState extends State<BooksFormPage> {
                             ),
                             backgroundColor: Color.fromARGB(255, 137, 26, 255),
                           ),
-                          onPressed: () async {},
+                          onPressed: () async {
+                            final apiserce = APIService(await createDio());
+                            await apiserce.addProduct(data);
+
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => NewPlanPage(),
+                              ),
+                            );
+                          },
                           child: Text(
                             "Continue",
                             style: GoogleFonts.dmSans(

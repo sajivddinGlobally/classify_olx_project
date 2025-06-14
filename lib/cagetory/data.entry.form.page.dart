@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
 class DataEntryFormPage extends StatefulWidget {
   const DataEntryFormPage({super.key});
@@ -12,8 +15,23 @@ class DataEntryFormPage extends StatefulWidget {
 }
 
 class _DataEntryFormPageState extends State<DataEntryFormPage> {
+  final saleController = TextEditingController();
+  final posiController = TextEditingController();
+  final saleFormController = TextEditingController();
+  final salatoController = TextEditingController();
+  final titleControler = TextEditingController();
+  final desContrler = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "type": saleController.text,
+      "bhk": posiController.text,
+      "bath": saleFormController.text,
+      "furs": salatoController.text,
+      "title": titleControler.text,
+      "des": desContrler.text,
+    };
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -69,27 +87,37 @@ class _DataEntryFormPageState extends State<DataEntryFormPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 15.h),
-                      FormBody(labeltxt: "Salary period*"),
+                      FormBody(
+                        labeltxt: "Salary period*",
+                        controller: saleController,
+                      ),
                       SizedBox(height: 15.h),
-                      FormBody(labeltxt: "Position type*"),
+                      FormBody(
+                        labeltxt: "Position type*",
+                        controller: posiController,
+                      ),
                       SizedBox(height: 15.h),
                       FormBody(
                         labeltxt: "Salary from*",
+                        controller: saleFormController,
                         type: TextInputType.number,
                       ),
                       SizedBox(height: 15.h),
                       FormBody(
                         labeltxt: "Salary to*",
+                        controller: salatoController,
                         type: TextInputType.number,
                       ),
                       SizedBox(height: 15.h),
                       FormBody(
+                        controller: titleControler,
                         labeltxt: "Ad title*",
                         helper:
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
                       SizedBox(height: 15.h),
                       FormBody(
+                        controller: desContrler,
                         labeltxt: "Describe what you are selling *",
                         helper:
                             "Include condition, features and reason for selling\nRequired Fields",
@@ -104,7 +132,16 @@ class _DataEntryFormPageState extends State<DataEntryFormPage> {
                           ),
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          final apiserce = APIService(await createDio());
+                          await apiserce.addProduct(data);
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => NewPlanPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Continue",
                           style: GoogleFonts.dmSans(

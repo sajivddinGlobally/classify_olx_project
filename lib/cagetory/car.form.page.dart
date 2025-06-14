@@ -1,19 +1,41 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
-class CarFormPage extends StatefulWidget {
+class CarFormPage extends ConsumerStatefulWidget {
   const CarFormPage({super.key});
 
   @override
-  State<CarFormPage> createState() => _CarFormPageState();
+  ConsumerState<CarFormPage> createState() => _CarFormPageState();
 }
 
-class _CarFormPageState extends State<CarFormPage> {
+class _CarFormPageState extends ConsumerState<CarFormPage> {
+  final carControlelr = TextEditingController();
+  final fuelControlelr = TextEditingController();
+  final yearController = TextEditingController();
+  final kmDrivenController = TextEditingController();
+  final ownerControleller = TextEditingController();
+  final titleController = TextEditingController();
+  final descController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "car": carControlelr.text,
+      "year": yearController.text,
+      "fuel": fuelControlelr.text,
+      "kmDriven": kmDrivenController.text,
+      "owner": ownerControleller.text,
+      "title": titleController.text,
+      "desc": descController.text,
+    };
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -73,15 +95,16 @@ class _CarFormPageState extends State<CarFormPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FormBody(labeltxt: "Car*"),
+                        FormBody(labeltxt: "Car*", controller: carControlelr),
                         SizedBox(height: 10.h),
                         FormBody(
+                          controller: yearController,
                           labeltxt: 'Year*',
                           helper: "Year has a minimum value of 1990.",
                           type: TextInputType.number,
                         ),
                         SizedBox(height: 10.h),
-                        FormBody(labeltxt: 'Fuel*'),
+                        FormBody(labeltxt: 'Fuel*', controller: fuelControlelr),
                         SizedBox(height: 15.h),
                         Text(
                           "Transmission",
@@ -139,18 +162,27 @@ class _CarFormPageState extends State<CarFormPage> {
                           ],
                         ),
                         SizedBox(height: 10.h),
-                        FormBody(labeltxt: 'KM driven *', maxlenghts: 6),
+                        FormBody(
+                          labeltxt: 'KM driven *',
+                          maxlenghts: 6,
+                          controller: kmDrivenController,
+                        ),
                         SizedBox(height: 4.h),
                         FormBody(
+                          controller: ownerControleller,
                           labeltxt: "No.of Owners*",
                           type: TextInputType.number,
                           maxlenghts: 10,
                           isCounter: '',
                         ),
                         SizedBox(height: 10.h),
-                        FormBody(labeltxt: "Ad title *"),
+                        FormBody(
+                          labeltxt: "Ad title *",
+                          controller: titleController,
+                        ),
                         SizedBox(height: 10.h),
                         FormBody(
+                          controller: descController,
                           labeltxt: "Describe what you are selling *",
                           helper:
                               'Include condition, features and reason for selling\nRequired Fields',
@@ -165,13 +197,27 @@ class _CarFormPageState extends State<CarFormPage> {
                             ),
                             backgroundColor: Color.fromARGB(255, 137, 26, 255),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => NewPlanPage(),
-                              ),
-                            );
+                          onPressed: () async {
+                            try {
+                              log("Car : ${carControlelr.text}");
+                              log("YEAR : ${yearController.text}");
+                              log("fuel : ${fuelControlelr.text}");
+                              log("km : ${kmDrivenController.text}");
+                              log("owner : ${ownerControleller.text}");
+                              log("title : ${titleController.text}");
+
+                              final apiserce = APIService(await createDio());
+                              await apiserce.addProduct(data);
+
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => NewPlanPage(),
+                                ),
+                              );
+                            } catch (e) {
+                              log(e.toString());
+                            }
                           },
                           child: Text(
                             "Continue",
@@ -200,6 +246,7 @@ class FormBody extends StatelessWidget {
   final String labeltxt;
   final String? helper;
   final int? maxlenghts;
+  final TextEditingController controller;
   final TextInputType? type;
   final String? isCounter;
   const FormBody({
@@ -209,6 +256,7 @@ class FormBody extends StatelessWidget {
     this.maxlenghts,
     this.type,
     this.isCounter,
+    required this.controller,
   });
 
   @override

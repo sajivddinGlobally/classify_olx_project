@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
 class TabletFormPage extends StatefulWidget {
   const TabletFormPage({super.key});
@@ -12,8 +15,17 @@ class TabletFormPage extends StatefulWidget {
 }
 
 class _TabletFormPageState extends State<TabletFormPage> {
+  final typeControler = TextEditingController();
+  final titleController = TextEditingController();
+  final descController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "owner": typeControler.text,
+      "title": titleController.text,
+      "desc": descController.text,
+    };
     return Scaffold(
       body: Stack(
         children: [
@@ -68,15 +80,17 @@ class _TabletFormPageState extends State<TabletFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 10.h),
-                    FormBody(labeltxt: "Type *"),
+                    FormBody(labeltxt: "Type *", controller: typeControler),
                     SizedBox(height: 15.h),
                     FormBody(
+                      controller: titleController,
                       labeltxt: "Ad title*",
                       helper:
                           "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                     ),
                     SizedBox(height: 15.h),
                     FormBody(
+                      controller: descController,
                       labeltxt: "Describe what you are selling *",
                       helper:
                           "Include condition, features and reason for selling\nRequired Fields",
@@ -91,7 +105,17 @@ class _TabletFormPageState extends State<TabletFormPage> {
                         ),
                         backgroundColor: Color.fromARGB(255, 137, 26, 255),
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        final apiserce = APIService(await createDio());
+                        await apiserce.addProduct(data);
+
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => NewPlanPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         "Continue",
                         style: GoogleFonts.dmSans(

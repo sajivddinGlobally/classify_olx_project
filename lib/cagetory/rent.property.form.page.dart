@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
 class RentPropertyFormPage extends StatefulWidget {
   const RentPropertyFormPage({super.key});
@@ -12,8 +15,43 @@ class RentPropertyFormPage extends StatefulWidget {
 }
 
 class _RentPropertyFormPageState extends State<RentPropertyFormPage> {
+  final typeContrller = TextEditingController();
+  final bhkController = TextEditingController();
+  final bathroomController = TextEditingController();
+  final furshingController = TextEditingController();
+  final projectControler = TextEditingController();
+  final listedControlelr = TextEditingController();
+  final superbuildController = TextEditingController();
+  final carpetControlelr = TextEditingController();
+  final mentationController = TextEditingController();
+  final florControlelr = TextEditingController();
+  final florNumberControler = TextEditingController();
+  final carparkingContrller = TextEditingController();
+  final facingcontroler = TextEditingController();
+  final proejctnameControler = TextEditingController();
+  final titleControler = TextEditingController();
+  final desContrler = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "type": typeContrller.text,
+      "bhk": bhkController.text,
+      "bath": bhkController.text,
+      "furs": furshingController.text,
+      "project": projectControler.text,
+      "listed": listedControlelr.text,
+      "superbuild": superbuildController.text,
+      "carpet": carpetControlelr.text,
+      "mentation": mentationController.text,
+      "flor": florControlelr.text,
+      "florNumber": florNumberControler.text,
+      "carparking": carparkingContrller.text,
+      "facing": facingcontroler.text,
+      "projectname": proejctnameControler.text,
+      "title": titleControler.text,
+      "des": desContrler.text,
+    };
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -68,21 +106,39 @@ class _RentPropertyFormPageState extends State<RentPropertyFormPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      FormBody(labeltxt: "Type*"),
+                      FormBody(labeltxt: "Type*", controller: typeContrller),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "BHK"),
+                      FormBody(labeltxt: "BHK", controller: bhkController),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Bathrooms"),
+                      FormBody(
+                        labeltxt: "Bathrooms",
+                        controller: bathroomController,
+                      ),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Furnishing"),
+                      FormBody(
+                        labeltxt: "Furnishing",
+                        controller: furshingController,
+                      ),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Project Status"),
+                      FormBody(
+                        labeltxt: "Project Status",
+                        controller: projectControler,
+                      ),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Listed by"),
+                      FormBody(
+                        labeltxt: "Listed by",
+                        controller: listedControlelr,
+                      ),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Super Builtup area sqft*"),
+                      FormBody(
+                        labeltxt: "Super Builtup area sqft*",
+                        controller: superbuildController,
+                      ),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Carpet Area sqft*"),
+                      FormBody(
+                        labeltxt: "Carpet Area sqft*",
+                        controller: carpetControlelr,
+                      ),
 
                       SizedBox(height: 15.h),
                       Text(
@@ -140,31 +196,44 @@ class _RentPropertyFormPageState extends State<RentPropertyFormPage> {
                           ),
                         ],
                       ),
-                      FormBody(labeltxt: "Maintenance (Monthly)"),
+                      FormBody(
+                        labeltxt: "Maintenance (Monthly)",
+                        controller: mentationController,
+                      ),
                       SizedBox(height: 10.h),
                       FormBody(
+                        controller: florControlelr,
                         labeltxt: "Total Floors",
                         type: TextInputType.number,
                       ),
                       SizedBox(height: 10.h),
                       FormBody(
+                        controller: florNumberControler,
                         labeltxt: "Floor No",
                         type: TextInputType.number,
                       ),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Car Parking"),
+                      FormBody(
+                        labeltxt: "Car Parking",
+                        controller: carparkingContrller,
+                      ),
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Facing"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Project Name"),
+                      FormBody(labeltxt: "Facing", controller: facingcontroler),
                       SizedBox(height: 10.h),
                       FormBody(
+                        labeltxt: "Project Name",
+                        controller: proejctnameControler,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        controller: titleControler,
                         labeltxt: "Ad title*",
                         helper:
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
                       SizedBox(height: 10.h),
                       FormBody(
+                        controller: desContrler,
                         labeltxt: "Describe what you are selling*",
                         helper:
                             "Include condition, features and reason for selling\nRequired Fields",
@@ -179,7 +248,16 @@ class _RentPropertyFormPageState extends State<RentPropertyFormPage> {
                           ),
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          final service = APIService(await createDio());
+                          await service.addProduct(data);
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => NewPlanPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Continue",
                           style: GoogleFonts.dmSans(

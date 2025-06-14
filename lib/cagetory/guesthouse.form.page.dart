@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 
 class GuesthouseFormPage extends StatefulWidget {
   const GuesthouseFormPage({super.key});
@@ -12,8 +15,33 @@ class GuesthouseFormPage extends StatefulWidget {
 }
 
 class _GuesthouseFormPageState extends State<GuesthouseFormPage> {
+  final projectControler = TextEditingController();
+  final listedControlelr = TextEditingController();
+  final superbuildController = TextEditingController();
+  final carpetControlelr = TextEditingController();
+  final mentationController = TextEditingController();
+  final furnisingController = TextEditingController();
+  final maintanceController = TextEditingController();
+  final carparkingContrller = TextEditingController();
+  final washrommController = TextEditingController();
+  final titleControler = TextEditingController();
+  final desContrler = TextEditingController();
+  final projectName = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = {
+      "project": projectControler.text,
+      "listed": listedControlelr.text,
+      "superbuild": superbuildController.text,
+      "carpet": carpetControlelr.text,
+      "mentation": mentationController.text,
+      "flor": furnisingController.text,
+      "florNumber": superbuildController.text,
+      "carparking": carparkingContrller.text,
+      "title": titleControler.text,
+      "des": desContrler.text,
+      "pri": projectName.text,
+    };
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -69,31 +97,60 @@ class _GuesthouseFormPageState extends State<GuesthouseFormPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Furnishing"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Project Status*"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Listed by"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Super Builtup area sqft *"),
-                      FormBody(labeltxt: "Carpet Area Sqft*"),
-                      SizedBox(height: 10.h),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Maintenance (Monthly)"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Car Parking"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Washrooms"),
-                      SizedBox(height: 10.h),
-                      FormBody(labeltxt: "Project Name"),
+                      FormBody(
+                        labeltxt: "Furnishing",
+                        controller: furnisingController,
+                      ),
                       SizedBox(height: 10.h),
                       FormBody(
+                        labeltxt: "Project Status*",
+                        controller: projectControler,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Listed by",
+                        controller: listedControlelr,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Super Builtup area sqft *",
+                        controller: superbuildController,
+                      ),
+                      FormBody(
+                        labeltxt: "Carpet Area Sqft*",
+                        controller: carpetControlelr,
+                      ),
+                      SizedBox(height: 10.h),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Maintenance (Monthly)",
+                        controller: maintanceController,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Car Parking",
+                        controller: carparkingContrller,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Washrooms",
+                        controller: washrommController,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        labeltxt: "Project Name",
+                        controller: projectName,
+                      ),
+                      SizedBox(height: 10.h),
+                      FormBody(
+                        controller: titleControler,
                         labeltxt: "Ad title*",
                         helper:
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
                       SizedBox(height: 10.h),
                       FormBody(
+                        controller: desContrler,
                         labeltxt: "Describe what you are selling *",
                         helper:
                             "Include condition, features and reason for selling\nRequired Fields",
@@ -108,7 +165,16 @@ class _GuesthouseFormPageState extends State<GuesthouseFormPage> {
                           ),
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          final apiserce = APIService(await createDio());
+                          await apiserce.addProduct(data);
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => NewPlanPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           "Continue",
                           style: GoogleFonts.dmSans(
