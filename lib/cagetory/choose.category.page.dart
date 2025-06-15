@@ -2,8 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/cagetory/bike.page.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/choose.more.cagegory.page.dart';
+import 'package:shopping_app_olx/cagetory/commerical.page.dart';
+import 'package:shopping_app_olx/cagetory/elctronics.page.dart';
+import 'package:shopping_app_olx/cagetory/electronics.form.oage.dart';
+import 'package:shopping_app_olx/cagetory/job.page.dart';
+import 'package:shopping_app_olx/cagetory/mobile.page.dart';
+import 'package:shopping_app_olx/cagetory/property.page.dart';
 
 class ChooseCategoryPage extends StatefulWidget {
   const ChooseCategoryPage({super.key});
@@ -23,15 +30,45 @@ class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
           CupertinoPageRoute(builder: (context) => CarFormPage()),
         );
       }),
-      _CategoryItem('Properties', Icons.home_outlined, () {}),
-      _CategoryItem('Mobiles', Icons.phone_android, () {}),
-      _CategoryItem('Jobs', Icons.work_outline, () {}),
-      _CategoryItem('Bikes', Icons.motorcycle_sharp, () {}),
-      _CategoryItem('Electronics & Appliances', Icons.tv, () {}),
+      _CategoryItem('Properties', Icons.home_outlined, () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(builder: (context) => PropertyPage()),
+        );
+      }),
+      _CategoryItem('Mobiles', Icons.phone_android, () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(builder: (context) => MobilePage()),
+        );
+      }),
+      _CategoryItem('Jobs', Icons.work_outline, () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(builder: (context) => JobPage()),
+        );
+      }),
+      _CategoryItem('Bikes', Icons.motorcycle_sharp, () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(builder: (context) => BikePage()),
+        );
+      }),
+      _CategoryItem('Electronics & Appliances', Icons.tv, () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(builder: (context) => ElctronicsPage()),
+        );
+      }),
       _CategoryItem(
         'Commercial Vehicles & Spares',
         Icons.local_shipping_outlined,
-        () {},
+        () {
+          Navigator.push(
+            context,
+            CupertinoPageRoute(builder: (context) => CommericalPage()),
+          );
+        },
       ),
       _CategoryItem('More Categories', Icons.apps, () {
         Navigator.push(
