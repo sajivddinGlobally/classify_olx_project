@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/choose.more.cagegory.page.dart';
 
 class ChooseCategoryPage extends StatefulWidget {
@@ -16,7 +17,12 @@ class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
 
   List<_CategoryItem> _getCategories() {
     return [
-      _CategoryItem('Cars', Icons.directions_car_filled_outlined, () {}),
+      _CategoryItem('Cars', Icons.directions_car_filled_outlined, () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(builder: (context) => CarFormPage()),
+        );
+      }),
       _CategoryItem('Properties', Icons.home_outlined, () {}),
       _CategoryItem('Mobiles', Icons.phone_android, () {}),
       _CategoryItem('Jobs', Icons.work_outline, () {}),
@@ -36,6 +42,7 @@ class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
     ];
   }
 
+  int tab = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

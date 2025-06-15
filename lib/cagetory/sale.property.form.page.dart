@@ -98,6 +98,8 @@ class _SalePropertyFormPageState extends State<SalePropertyFormPage> {
     );
   }
 
+  bool isProperty = false;
+
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
@@ -119,6 +121,7 @@ class _SalePropertyFormPageState extends State<SalePropertyFormPage> {
       "title": titleControler.text,
       "des": desContrler.text,
     };
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -294,6 +297,9 @@ class _SalePropertyFormPageState extends State<SalePropertyFormPage> {
                         ),
                         onPressed: () async {
                           try {
+                            setState(() {
+                              isProperty = true;
+                            });
                             final apiserce = APIService(await createDio());
                             await apiserce.addProduct({
                               "category": "text",
@@ -333,17 +339,30 @@ class _SalePropertyFormPageState extends State<SalePropertyFormPage> {
                             );
                           } catch (e) {
                             log(e.toString());
-
+                            setState(() {
+                              isProperty = false;
+                            });
                             Fluttertoast.showToast(msg: "Product Add Failed");
                           }
                         },
-                        child: Text(
-                          "Continue",
-                          style: GoogleFonts.dmSans(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
+                        child: Center(
+                          child:
+                              isProperty == false
+                                  ? Text(
+                                    "Continue",
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : SizedBox(
+                                    width: 20.w,
+                                    height: 20.h,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                         ),
                       ),
                       SizedBox(height: 10.h),

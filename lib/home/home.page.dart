@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:shopping_app_olx/cagetory/category.page.dart';
+import 'package:shopping_app_olx/cagetory/choose.category.page.dart';
 import 'package:shopping_app_olx/chat/chat.page.dart';
 import 'package:shopping_app_olx/cloth/clothing.page.dart';
 import 'package:shopping_app_olx/home/service/homepageController.dart';
@@ -716,7 +717,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            CupertinoPageRoute(builder: (context) => CategoryPage()),
+            CupertinoPageRoute(builder: (context) => ChooseCategoryPage()),
           );
         },
         shape: CircleBorder(),

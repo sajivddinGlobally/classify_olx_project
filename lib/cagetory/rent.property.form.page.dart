@@ -1,10 +1,19 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io' show File;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
 class RentPropertyFormPage extends StatefulWidget {
@@ -32,8 +41,65 @@ class _RentPropertyFormPageState extends State<RentPropertyFormPage> {
   final titleControler = TextEditingController();
   final desContrler = TextEditingController();
 
+  File? image;
+  final picker = ImagePicker();
+
+  Future<void> pickImageFormCamera() async {
+    var status = await Permission.camera.request();
+    if (status.isGranted) {
+      final PickedFile = await picker.pickImage(source: ImageSource.camera);
+      if (PickedFile != null) {
+        setState(() {
+          image = File(PickedFile.path);
+        });
+      }
+    } else {
+      print("Camera Permission isdenied");
+    }
+  }
+
+  Future<void> pickImageFromGallery() async {
+    var status = await Permission.camera.request();
+    if (status.isGranted) {
+      final PickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (PickedFile != null) {
+        setState(() {
+          image = File(PickedFile.path);
+        });
+      }
+    } else {
+      print("Gallery Permission isdenied");
+    }
+  }
+
+  Future showImage() async {
+    showCupertinoModalPopup(
+      context: context,
+      builder:
+          (context) => CupertinoActionSheet(
+            actions: [
+              CupertinoActionSheetAction(
+                onPressed: () {
+                  pickImageFormCamera();
+                  Navigator.pop(context);
+                },
+                child: Text("Camera"),
+              ),
+              CupertinoActionSheetAction(
+                onPressed: () {
+                  pickImageFromGallery();
+                  Navigator.pop(context);
+                },
+                child: Text("Gallery"),
+              ),
+            ],
+          ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box("data");
     Map<String, dynamic> data = {
       "type": typeContrller.text,
       "bhk": bhkController.text,
@@ -240,6 +306,39 @@ class _RentPropertyFormPageState extends State<RentPropertyFormPage> {
                         maxlenghts: 4096,
                       ),
                       SizedBox(height: 20.h),
+                      GestureDetector(
+                        onTap: () {
+                          showImage();
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 216.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.r),
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey, width: 1.w),
+                          ),
+                          child:
+                              image == null
+                                  ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.upload),
+                                      Text("Upload Image"),
+                                    ],
+                                  )
+                                  : ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    child: Image.file(
+                                      image!,
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 216.h,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size(
@@ -249,6 +348,50 @@ class _RentPropertyFormPageState extends State<RentPropertyFormPage> {
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
                         onPressed: () async {
+                          try {
+                            setState(() {});
+                            final apiserce = APIService(await createDio());
+                            await apiserce.addProduct({
+                              "category": "text",
+                              "user_id": "${box.get("id")}",
+                              "image": await MultipartFile.fromFile(
+                                image!.path,
+                                filename: image!.path.split('/').last,
+                              ),
+                              "json_data": jsonEncode({
+                                "type": typeContrller.text,
+                                "bhk": bhkController.text,
+                                "bathroo": bathroomController.text,
+                                "frun": furshingController.text,
+                                "project": projectControler.text,
+                                "listed": listedControlelr.text,
+                                "super": superbuildController.text,
+                                "car": carpetControlelr.text,
+                                "main": mentationController.text,
+                                "flor": florControlelr.text,
+                                "flornumber": florNumberControler.text,
+                                "carparking": carparkingContrller.text,
+                                "facing": facingcontroler.text,
+                                "projectname": proejctnameControler.text,
+                                "title": titleControler.text,
+                                "des": desContrler.text,
+                              }),
+                            });
+                            Fluttertoast.showToast(
+                              msg: "Product Add Successfull",
+                            );
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                              (route) => false,
+                            );
+                          } catch (e) {
+                            log(e.toString());
+                            setState(() {});
+                            Fluttertoast.showToast(msg: "Product Add Failed");
+                          }
                           final service = APIService(await createDio());
                           await service.addProduct(data);
                           Navigator.push(

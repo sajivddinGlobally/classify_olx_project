@@ -1,10 +1,19 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
 class ShopsOfficeFormPage extends StatefulWidget {
@@ -25,8 +34,65 @@ class _ShopsOfficeFormPageState extends State<ShopsOfficeFormPage> {
   final wasroomController = TextEditingController();
   final projectnameController = TextEditingController();
 
+  File? image;
+  final picker = ImagePicker();
+
+  Future<void> pickImageFormCamera() async {
+    var status = await Permission.camera.request();
+    if (status.isGranted) {
+      final PickedFile = await picker.pickImage(source: ImageSource.camera);
+      if (PickedFile != null) {
+        setState(() {
+          image = File(PickedFile.path);
+        });
+      }
+    } else {
+      print("Camera Permission isdenied");
+    }
+  }
+
+  Future<void> pickImageFromGallery() async {
+    var status = await Permission.camera.request();
+    if (status.isGranted) {
+      final PickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (PickedFile != null) {
+        setState(() {
+          image = File(PickedFile.path);
+        });
+      }
+    } else {
+      print("Gallery Permission isdenied");
+    }
+  }
+
+  Future showImage() async {
+    showCupertinoModalPopup(
+      context: context,
+      builder:
+          (context) => CupertinoActionSheet(
+            actions: [
+              CupertinoActionSheetAction(
+                onPressed: () {
+                  pickImageFormCamera();
+                  Navigator.pop(context);
+                },
+                child: Text("Camera"),
+              ),
+              CupertinoActionSheetAction(
+                onPressed: () {
+                  pickImageFromGallery();
+                  Navigator.pop(context);
+                },
+                child: Text("Gallery"),
+              ),
+            ],
+          ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box("data");
     Map<String, dynamic> data = {
       "car": carParContorlelr.text,
       "year": wasroomController.text,
@@ -143,6 +209,39 @@ class _ShopsOfficeFormPageState extends State<ShopsOfficeFormPage> {
                         maxlenghts: 4096,
                       ),
                       SizedBox(height: 20.h),
+                      GestureDetector(
+                        onTap: () {
+                          showImage();
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 216.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.r),
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey, width: 1.w),
+                          ),
+                          child:
+                              image == null
+                                  ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.upload),
+                                      Text("Upload Image"),
+                                    ],
+                                  )
+                                  : ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    child: Image.file(
+                                      image!,
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 216.h,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size(
@@ -152,15 +251,42 @@ class _ShopsOfficeFormPageState extends State<ShopsOfficeFormPage> {
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
                         onPressed: () async {
-                          final apiserce = APIService(await createDio());
-                          await apiserce.addProduct(data);
-
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (context) => NewPlanPage(),
-                            ),
-                          );
+                          try {
+                            final apiservice = APIService(createDio());
+                            await apiservice.addProduct({
+                              "category": "test",
+                              "user_id": "${box.get("id")}",
+                              "image": await MultipartFile.fromFile(
+                                image!.path,
+                                filename: image!.path.split("/").last,
+                              ),
+                              "json_data": jsonEncode({
+                                "car": carParContorlelr.text,
+                                "year": wasroomController.text,
+                                "fuel": projectnameController.text,
+                                "kmDriven": superbuildController.text,
+                                "owner": maintnanceController.text,
+                                "title": titleController.text,
+                                "desc": descController.text,
+                                "liseted": listedController.text,
+                                "fur": fursingController.text,
+                              }),
+                            });
+                            Fluttertoast.showToast(
+                              msg: "Product Add Successfull",
+                            );
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                              (route) => false,
+                            );
+                          } catch (e) {
+                            log(e.toString());
+                            setState(() {});
+                            Fluttertoast.showToast(msg: "Product Add Failed");
+                          }
                         },
                         child: Text(
                           "Continue",

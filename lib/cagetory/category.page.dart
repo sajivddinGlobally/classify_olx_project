@@ -100,10 +100,11 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                 tab = index;
                               });
 
+
                               // Navigator.push(
                               //   context,
                               //   CupertinoPageRoute(
-                              //     builder: (context) => ProductRegisterPage(),
+                              //     builder: (context) => ChooseCategoryPage(),
                               //   ),
                               // );
                               Navigator.push(
