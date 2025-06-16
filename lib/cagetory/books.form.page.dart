@@ -25,9 +25,6 @@ class BooksFormPage extends StatefulWidget {
 }
 
 class _BooksFormPageState extends State<BooksFormPage> {
-  final typeController = TextEditingController();
-  final yearController = TextEditingController();
-  final kmDrivenController = TextEditingController();
   final titleController = TextEditingController();
   final descController = TextEditingController();
 
@@ -93,9 +90,6 @@ class _BooksFormPageState extends State<BooksFormPage> {
   Widget build(BuildContext context) {
     var box = Hive.box("data");
     Map<String, dynamic> data = {
-      "year": yearController.text,
-      "fuel": typeController.text,
-      "kmDriven": kmDrivenController.text,
       "title": titleController.text,
       "desc": descController.text,
     };
@@ -156,18 +150,18 @@ class _BooksFormPageState extends State<BooksFormPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 15.h),
-                        FormBody(labeltxt: "Type*", controller: typeController),
-                        SizedBox(height: 15.h),
-                        FormBody(
-                          labeltxt: "Year*",
-                          type: TextInputType.number,
-                          controller: yearController,
-                        ),
-                        SizedBox(height: 15.h),
-                        FormBody(
-                          labeltxt: "KM driven*",
-                          controller: kmDrivenController,
-                        ),
+                        // FormBody(labeltxt: "Type*", controller: typeController),
+                        // SizedBox(height: 15.h),
+                        // FormBody(
+                        //   labeltxt: "Year*",
+                        //   type: TextInputType.number,
+                        //   controller: yearController,
+                        // ),
+                        // SizedBox(height: 15.h),
+                        // FormBody(
+                        //   labeltxt: "KM driven*",
+                        //   controller: kmDrivenController,
+                        // ),
                         SizedBox(height: 15.h),
                         FormBody(
                           controller: titleController,
@@ -244,9 +238,6 @@ class _BooksFormPageState extends State<BooksFormPage> {
                                   filename: image!.path.split('/').last,
                                 ),
                                 "json_data": jsonEncode({
-                                  "year": yearController.text,
-                                  "fuel": typeController.text,
-                                  "kmDriven": kmDrivenController.text,
                                   "title": titleController.text,
                                   "desc": descController.text,
                                 }),
