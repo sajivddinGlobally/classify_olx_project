@@ -51,7 +51,7 @@ class Data {
 class SellList {
     int id;
     int userId;
-    Category category;
+    String category;
     String image;
     String jsonData;
     int status;
@@ -72,7 +72,7 @@ class SellList {
     factory SellList.fromJson(Map<String, dynamic> json) => SellList(
         id: json["id"],
         userId: json["user_id"],
-        category: categoryValues.map[json["category"]]!,
+        category: json["category"],
         image: json["image"],
         jsonData: json["json_data"],
         status: json["status"],
@@ -83,33 +83,11 @@ class SellList {
     Map<String, dynamic> toJson() => {
         "id": id,
         "user_id": userId,
-        "category": categoryValues.reverse[category],
+        "category": category,
         "image": image,
         "json_data": jsonData,
         "status": status,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
     };
-}
-
-enum Category {
-    ELECTRONICS,
-    TEST
-}
-
-final categoryValues = EnumValues({
-    "Electronics": Category.ELECTRONICS,
-    "test": Category.TEST
-});
-
-class EnumValues<T> {
-    Map<String, T> map;
-    late Map<T, String> reverseMap;
-
-    EnumValues(this.map);
-
-    Map<T, String> get reverse {
-            reverseMap = map.map((k, v) => MapEntry(v, k));
-            return reverseMap;
-    }
 }

@@ -182,7 +182,7 @@ class _ListingPageState extends ConsumerState<ListingPage> {
             ],
           );
         },
-        error: (error, stackTrace) => Center(child: Text(e.toString())),
+        error: (error, stackTrace) => Center(child: Text(error.toString())),
         loading: () => Center(child: CircularProgressIndicator()),
       ),
     );
