@@ -237,7 +237,7 @@ class _BooksFormPageState extends State<BooksFormPage> {
                               });
                               final apiserce = APIService(await createDio());
                               await apiserce.addProduct({
-                                "category": "text",
+                                "category": "test",
                                 "user_id": "${box.get("id")}",
                                 "image": await MultipartFile.fromFile(
                                   image!.path,
