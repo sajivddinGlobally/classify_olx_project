@@ -85,6 +85,8 @@ class _TabletFormPageState extends State<TabletFormPage> {
     );
   }
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
@@ -206,6 +208,9 @@ class _TabletFormPageState extends State<TabletFormPage> {
                         backgroundColor: Color.fromARGB(255, 137, 26, 255),
                       ),
                       onPressed: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
                         try {
                           final apservice = APIService(createDio());
                           await apservice.addProduct({
@@ -233,17 +238,23 @@ class _TabletFormPageState extends State<TabletFormPage> {
                           );
                         } catch (e) {
                           log(e.toString());
-                          setState(() {});
+                          setState(() {
+                            isLoading = false;
+                          });
                           Fluttertoast.showToast(msg: "Product Add Failed");
                         }
                       },
-                      child: Text(
-                        "Continue",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
+                      child: Center(
+                        child:isLoading == false? Text(
+                          "Continue",
+                          style: GoogleFonts.dmSans(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ) : Center(child: CircularProgressIndicator(
                           color: Colors.white,
-                        ),
+                        ),)
                       ),
                     ),
                     SizedBox(height: 10.h),

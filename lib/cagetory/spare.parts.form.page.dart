@@ -209,7 +209,7 @@ class _SparePartsFormPageState extends State<SparePartsFormPage> {
                             });
                             final apiservice = APIService(createDio());
                             await apiservice.addProduct({
-                              "categroy": "text",
+                              "category": "test",
                               "user_id": "${box.get("id")}",
                               "image": await MultipartFile.fromFile(
                                 image!.path,

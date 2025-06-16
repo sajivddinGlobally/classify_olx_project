@@ -85,6 +85,8 @@ class _MobileFormPageState extends State<MobileFormPage> {
     );
   }
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
@@ -206,6 +208,9 @@ class _MobileFormPageState extends State<MobileFormPage> {
                         backgroundColor: Color.fromARGB(255, 137, 26, 255),
                       ),
                       onPressed: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
                         try {
                           final apiservice = APIService(createDio());
                           await apiservice.addProduct({
@@ -233,17 +238,28 @@ class _MobileFormPageState extends State<MobileFormPage> {
                           );
                         } catch (e) {
                           log(e.toString());
-                          setState(() {});
+                          setState(() {
+                            isLoading = false;
+                          });
                           Fluttertoast.showToast(msg: "Product Add Failed");
                         }
                       },
-                      child: Text(
-                        "Continue",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
+                      child: Center(
+                        child:
+                            isLoading == false
+                                ? Text(
+                                  "Continue",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                                )
+                                : Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                ),
                       ),
                     ),
                     SizedBox(height: 10.h),

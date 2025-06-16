@@ -90,6 +90,8 @@ class _ShopsOfficeFormPageState extends State<ShopsOfficeFormPage> {
     );
   }
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
@@ -251,6 +253,9 @@ class _ShopsOfficeFormPageState extends State<ShopsOfficeFormPage> {
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
                         onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
                           try {
                             final apiservice = APIService(createDio());
                             await apiservice.addProduct({
@@ -284,7 +289,9 @@ class _ShopsOfficeFormPageState extends State<ShopsOfficeFormPage> {
                             );
                           } catch (e) {
                             log(e.toString());
-                            setState(() {});
+                            setState(() {
+                              isLoading = false;
+                            });
                             Fluttertoast.showToast(msg: "Product Add Failed");
                           }
                         },

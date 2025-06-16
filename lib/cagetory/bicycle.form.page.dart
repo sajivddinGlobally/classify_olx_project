@@ -214,7 +214,7 @@ class _BicycleFormPageState extends State<BicycleFormPage> {
                           try {
                             final apiservice = APIService(createDio());
                             await apiservice.addProduct({
-                              "category": "text",
+                              "category": "test",
                               "user_id": "${box.get("id")}",
                               "image": await MultipartFile.fromFile(
                                 image!.path,

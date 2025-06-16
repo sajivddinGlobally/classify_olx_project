@@ -270,13 +270,22 @@ class _CommericalFormPageState extends State<CommericalFormPage> {
                               Fluttertoast.showToast(msg: "Product Add Failed");
                             }
                           },
-                          child: Text(
-                            "Continue",
-                            style: GoogleFonts.dmSans(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
+                          child: Center(
+                            child:
+                                isProperty == false
+                                    ? Text(
+                                      "Continue",
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                    : Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ),
                           ),
                         ),
                         SizedBox(height: 10.h),

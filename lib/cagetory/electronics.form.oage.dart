@@ -210,8 +210,7 @@ class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
                             });
                             final apiservice = APIService(createDio());
                             await apiservice.addProduct({
-                              "categor": "test",
-
+                              "category": "test",
                               "use_id": "${box.get("id")}",
                               "image": await MultipartFile.fromFile(
                                 image!.path,
@@ -240,13 +239,22 @@ class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
                             Fluttertoast.showToast(msg: "Product Add Failed");
                           }
                         },
-                        child: Text(
-                          "Continue",
-                          style: GoogleFonts.dmSans(
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
+                        child: Center(
+                          child:
+                              isProperty == false
+                                  ? Text(
+                                    "Continue",
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                         ),
                       ),
                       SizedBox(height: 10.h),
