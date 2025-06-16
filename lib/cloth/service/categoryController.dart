@@ -11,6 +11,5 @@ final categoryController = FutureProvider.family
       log(body.category);
       final categoerservice = CategoryService(await createDio());
       log(categoerservice.toString());
-    
       return categoerservice.fetchCategory(body);
     });

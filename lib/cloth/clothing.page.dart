@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -240,7 +239,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                           // "Nike Air Jorden 55 Medium",
                           //clothsList[index]["title"].toString(),
                           // productcategory.data[index].name,
-                          jsonDetails['name'].toString(),
+                          //jsonDetails['name'].toString(),
+                          data.data[index].category,
                           style: GoogleFonts.dmSans(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
