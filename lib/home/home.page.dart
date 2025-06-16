@@ -83,7 +83,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 240, 228, 250),
+      //backgroundColor: Color.fromARGB(255, 240, 228, 250),
       body:
           tabBottom == 0
               ? SingleChildScrollView(
@@ -310,8 +310,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   context,
                                                   CupertinoPageRoute(
                                                     builder:
-                                                        (context) =>
-                                                            ClothingPage(),
+                                                        (
+                                                          context,
+                                                        ) => ClothingPage(
+                                                          categoryTxt:
+                                                              category
+                                                                  .data[index]
+                                                                  .title,
+                                                        ),
                                                   ),
                                                 );
                                               },
@@ -647,64 +653,76 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       ),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 20.w,
-                                  right: 20.w,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "All Products",
-                                      style: GoogleFonts.dmSans(
-                                        fontSize: 26.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color.fromARGB(255, 36, 33, 38),
-                                        letterSpacing: -1,
-                                      ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 20.w,
+                                      right: 20.w,
                                     ),
-                                    Container(
-                                      width: 65.w,
-                                      height: 26.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          35.45.r,
-                                        ),
-                                        color: Color.fromARGB(
-                                          255,
-                                          255,
-                                          255,
-                                          255,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "View all",
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "All Products",
                                           style: GoogleFonts.dmSans(
-                                            fontSize: 11.sp,
-                                            fontWeight: FontWeight.w500,
+                                            fontSize: 26.sp,
+                                            fontWeight: FontWeight.w600,
                                             color: Color.fromARGB(
                                               255,
-                                              97,
-                                              91,
-                                              104,
+                                              36,
+                                              33,
+                                              38,
+                                            ),
+                                            letterSpacing: -1,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 65.w,
+                                          height: 26.h,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              35.45.r,
+                                            ),
+                                            color: Color.fromARGB(
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "View all",
+                                              style: GoogleFonts.dmSans(
+                                                fontSize: 11.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: Color.fromARGB(
+                                                  255,
+                                                  97,
+                                                  91,
+                                                  104,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  // SizedBox(height: 20.h),
+                                  // AllProductBody(),
+                                ],
                               ),
-                              SizedBox(height: 20.h),
-                              AllProductBody(),
                             ],
                           ),
                         ),
                       ],
                     ),
+                    SizedBox(height: 20.h),
+                    AllProductBody(),
                   ],
                 ),
               )

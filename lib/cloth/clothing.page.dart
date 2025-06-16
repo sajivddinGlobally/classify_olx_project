@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'dart:math';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +10,8 @@ import 'package:shopping_app_olx/cloth/model/categoryBodyModel.dart';
 import 'package:shopping_app_olx/cloth/service/categoryController.dart';
 
 class ClothingPage extends ConsumerStatefulWidget {
-  const ClothingPage({super.key});
+  final String categoryTxt;
+  const ClothingPage({super.key, required this.categoryTxt});
 
   @override
   ConsumerState<ClothingPage> createState() => _ClothingPageState();
@@ -78,10 +80,11 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
       "price": "\$450.00",
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     final dataProvider = ref.watch(
-      categoryController(CategoryBodyModel(category: "Electronics")),
+      categoryController(CategoryBodyModel(category: widget.categoryTxt)),
     );
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
@@ -145,6 +148,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
           SizedBox(height: 20.h),
           dataProvider.when(
             data: (data) {
+              log(data.data.length.toString());
               return Padding(
                 padding: EdgeInsets.only(left: 20.w, right: 20.w),
                 child: GridView.builder(
