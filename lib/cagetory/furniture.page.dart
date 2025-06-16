@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/furniture.form.page.dart';
+import 'package:shopping_app_olx/cagetory/other.form.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
 
 class FurniturePage extends StatefulWidget {
@@ -80,13 +81,53 @@ class _FurniturePageState extends State<FurniturePage> {
                       child: PropertyBody(txt: "Sofa & Dining"),
                     ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Beds & Wardrobes"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => FurnitureFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Beds & Wardrobes"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Home Decor & Garden"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => FurnitureFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Home Decor & Garden"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Kids Furniture"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => FurnitureFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Kids Furniture"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Other Household Items"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => OtherFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Other Household Items"),
+                    ),
                   ],
                 ),
               ),

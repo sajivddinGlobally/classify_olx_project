@@ -27,6 +27,7 @@ class ElectronicsFormPage extends StatefulWidget {
 class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
   final titleController = TextEditingController();
   final descController = TextEditingController();
+  final nameContorller = TextEditingController();
 
   File? image;
   final picker = ImagePicker();
@@ -91,6 +92,7 @@ class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
     Map<String, dynamic> data = {
       "title": titleController.text,
       "desc": descController.text,
+      "name": nameContorller.text,
     };
     return Scaffold(
       body: SingleChildScrollView(
@@ -146,6 +148,13 @@ class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: 15.h),
+                      FormBody(
+                        controller: nameContorller,
+                        labeltxt: "Name *",
+                        helper:
+                            "Mention the key features of your item (eg. brand, model 0/70 age, type)",
+                      ),
                       SizedBox(height: 15.h),
                       FormBody(
                         controller: titleController,
@@ -219,6 +228,7 @@ class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
                               "json_data": jsonEncode({
                                 "title": titleController.text,
                                 "desc": descController.text,
+                                "name": nameContorller.text,
                               }),
                             });
                             Fluttertoast.showToast(

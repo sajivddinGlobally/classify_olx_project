@@ -6,6 +6,7 @@ import 'package:shopping_app_olx/cagetory/bike.page.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/choose.more.cagegory.page.dart';
 import 'package:shopping_app_olx/cagetory/commerical.page.dart';
+import 'package:shopping_app_olx/cagetory/data.entry.form.page.dart';
 import 'package:shopping_app_olx/cagetory/elctronics.page.dart';
 import 'package:shopping_app_olx/cagetory/electronics.form.oage.dart';
 import 'package:shopping_app_olx/cagetory/job.page.dart';

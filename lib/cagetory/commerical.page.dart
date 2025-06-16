@@ -81,7 +81,17 @@ class _CommericalPageState extends State<CommericalPage> {
                       child: PropertyBody(txt: "Commercial & Other Vehicles"),
                     ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Spare Parts"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => CommericalFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Spare Parts"),
+                    ),
                   ],
                 ),
               ),

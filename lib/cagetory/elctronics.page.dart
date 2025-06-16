@@ -81,23 +81,94 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                       child: PropertyBody(txt: "TVs, Video-Audio"),
                     ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Kitchen & Other Appliances"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ElectronicsFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Kitchen & Other Appliances"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Computers & Laptops"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ElectronicsFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Computers & Laptops"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Cameras & Lenses"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ElectronicsFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Cameras & Lenses"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Games & Entertainment"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ElectronicsFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Games & Entertainment"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Fridges"),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       CupertinoPageRoute(
+                    //         builder: (context) => ElectronicsFormPage(),
+                    //       ),
+                    //     );
+                    //   },
+                    //   child: PropertyBody(txt: "Fridges"),
+                    // ),
+                    //SizedBox(height: 20.h),
+                    // PropertyBody(txt: "Computer Accessories"),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Computer Accessories"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ElectronicsFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(
+                        txt: "Hard Disks, Printers & Monitors",
+                      ),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Hard Disks, Printers & Monitors"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ElectronicsFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "ACS"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "ACS"),
-                    SizedBox(height: 20.h),
-                    PropertyBody(txt: "Washing Machines"),
                   ],
                 ),
               ),

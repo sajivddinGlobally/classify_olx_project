@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:dio/dio.dart';
+
+import 'package:dio/dio.dart' show MultipartFile;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
@@ -15,17 +16,17 @@ import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
-class TabletFormPage extends StatefulWidget {
-  const TabletFormPage({super.key});
+class OtherFormPage extends StatefulWidget {
+  const OtherFormPage({super.key});
 
   @override
-  State<TabletFormPage> createState() => _TabletFormPageState();
+  State<OtherFormPage> createState() => _OtherFormPageState();
 }
 
-class _TabletFormPageState extends State<TabletFormPage> {
-  final typeControler = TextEditingController();
+class _OtherFormPageState extends State<OtherFormPage> {
   final titleController = TextEditingController();
   final descController = TextEditingController();
+  final nameController = TextEditingController();
 
   File? image;
   final picker = ImagePicker();
@@ -83,15 +84,14 @@ class _TabletFormPageState extends State<TabletFormPage> {
     );
   }
 
-  bool isLoading = false;
-
+  bool isProperty = false;
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
     Map<String, dynamic> data = {
-      "owner": typeControler.text,
       "title": titleController.text,
       "desc": descController.text,
+      "name": nameController.text,
     };
     return Scaffold(
       body: Stack(
@@ -132,7 +132,7 @@ class _TabletFormPageState extends State<TabletFormPage> {
               SizedBox(height: 10.h),
               Center(
                 child: Text(
-                  "Mobile",
+                  "Furniture Include some details",
                   style: GoogleFonts.dmSans(
                     fontSize: 25.sp,
                     fontWeight: FontWeight.w600,
@@ -146,8 +146,13 @@ class _TabletFormPageState extends State<TabletFormPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10.h),
-                    FormBody(labeltxt: "Type *", controller: typeControler),
+                    SizedBox(height: 15.h),
+                    FormBody(
+                      controller: nameController,
+                      labeltxt: "Name *",
+                      helper:
+                          "Mention the key features of your item (eg. brand, model 0/70 age, type)",
+                    ),
                     SizedBox(height: 15.h),
                     FormBody(
                       controller: titleController,
@@ -155,7 +160,6 @@ class _TabletFormPageState extends State<TabletFormPage> {
                       helper:
                           "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                     ),
-
                     SizedBox(height: 15.h),
                     FormBody(
                       controller: descController,
@@ -207,20 +211,20 @@ class _TabletFormPageState extends State<TabletFormPage> {
                         backgroundColor: Color.fromARGB(255, 137, 26, 255),
                       ),
                       onPressed: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
                         try {
-                          final apservice = APIService(createDio());
-                          await apservice.addProduct({
+                          setState(() {
+                            isProperty = true;
+                          });
+
+                          final apiservice = APIService(createDio());
+                          await apiservice.addProduct({
                             "category": "test",
                             "user_id": "${box.get("id")}",
                             "image": await MultipartFile.fromFile(
                               image!.path,
                               filename: image!.path.split("/").last,
                             ),
-                            "json_data": jsonEncode({
-                              "owner": typeControler.text,
+                            "data_json": jsonEncode({
                               "title": titleController.text,
                               "desc": descController.text,
                             }),
@@ -238,14 +242,14 @@ class _TabletFormPageState extends State<TabletFormPage> {
                         } catch (e) {
                           log(e.toString());
                           setState(() {
-                            isLoading = false;
+                            isProperty = false;
                           });
                           Fluttertoast.showToast(msg: "Product Add Failed");
                         }
                       },
                       child: Center(
                         child:
-                            isLoading == false
+                            isProperty == false
                                 ? Text(
                                   "Continue",
                                   style: GoogleFonts.dmSans(

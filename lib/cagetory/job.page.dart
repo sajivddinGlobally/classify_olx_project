@@ -81,31 +81,161 @@ class _JobPageState extends State<JobPage> {
                         child: PropertyBody(txt: "Data entry & Back office"),
                       ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Sales & Marketing"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Sales & Marketing"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "BPO & Telecaller"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "BPO & Telecaller"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Driver"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Driver"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Office Assistant"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Office Assistant"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Delivery & Colection"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Delivery & Colection"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Teacher"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Teacher"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Receptionist & Front office"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Receptionist & Front office"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Operator & technician"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Operator & technician"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "IT Engineer & Developer"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "IT Engineer & Developer"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Hotel & Travel Executive"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Hotel & Travel Executive"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Accountant"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Accountant"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Designer"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Designer"),
+                      ),
                       SizedBox(height: 20.h),
-                      PropertyBody(txt: "Other Jobs"),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => DataEntryFormPage(),
+                            ),
+                          );
+                        },
+                        child: PropertyBody(txt: "Other Jobs"),
+                      ),
                       SizedBox(height: 20.h),
                     ],
                   ),

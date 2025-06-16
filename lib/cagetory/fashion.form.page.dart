@@ -27,6 +27,7 @@ class FashionFormPage extends StatefulWidget {
 class _FashionFormPageState extends State<FashionFormPage> {
   final titleController = TextEditingController();
   final descController = TextEditingController();
+  final nameController = TextEditingController();
 
   File? image;
   final picker = ImagePicker();
@@ -91,6 +92,7 @@ class _FashionFormPageState extends State<FashionFormPage> {
     Map<String, dynamic> data = {
       "title": titleController.text,
       "desc": descController.text,
+      "name": nameController.text,
     };
     return Scaffold(
       body: SingleChildScrollView(
@@ -147,6 +149,13 @@ class _FashionFormPageState extends State<FashionFormPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(height: 15.h),
+                        FormBody(
+                          controller: nameController,
+                          labeltxt: "Name *",
+                          helper:
+                              "Mention the key features of your item (eg. brand, model 0/70 age, type)",
+                        ),
                         SizedBox(height: 15.h),
                         FormBody(
                           controller: titleController,
@@ -225,6 +234,7 @@ class _FashionFormPageState extends State<FashionFormPage> {
                                 "json_data": jsonEncode({
                                   "title": titleController.text,
                                   "desc": descController.text,
+                                  "name": nameController.text,
                                 }),
                               });
                               Fluttertoast.showToast(

@@ -118,7 +118,17 @@ class _PropertyPageState extends State<PropertyPage> {
                       child: PropertyBody(txt: "For Rent : Shops & Offices"),
                     ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "For Sale : Shops & Offices"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ShopsOfficeFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "For Sale : Shops & Offices"),
+                    ),
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {

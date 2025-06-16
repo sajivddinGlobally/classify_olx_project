@@ -83,13 +83,53 @@ class _BooksPageState extends State<BooksPage> {
                           child: PropertyBody(txt: "Books"),
                         ),
                         SizedBox(height: 20.h),
-                        PropertyBody(txt: "Gym & Fitness"),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => BooksFormPage(),
+                              ),
+                            );
+                          },
+                          child: PropertyBody(txt: "Gym & Fitness"),
+                        ),
                         SizedBox(height: 20.h),
-                        PropertyBody(txt: "Musical Instruments"),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => BooksFormPage(),
+                              ),
+                            );
+                          },
+                          child: PropertyBody(txt: "Musical Instruments"),
+                        ),
                         SizedBox(height: 20.h),
-                        PropertyBody(txt: "Sports Equipment"),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => BooksFormPage(),
+                              ),
+                            );
+                          },
+                          child: PropertyBody(txt: "Sports Equipment"),
+                        ),
                         SizedBox(height: 20.h),
-                        PropertyBody(txt: "Other Hobbies"),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => BooksFormPage(),
+                              ),
+                            );
+                          },
+                          child: PropertyBody(txt: "Other Hobbies"),
+                        ),
                         SizedBox(height: 10.h),
                       ],
                     ),

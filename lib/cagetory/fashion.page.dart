@@ -80,9 +80,29 @@ class _FashionPageState extends State<FashionPage> {
                       child: PropertyBody(txt: "Men"),
                     ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Women"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => FashionFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Women"),
+                    ),
                     SizedBox(height: 20.h),
-                    PropertyBody(txt: "Kids"),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => FashionFormPage(),
+                          ),
+                        );
+                      },
+                      child: PropertyBody(txt: "Kids"),
+                    ),
                   ],
                 ),
               ),

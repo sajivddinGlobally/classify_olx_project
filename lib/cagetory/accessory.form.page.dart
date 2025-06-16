@@ -26,6 +26,7 @@ class AccessoryFormPage extends StatefulWidget {
 class _AccessoryFormPageState extends State<AccessoryFormPage> {
   final titleController = TextEditingController();
   final descController = TextEditingController();
+  final typeControleller = TextEditingController();
 
   File? image;
   final picker = ImagePicker();
@@ -91,6 +92,7 @@ class _AccessoryFormPageState extends State<AccessoryFormPage> {
     Map<String, dynamic> data = {
       "title": titleController.text,
       "des": descController.text,
+      "type": typeControleller.text,
     };
     return Scaffold(
       body: Stack(
@@ -145,63 +147,63 @@ class _AccessoryFormPageState extends State<AccessoryFormPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10.h),
                     SizedBox(height: 15.h),
-                    Text(
-                      "Type*",
-                      style: GoogleFonts.dmSans(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromARGB(153, 0, 0, 0),
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 190.w,
-                          height: 53.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.r),
-                            border: Border.all(
-                              color: Color.fromARGB(153, 0, 0, 0),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Mobile",
-                              style: GoogleFonts.dmSans(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w400,
-                                color: Color.fromARGB(153, 0, 0, 0),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 190.w,
-                          height: 53.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.r),
-                            border: Border.all(
-                              color: Color.fromARGB(153, 0, 0, 0),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Tablets",
-                              style: GoogleFonts.dmSans(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w400,
-                                color: Color.fromARGB(153, 0, 0, 0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Text(
+                    //   "Type*",
+                    //   style: GoogleFonts.dmSans(
+                    //     fontSize: 18.sp,
+                    //     fontWeight: FontWeight.w500,
+                    //     color: Color.fromARGB(153, 0, 0, 0),
+                    //     letterSpacing: -0.5,
+                    //   ),
+                    // ),
+                    // SizedBox(height: 10.h),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Container(
+                    //       width: 190.w,
+                    //       height: 53.h,
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(5.r),
+                    //         border: Border.all(
+                    //           color: Color.fromARGB(153, 0, 0, 0),
+                    //         ),
+                    //       ),
+                    //       child: Center(
+                    //         child: Text(
+                    //           "Mobile",
+                    //           style: GoogleFonts.dmSans(
+                    //             fontSize: 18.sp,
+                    //             fontWeight: FontWeight.w400,
+                    //             color: Color.fromARGB(153, 0, 0, 0),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     Container(
+                    //       width: 190.w,
+                    //       height: 53.h,
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(5.r),
+                    //         border: Border.all(
+                    //           color: Color.fromARGB(153, 0, 0, 0),
+                    //         ),
+                    //       ),
+                    //       child: Center(
+                    //         child: Text(
+                    //           "Tablets",
+                    //           style: GoogleFonts.dmSans(
+                    //             fontSize: 18.sp,
+                    //             fontWeight: FontWeight.w400,
+                    //             color: Color.fromARGB(153, 0, 0, 0),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    FormBody(labeltxt: "Tyoe *", controller: typeControleller),
                     SizedBox(height: 15.h),
                     FormBody(
                       controller: titleController,
@@ -275,6 +277,7 @@ class _AccessoryFormPageState extends State<AccessoryFormPage> {
                             "json_data": jsonEncode({
                               "title": titleController.text,
                               "des": descController.text,
+                              "type": typeControleller.text,
                             }),
                           });
                           Fluttertoast.showToast(
