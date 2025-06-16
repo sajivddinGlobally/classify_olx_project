@@ -154,7 +154,13 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       padding: EdgeInsets.only(left: 20.w, right: 20.w),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 350.h,
+                        // height: 350.h,
+                        padding: EdgeInsets.only(
+                          left: 25.w,
+                          right: 25.w,
+                          //top: 25.h,
+                          bottom: 30.h,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.r),
                           color: Colors.white,
@@ -199,16 +205,16 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                 name: 'Paid Plan',
                               ),
                             ),
-                            SizedBox(height: 10.h),
-                            EditProfileBody(
-                              icon: Icons.description_outlined,
-                              name: 'Privacy Policy',
-                            ),
-                            SizedBox(height: 10.h),
-                            EditProfileBody(
-                              icon: Icons.insert_drive_file_outlined,
-                              name: 'Terms & Condition',
-                            ),
+                            // SizedBox(height: 10.h),
+                            // EditProfileBody(
+                            //   icon: Icons.description_outlined,
+                            //   name: 'Privacy Policy',
+                            // ),
+                            // SizedBox(height: 10.h),
+                            // EditProfileBody(
+                            //   icon: Icons.insert_drive_file_outlined,
+                            //   name: 'Terms & Condition',
+                            // ),
                             SizedBox(height: 10.h),
                             if (token != null) ...[
                               Padding(
