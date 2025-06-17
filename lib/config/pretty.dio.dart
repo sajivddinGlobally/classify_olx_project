@@ -46,7 +46,7 @@ Dio createDio() {
         if (e.response?.statusCode == 401) {
           log("Token expire refreshing ");
           //log(e.response?.data['message']);
-          Fluttertoast.showToast(msg: e.response?.data["message"]);
+          Fluttertoast.showToast(msg: "Token expire please login");
           // ✅ Use the global navigator key
           navigatorKey.currentState?.pushAndRemoveUntil(
             CupertinoPageRoute(builder: (_) => LoginPage()),

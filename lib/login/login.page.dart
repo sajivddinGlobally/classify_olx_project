@@ -147,7 +147,8 @@ class _LoginPageState extends State<LoginPage> {
                               Fluttertoast.showToast(
                                 msg: "${response.otpForTesting}",
                                 fontSize: 30.sp,
-                                timeInSecForIosWeb: 30,
+                                timeInSecForIosWeb: 40,
+                                
                                 gravity: ToastGravity.TOP,
                                 toastLength: Toast.LENGTH_LONG,
                               );

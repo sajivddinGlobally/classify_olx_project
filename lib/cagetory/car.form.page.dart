@@ -172,61 +172,61 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                         SizedBox(height: 10.h),
                         FormBody(labeltxt: 'Fuel*', controller: fuelControlelr),
                         SizedBox(height: 15.h),
-                        Text(
-                          "Transmission",
-                          style: GoogleFonts.dmSans(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromARGB(153, 0, 0, 0),
-                            letterSpacing: -0.5,
-                          ),
-                        ),
-                        SizedBox(height: 15.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 190.w,
-                              height: 53.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.r),
-                                border: Border.all(
-                                  color: Color.fromARGB(153, 0, 0, 0),
-                                ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Automatic",
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color.fromARGB(153, 0, 0, 0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 190.w,
-                              height: 53.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.r),
-                                border: Border.all(
-                                  color: Color.fromARGB(153, 0, 0, 0),
-                                ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Automatic",
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color.fromARGB(153, 0, 0, 0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Text(
+                        //   "Transmission",
+                        //   style: GoogleFonts.dmSans(
+                        //     fontSize: 18.sp,
+                        //     fontWeight: FontWeight.w500,
+                        //     color: Color.fromARGB(153, 0, 0, 0),
+                        //     letterSpacing: -0.5,
+                        //   ),
+                        // ),
+                        // SizedBox(height: 15.h),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Container(
+                        //       width: 190.w,
+                        //       height: 53.h,
+                        //       decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.circular(5.r),
+                        //         border: Border.all(
+                        //           color: Color.fromARGB(153, 0, 0, 0),
+                        //         ),
+                        //       ),
+                        //       child: Center(
+                        //         child: Text(
+                        //           "Automatic",
+                        //           style: GoogleFonts.dmSans(
+                        //             fontSize: 18.sp,
+                        //             fontWeight: FontWeight.w400,
+                        //             color: Color.fromARGB(153, 0, 0, 0),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     Container(
+                        //       width: 190.w,
+                        //       height: 53.h,
+                        //       decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.circular(5.r),
+                        //         border: Border.all(
+                        //           color: Color.fromARGB(153, 0, 0, 0),
+                        //         ),
+                        //       ),
+                        //       child: Center(
+                        //         child: Text(
+                        //           "Automatic",
+                        //           style: GoogleFonts.dmSans(
+                        //             fontSize: 18.sp,
+                        //             fontWeight: FontWeight.w400,
+                        //             color: Color.fromARGB(153, 0, 0, 0),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         SizedBox(height: 10.h),
                         FormBody(
                           labeltxt: 'KM driven *',

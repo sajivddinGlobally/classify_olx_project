@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:shopping_app_olx/cagetory/choose.category.page.dart';
@@ -12,6 +13,7 @@ import 'package:shopping_app_olx/chat/chat.page.dart';
 import 'package:shopping_app_olx/cloth/clothing.page.dart';
 import 'package:shopping_app_olx/home/service/homepageController.dart';
 import 'package:shopping_app_olx/listing/listing.page.dart';
+import 'package:shopping_app_olx/login/login.page.dart';
 import 'package:shopping_app_olx/map/map.page.dart';
 import 'package:shopping_app_olx/map/service/locationController.dart';
 import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
@@ -68,6 +70,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
+    var token = box.get("token");
 
     final categorProvider = ref.watch(allCategoryController);
     final homepageData = ref.watch(homepageController);
@@ -726,10 +729,18 @@ class _HomePageState extends ConsumerState<HomePage> {
               : ProfilePage(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            CupertinoPageRoute(builder: (context) => ChooseCategoryPage()),
-          );
+          if (token == null) {
+            Fluttertoast.showToast(msg: "Please login first");
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => LoginPage()),
+            );
+          } else {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => ChooseCategoryPage()),
+            );
+          }
         },
         shape: CircleBorder(),
         backgroundColor: Color.fromARGB(255, 137, 26, 255),
