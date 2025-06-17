@@ -20,14 +20,18 @@ class _CategoryService implements CategoryService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CategoryResModel> fetchCategory(CategoryBodyModel body) async {
+  Future<CategoryResModel> fetchCategory(String category) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    final _data = {'category': category};
     final _options = _setStreamType<CategoryResModel>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
+      Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'application/x-www-form-urlencoded',
+          )
           .compose(
             _dio.options,
             '/api/category-by-products',

@@ -9,7 +9,12 @@ part 'category.service.g.dart';
 abstract class CategoryService {
   factory CategoryService(Dio dio, {String baseUrl}) = _CategoryService;
 
+  // @POST("/api/category-by-products")
+  // Future<CategoryResModel> fetchCategory(@Body() CategoryBodyModel body);
+
   @POST("/api/category-by-products")
-  Future<CategoryResModel> fetchCategory(@Body() CategoryBodyModel body);
- 
+  @FormUrlEncoded()
+  Future<CategoryResModel> fetchCategory(
+    @Field("category") String category,
+  );
 }

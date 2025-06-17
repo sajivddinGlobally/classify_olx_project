@@ -310,14 +310,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   context,
                                                   CupertinoPageRoute(
                                                     builder:
-                                                        (
-                                                          context,
-                                                        ) => ClothingPage(
-                                                          categoryTxt:
-                                                              category
-                                                                  .data[index]
-                                                                  .title,
-                                                        ),
+                                                        (context) =>
+                                                            ClothingPage(),
                                                   ),
                                                 );
                                               },

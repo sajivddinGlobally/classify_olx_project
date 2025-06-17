@@ -9,8 +9,7 @@ import 'package:shopping_app_olx/cloth/model/categoryBodyModel.dart';
 import 'package:shopping_app_olx/cloth/service/categoryController.dart';
 
 class ClothingPage extends ConsumerStatefulWidget {
-  final String categoryTxt;
-  const ClothingPage({super.key, required this.categoryTxt});
+  const ClothingPage({super.key});
 
   @override
   ConsumerState<ClothingPage> createState() => _ClothingPageState();
@@ -82,9 +81,10 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dataProvider = ref.watch(
-      categoryController(CategoryBodyModel(category: widget.categoryTxt)),
-    );
+    // final dataProvider = ref.watch(
+    //   categoryController(CategoryBodyModel(category: widget.categoryTxt)),
+    // );
+    final dataProvider = ref.watch(categoryController);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
       body: Column(
