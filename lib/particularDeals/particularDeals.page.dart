@@ -36,7 +36,7 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
                     Image.network(
                       particular.data.image.toString(),
                       width: MediaQuery.of(context).size.width,
-                      // height: 300.h,
+                      height: 480.h,
                       fit: BoxFit.cover,
                     ),
                     // Image.network(

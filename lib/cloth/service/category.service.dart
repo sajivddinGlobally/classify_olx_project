@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:shopping_app_olx/cloth/model/categoryBodyModel.dart';
 import 'package:shopping_app_olx/cloth/model/categoryResModel.dart';
 
 part 'category.service.g.dart';
@@ -9,12 +8,7 @@ part 'category.service.g.dart';
 abstract class CategoryService {
   factory CategoryService(Dio dio, {String baseUrl}) = _CategoryService;
 
-  // @POST("/api/category-by-products")
-  // Future<CategoryResModel> fetchCategory(@Body() CategoryBodyModel body);
-
   @POST("/api/category-by-products")
   @FormUrlEncoded()
-  Future<CategoryResModel> fetchCategory(
-    @Field("category") String category,
-  );
+  Future<CategoryResModel> fetchCategory(@Field("category") String category);
 }

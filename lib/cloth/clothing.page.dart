@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shopping_app_olx/cloth/model/categoryBodyModel.dart';
 import 'package:shopping_app_olx/cloth/service/categoryController.dart';
+import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 
 class ClothingPage extends ConsumerStatefulWidget {
   const ClothingPage({super.key});
@@ -81,9 +81,6 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final dataProvider = ref.watch(
-    //   categoryController(CategoryBodyModel(category: widget.categoryTxt)),
-    // );
     final dataProvider = ref.watch(categoryController);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
@@ -110,22 +107,21 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
               ),
               SizedBox(width: 10.w),
               Expanded(
-                child: SizedBox(
-                  height: 46.h,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: UnderlineInputBorder(
-                        borderRadius: BorderRadius.circular(40.r),
-                        borderSide: BorderSide.none,
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderRadius: BorderRadius.circular(40.r),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintText: "Clothing",
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 15.h, right: 15.w),
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: UnderlineInputBorder(
+                      borderRadius: BorderRadius.circular(40.r),
+                      borderSide: BorderSide.none,
                     ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderRadius: BorderRadius.circular(40.r),
+                      borderSide: BorderSide.none,
+                    ),
+                    prefixIcon: Icon(Icons.search),
+                    hintText: "Clothing",
                   ),
                 ),
               ),
@@ -171,16 +167,29 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                       children: [
                         Stack(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15.r),
-                              child: Image.network(
-                                // "assets/shoes1.png",
-                                //clothsList[index]["imageUrl"].toString(),
-                                //productcategory.data[index].image,
-                                data.data[index].image,
-                                width: 196.w,
-                                height: 160.h,
-                                fit: BoxFit.cover,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder:
+                                        (context) => ParticularDealsPage(
+                                          id: data.data[index].id.toString(),
+                                        ),
+                                  ),
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15.r),
+                                child: Image.network(
+                                  // "assets/shoes1.png",
+                                  //clothsList[index]["imageUrl"].toString(),
+                                  //productcategory.data[index].image,
+                                  data.data[index].image,
+                                  width: 196.w,
+                                  height: 160.h,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                             Positioned(
