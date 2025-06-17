@@ -87,228 +87,236 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
     final searchQuery = ref.watch(searchProvider).toLowerCase();
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 54.h),
-          Row(
-            children: [
-              SizedBox(width: 20.w),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  width: 46.w,
-                  height: 46.h,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                  child: Center(child: Icon(Icons.arrow_back)),
-                ),
-              ),
-              SizedBox(width: 10.w),
-              Expanded(
-                child: TextField(
-                  onChanged: (value) {
-                    ref.read(searchProvider.notifier).state = value;
-                  },
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(top: 15.h, right: 15.w),
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(40.r),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(40.r),
-                      borderSide: BorderSide.none,
-                    ),
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Clothing",
-                  ),
-                ),
-              ),
-              SizedBox(width: 20.w),
-            ],
-          ),
-          SizedBox(height: 16.h),
-          Padding(
-            padding: EdgeInsets.only(left: 20.w, right: 20.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 54.h),
+            Row(
               children: [
-                // FilterBody(name: "Category"),
-                // FilterBody(name: "Price"),
-                // FilterBody(name: "Recently Posted"),
+                SizedBox(width: 20.w),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 46.w,
+                    height: 46.h,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    child: Center(child: Icon(Icons.arrow_back)),
+                  ),
+                ),
+                SizedBox(width: 10.w),
+                Expanded(
+                  child: TextField(
+                    onChanged: (value) {
+                      ref.read(searchProvider.notifier).state = value;
+                    },
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 15.h, right: 15.w),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(40.r),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(40.r),
+                        borderSide: BorderSide.none,
+                      ),
+                      prefixIcon: Icon(Icons.search),
+                      hintText: "Clothing",
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20.w),
               ],
             ),
-          ),
-          SizedBox(height: 20.h),
-          dataProvider.when(
-            data: (data) {
-              final filterData =
-                  data.data.where((item) {
-                    final jsonMap = jsonDecode(item.jsonData);
-                    final name = jsonMap['name'].toString().toLowerCase();
-                    final category = item.category.toLowerCase();
-                    return name.contains(searchQuery) ||
-                        category.contains(searchQuery);
-                  }).toList();
-              if (filterData.isEmpty) {
-                return Center(
-                  child: Text(
-                    "No data found",
-                    style: GoogleFonts.dmSans(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
+            SizedBox(height: 16.h),
+            Padding(
+              padding: EdgeInsets.only(left: 20.w, right: 20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // FilterBody(name: "Category"),
+                  // FilterBody(name: "Price"),
+                  // FilterBody(name: "Recently Posted"),
+                ],
+              ),
+            ),
+            SizedBox(height: 20.h),
+            dataProvider.when(
+              data: (data) {
+                final filterData =
+                    data.data.where((item) {
+                      final jsonMap = jsonDecode(item.jsonData);
+                      final name = jsonMap['name'].toString().toLowerCase();
+                      final category = item.category.toLowerCase();
+                      return name.contains(searchQuery) ||
+                          category.contains(searchQuery);
+                    }).toList();
+                if (filterData.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "No data found",
+                      style: GoogleFonts.dmSans(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                );
-              }
-              log(data.data.length.toString());
-              return Padding(
-                padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  // itemCount: data.data.length,
-                  itemCount: filterData.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20.w,
-                    mainAxisSpacing: 10.h,
-                    childAspectRatio: 0.75,
-                  ),
-                  itemBuilder: (context, index) {
-                    final item = filterData[index];
-                    final jsonDetails = jsonDecode(item.jsonData);
-                    // final Map<String, dynamic> jsonDetails = jsonDecode(
-                    //   categ.jsonData,
-                    // );
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
+                  );
+                }
+                log(data.data.length.toString());
+                return Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                    child: GridView.builder(
+                      padding: EdgeInsets.zero,
+
+                      itemCount: filterData.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 20.w,
+                        mainAxisSpacing: 10.h,
+                        childAspectRatio: 0.75,
+                      ),
+                      itemBuilder: (context, index) {
+                        final item = filterData[index];
+                        final jsonDetails = jsonDecode(item.jsonData);
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                    builder:
-                                        (context) => ParticularDealsPage(
-                                          id: data.data[index].id.toString(),
-                                        ),
-                                  ),
-                                );
-                              },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15.r),
-                                child: Image.network(
-                                  // "assets/shoes1.png",
-                                  //clothsList[index]["imageUrl"].toString(),
-                                  //productcategory.data[index].image,
-                                  // data.data[index].image,
-                                  item.image,
-                                  width: 196.w,
-                                  height: 160.h,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              right: 15.w,
-                              top: 15.h,
-                              child: Container(
-                                width: 30.w,
-                                height: 30.h,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.favorite_border,
-                                    size: 18.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 15.h),
-                        Container(
-                          width: 155.w,
-                          height: 25.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.r),
-                            color: Color.fromARGB(25, 137, 26, 255),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 6.w, right: 6.w),
-                            child: Row(
+                            Stack(
                               children: [
-                                Icon(
-                                  Icons.location_on,
-                                  size: 15.sp,
-                                  color: Color.fromARGB(255, 137, 26, 255),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder:
+                                            (context) => ParticularDealsPage(
+                                              id:
+                                                  data.data[index].id
+                                                      .toString(),
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    child: Image.network(
+                                      // "assets/shoes1.png",
+                                      //clothsList[index]["imageUrl"].toString(),
+                                      //productcategory.data[index].image,
+                                      // data.data[index].image,
+                                      item.image,
+                                      width: 196.w,
+                                      height: 160.h,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                                Text(
-                                  "Udaipur, rajasthan",
-                                  //clothsList[index]["location"].toString(),
-                                  //productcategory.data[index].address,
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromARGB(255, 137, 26, 255),
+                                Positioned(
+                                  right: 15.w,
+                                  top: 15.h,
+                                  child: Container(
+                                    width: 30.w,
+                                    height: 30.h,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.favorite_border,
+                                        size: 18.sp,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          // "Nike Air Jorden 55 Medium",
-                          //clothsList[index]["title"].toString(),
-                          // productcategory.data[index].name,
-                          //jsonDetails['name'].toString(),
-                          // data.data[index].category,
-                          item.category,
-                          style: GoogleFonts.dmSans(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromARGB(255, 97, 91, 104),
-                            letterSpacing: -0.80,
-                          ),
-                        ),
-                        Text(
-                          //"\$450.00",
-                          //clothsList[index]["price"].toString(),
-                          // productcategory.data[index].price.toString(),
-                          //jsonDetails['price'].toString(),
-                          jsonDetails['price'].toString(),
-                          style: GoogleFonts.dmSans(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 137, 26, 255),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              );
-            },
-            error: (error, stackTrace) => Center(child: Text(error.toString())),
-            loading: () => Center(child: CircularProgressIndicator()),
-          ),
-        ],
+                            SizedBox(height: 15.h),
+                            Container(
+                              width: 155.w,
+                              height: 25.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30.r),
+                                color: Color.fromARGB(25, 137, 26, 255),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 6.w, right: 6.w),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      size: 15.sp,
+                                      color: Color.fromARGB(255, 137, 26, 255),
+                                    ),
+                                    Text(
+                                      "Udaipur, rajasthan",
+                                      //clothsList[index]["location"].toString(),
+                                      //productcategory.data[index].address,
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color.fromARGB(
+                                          255,
+                                          137,
+                                          26,
+                                          255,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Text(
+                              // "Nike Air Jorden 55 Medium",
+                              //clothsList[index]["title"].toString(),
+                              // productcategory.data[index].name,
+                              //jsonDetails['name'].toString(),
+                              // data.data[index].category,
+                              item.category,
+                              style: GoogleFonts.dmSans(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 97, 91, 104),
+                                letterSpacing: -0.80,
+                              ),
+                            ),
+                            Text(
+                              //"\$450.00",
+                              //clothsList[index]["price"].toString(),
+                              // productcategory.data[index].price.toString(),
+                              //jsonDetails['price'].toString(),
+                              jsonDetails['price'].toString(),
+                              style: GoogleFonts.dmSans(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 137, 26, 255),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                );
+              },
+              error:
+                  (error, stackTrace) => Center(child: Text(error.toString())),
+              loading: () => Center(child: CircularProgressIndicator()),
+            ),
+          ],
+        ),
       ),
     );
   }
