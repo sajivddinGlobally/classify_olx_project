@@ -31,6 +31,7 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 15.h),
                 Stack(
                   children: [
                     Image.network(

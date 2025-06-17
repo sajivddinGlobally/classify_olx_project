@@ -156,8 +156,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                         width: MediaQuery.of(context).size.width,
                         // height: 350.h,
                         padding: EdgeInsets.only(
-                          left: 25.w,
-                          right: 25.w,
+                          left: 20.w,
+                          right: 20.w,
                           //top: 25.h,
                           bottom: 30.h,
                         ),

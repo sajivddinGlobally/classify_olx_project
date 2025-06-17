@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/listing/service/getlistingController.dart';
+import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 import 'package:shopping_app_olx/plan/reting.page.dart';
 
 class ListingPage extends ConsumerStatefulWidget {
@@ -61,7 +62,9 @@ class _ListingPageState extends ConsumerState<ListingPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => RetingPage(),
+                            builder:
+                                (context) =>
+                                    ParticularDealsPage(id: data.id.toString()),
                           ),
                         );
                       },
