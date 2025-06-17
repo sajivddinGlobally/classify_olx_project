@@ -79,9 +79,12 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
     },
   ];
 
+  final searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final dataProvider = ref.watch(categoryController);
+    final searchQuery = ref.watch(searchProvider).toLowerCase();
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
       body: Column(
@@ -108,6 +111,9 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
               SizedBox(width: 10.w),
               Expanded(
                 child: TextField(
+                  onChanged: (value) {
+                    ref.read(searchProvider.notifier).state = value;
+                  },
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(top: 15.h, right: 15.w),
                     filled: true,
@@ -143,6 +149,26 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
           SizedBox(height: 20.h),
           dataProvider.when(
             data: (data) {
+              final filterData =
+                  data.data.where((item) {
+                    final jsonMap = jsonDecode(item.jsonData);
+                    final name = jsonMap['name'].toString().toLowerCase();
+                    final category = item.category.toLowerCase();
+                    return name.contains(searchQuery) ||
+                        category.contains(searchQuery);
+                  }).toList();
+              if (filterData.isEmpty) {
+                return Center(
+                  child: Text(
+                    "No data found",
+                    style: GoogleFonts.dmSans(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
+                );
+              }
               log(data.data.length.toString());
               return Padding(
                 padding: EdgeInsets.only(left: 20.w, right: 20.w),
@@ -150,7 +176,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
-                  itemCount: data.data.length,
+                  // itemCount: data.data.length,
+                  itemCount: filterData.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 20.w,
@@ -158,10 +185,11 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                     childAspectRatio: 0.75,
                   ),
                   itemBuilder: (context, index) {
-                    final categ = data.data[index];
-                    final Map<String, dynamic> jsonDetails = jsonDecode(
-                      categ.jsonData,
-                    );
+                    final item = filterData[index];
+                    final jsonDetails = jsonDecode(item.jsonData);
+                    // final Map<String, dynamic> jsonDetails = jsonDecode(
+                    //   categ.jsonData,
+                    // );
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -185,7 +213,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                                   // "assets/shoes1.png",
                                   //clothsList[index]["imageUrl"].toString(),
                                   //productcategory.data[index].image,
-                                  data.data[index].image,
+                                  // data.data[index].image,
+                                  item.image,
                                   width: 196.w,
                                   height: 160.h,
                                   fit: BoxFit.cover,
@@ -249,7 +278,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                           //clothsList[index]["title"].toString(),
                           // productcategory.data[index].name,
                           //jsonDetails['name'].toString(),
-                          data.data[index].category,
+                          // data.data[index].category,
+                          item.category,
                           style: GoogleFonts.dmSans(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
@@ -261,6 +291,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                           //"\$450.00",
                           //clothsList[index]["price"].toString(),
                           // productcategory.data[index].price.toString(),
+                          //jsonDetails['price'].toString(),
                           jsonDetails['price'].toString(),
                           style: GoogleFonts.dmSans(
                             fontSize: 18.sp,
