@@ -73,7 +73,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     var box = Hive.box("data");
     var token = box.get("token");
-    final likeState = ref.watch(likeNotiferProvider);
+
     final categorProvider = ref.watch(allCategoryController);
     final homepageData = ref.watch(homepageController);
 
@@ -965,6 +965,7 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
   ];
   @override
   Widget build(BuildContext context) {
+    var box = Hive.box("data");
     final homepageData = ref.watch(homepageController);
     return homepageData.when(
       data: (allproduct) {
@@ -984,24 +985,29 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
             itemBuilder: (context, index) {
               final data = allproduct.allProducts[index];
               final Map<String, dynamic> jsonData = jsonDecode(data.jsonData);
+              ///// ye like ke liye
+              final productId = allproduct.allProducts[index].id.toString();
+              final isLiked = ref.watch(likeToggleProvider).contains(productId);
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder:
-                              (context) => ParticularDealsPage(
-                                id: allproduct.allProducts[index].id.toString(),
-                              ),
-                        ),
-                      );
-                    },
-                    child: Stack(
-                      children: [
-                        ClipRRect(
+                  Stack(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder:
+                                  (context) => ParticularDealsPage(
+                                    id:
+                                        allproduct.allProducts[index].id
+                                            .toString(),
+                                  ),
+                            ),
+                          );
+                        },
+                        child: ClipRRect(
                           borderRadius: BorderRadius.circular(15.r),
                           child: Image.network(
                             // "assets/shoes1.png",
@@ -1012,9 +1018,35 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        Positioned(
-                          right: 15.w,
-                          top: 15.h,
+                      ),
+                      Positioned(
+                        right: 15.w,
+                        top: 15.h,
+                        child: GestureDetector(
+                          onTap: () async {
+                            final body = LikeBodyModel(
+                              productId: productId,
+                              type: "like",
+                              userId: "${box.get('id')}",
+                            );
+                            await ref
+                                .read(likeNotiferProvider.notifier)
+                                .likeProduct(body);
+
+                            final toggleNotifier = ref.read(
+                              likeToggleProvider.notifier,
+                            );
+                            toggleNotifier.toggle(productId);
+                            final nowLiked = toggleNotifier.isLiked(productId);
+                            Fluttertoast.showToast(
+                              msg:
+                                  nowLiked
+                                      ? "Added to Liked"
+                                      : "Removed from Liked",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                            );
+                          },
                           child: Container(
                             width: 30.w,
                             height: 30.h,
@@ -1023,12 +1055,20 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
                               color: Colors.white,
                             ),
                             child: Center(
-                              child: Icon(Icons.favorite_border, size: 18.sp),
+                              child: Center(
+                                child: Icon(
+                                  isLiked
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: isLiked ? Colors.red : Colors.grey,
+                                  size: 18.sp,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 15.h),
                   Container(
