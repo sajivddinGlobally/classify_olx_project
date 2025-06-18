@@ -14,6 +14,7 @@ import 'package:shopping_app_olx/cloth/clothing.page.dart';
 import 'package:shopping_app_olx/home/service/homepageController.dart';
 import 'package:shopping_app_olx/like/model/likeBodyModel.dart';
 import 'package:shopping_app_olx/like/service/likeController.dart';
+import 'package:shopping_app_olx/like/showlike.page.dart';
 import 'package:shopping_app_olx/listing/listing.page.dart';
 import 'package:shopping_app_olx/login/login.page.dart';
 import 'package:shopping_app_olx/map/map.page.dart';
@@ -85,7 +86,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     if (homepageData.error != null) {
       return Scaffold(body: Center(child: Text("${homepageData.error}")));
     }
-
     return Scaffold(
       //backgroundColor: Color.fromARGB(255, 240, 228, 250),
       body:
@@ -219,15 +219,26 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     ),
                                   ),
                                   Spacer(),
-                                  Container(
-                                    width: 50.w,
-                                    height: 50.h,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                    ),
-                                    child: Center(
-                                      child: Icon(Icons.favorite_border),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder:
+                                              (context) => ShowlikePage(id: ''),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 50.w,
+                                      height: 50.h,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                      ),
+                                      child: Center(
+                                        child: Icon(Icons.favorite_border),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(width: 8.w),

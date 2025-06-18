@@ -69,15 +69,15 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
                                 child: Center(child: Icon(Icons.arrow_back)),
                               ),
                             ),
-                            Container(
-                              width: 46.w,
-                              height: 46.h,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                              ),
-                              child: Center(child: Icon(Icons.favorite_border)),
-                            ),
+                            // Container(
+                            //   width: 46.w,
+                            //   height: 46.h,
+                            //   decoration: BoxDecoration(
+                            //     shape: BoxShape.circle,
+                            //     color: Colors.white,
+                            //   ),
+                            //   child: Center(child: Icon(Icons.favorite_border)),
+                            // ),
                           ],
                         ),
                       ),
