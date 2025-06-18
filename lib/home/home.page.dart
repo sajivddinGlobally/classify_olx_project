@@ -12,6 +12,8 @@ import 'package:shopping_app_olx/cagetory/choose.category.page.dart';
 import 'package:shopping_app_olx/chat/chat.page.dart';
 import 'package:shopping_app_olx/cloth/clothing.page.dart';
 import 'package:shopping_app_olx/home/service/homepageController.dart';
+import 'package:shopping_app_olx/like/model/likeBodyModel.dart';
+import 'package:shopping_app_olx/like/service/likeController.dart';
 import 'package:shopping_app_olx/listing/listing.page.dart';
 import 'package:shopping_app_olx/login/login.page.dart';
 import 'package:shopping_app_olx/map/map.page.dart';
@@ -71,7 +73,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     var box = Hive.box("data");
     var token = box.get("token");
-
+    final likeState = ref.watch(likeNotiferProvider);
     final categorProvider = ref.watch(allCategoryController);
     final homepageData = ref.watch(homepageController);
 
@@ -468,36 +470,43 @@ class _HomePageState extends ConsumerState<HomePage> {
                                             listing.latestListings[index];
                                         final Map<String, dynamic> jsonDetails =
                                             jsonDecode(product.jsonData);
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              CupertinoPageRoute(
-                                                builder:
-                                                    (
-                                                      context,
-                                                    ) => ParticularDealsPage(
-                                                      id:
-                                                          listing
-                                                              .latestListings[index]
-                                                              .id
-                                                              .toString(),
-                                                    ),
-                                              ),
-                                            );
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                              top: 21.h,
-                                              left: 20.w,
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Stack(
-                                                  children: [
-                                                    ClipRRect(
+                                        ///// ye like ke liye
+                                        final productId =
+                                            listing.latestListings[index].id
+                                                .toString();
+                                        final isLiked = ref
+                                            .watch(likeToggleProvider)
+                                            .contains(productId);
+                                        return Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 21.h,
+                                            left: 20.w,
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        CupertinoPageRoute(
+                                                          builder:
+                                                              (
+                                                                context,
+                                                              ) => ParticularDealsPage(
+                                                                id:
+                                                                    listing
+                                                                        .latestListings[index]
+                                                                        .id
+                                                                        .toString(),
+                                                              ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: ClipRRect(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                             15.r,
@@ -514,9 +523,52 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
-                                                    Positioned(
-                                                      right: 15.w,
-                                                      top: 15.h,
+                                                  ),
+                                                  Positioned(
+                                                    right: 15.w,
+                                                    top: 15.h,
+                                                    child: GestureDetector(
+                                                      onTap: () async {
+                                                        final body = LikeBodyModel(
+                                                          productId: productId,
+                                                          type: "like",
+                                                          userId:
+                                                              "${box.get("id")}",
+                                                        );
+                                                        await ref
+                                                            .read(
+                                                              likeNotiferProvider
+                                                                  .notifier,
+                                                            )
+                                                            .likeProduct(body);
+
+                                                        final toggleNotifier =
+                                                            ref.read(
+                                                              likeToggleProvider
+                                                                  .notifier,
+                                                            );
+                                                        toggleNotifier.toggle(
+                                                          productId,
+                                                        );
+                                                        final nowLiked =
+                                                            toggleNotifier
+                                                                .isLiked(
+                                                                  productId,
+                                                                );
+
+                                                        Fluttertoast.showToast(
+                                                          msg:
+                                                              nowLiked
+                                                                  ? "Added to Liked"
+                                                                  : "Removed from Liked",
+                                                          toastLength:
+                                                              Toast
+                                                                  .LENGTH_SHORT,
+                                                          gravity:
+                                                              ToastGravity
+                                                                  .BOTTOM,
+                                                        );
+                                                      },
                                                       child: Container(
                                                         width: 30.w,
                                                         height: 30.h,
@@ -530,111 +582,118 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                             ),
                                                         child: Center(
                                                           child: Icon(
-                                                            Icons
-                                                                .favorite_border,
+                                                            isLiked
+                                                                ? Icons.favorite
+                                                                : Icons
+                                                                    .favorite_border,
+                                                            color:
+                                                                isLiked
+                                                                    ? Colors.red
+                                                                    : Colors
+                                                                        .grey,
                                                             size: 18.sp,
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ],
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 15.h),
+                                              Container(
+                                                // width: 135.w,
+                                                height: 25.h,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        30.r,
+                                                      ),
+                                                  color: Color.fromARGB(
+                                                    25,
+                                                    137,
+                                                    26,
+                                                    255,
+                                                  ),
                                                 ),
-                                                SizedBox(height: 15.h),
-                                                Container(
-                                                  // width: 135.w,
-                                                  height: 25.h,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          30.r,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: 6.w,
+                                                    right: 6.w,
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.location_on,
+                                                        size: 15.sp,
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          137,
+                                                          26,
+                                                          255,
                                                         ),
-                                                    color: Color.fromARGB(
-                                                      25,
-                                                      137,
-                                                      26,
-                                                      255,
-                                                    ),
-                                                  ),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                      left: 6.w,
-                                                      right: 6.w,
-                                                    ),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.location_on,
-                                                          size: 15.sp,
-                                                          color: Color.fromARGB(
-                                                            255,
-                                                            137,
-                                                            26,
-                                                            255,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          // "Udaipur, rajasthan",
-                                                          // dealsList[index]["location"]
-                                                          //     .toString(),
-                                                          listing.location,
-                                                          style: GoogleFonts.dmSans(
-                                                            fontSize: 12.sp,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color:
-                                                                Color.fromARGB(
-                                                                  255,
-                                                                  137,
-                                                                  26,
-                                                                  255,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                      Text(
+                                                        // "Udaipur, rajasthan",
+                                                        // dealsList[index]["location"]
+                                                        //     .toString(),
+                                                        listing.location,
+                                                        style:
+                                                            GoogleFonts.dmSans(
+                                                              fontSize: 12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color:
+                                                                  Color.fromARGB(
+                                                                    255,
+                                                                    137,
+                                                                    26,
+                                                                    255,
+                                                                  ),
+                                                            ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                SizedBox(height: 8.h),
-                                                Text(
-                                                  // "Nike Air Jorden 55 Medium",
-                                                  // dealsList[index]["title"]
-                                                  //     .toString(),
-                                                  // listing
-                                                  //     .latestListings[index]
-                                                  //     .category,
-                                                  jsonDetails['name']
-                                                      .toString(),
-                                                  style: GoogleFonts.dmSans(
-                                                    fontSize: 14.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      97,
-                                                      91,
-                                                      104,
-                                                    ),
-                                                    letterSpacing: -0.80,
+                                              ),
+                                              SizedBox(height: 8.h),
+                                              Text(
+                                                // "Nike Air Jorden 55 Medium",
+                                                // dealsList[index]["title"]
+                                                //     .toString(),
+                                                // listing
+                                                //     .latestListings[index]
+                                                //     .category,
+                                                jsonDetails['name'].toString(),
+                                                style: GoogleFonts.dmSans(
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    97,
+                                                    91,
+                                                    104,
+                                                  ),
+                                                  letterSpacing: -0.80,
+                                                ),
+                                              ),
+                                              Text(
+                                                // "\$450.00",
+                                                // dealsList[index]["price"]
+                                                //     .toString(),
+                                                jsonDetails['price'].toString(),
+                                                style: GoogleFonts.dmSans(
+                                                  fontSize: 18.sp,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    137,
+                                                    26,
+                                                    255,
                                                   ),
                                                 ),
-                                                Text(
-                                                  // "\$450.00",
-                                                  // dealsList[index]["price"]
-                                                  //     .toString(),
-                                                  jsonDetails['price']
-                                                      .toString(),
-                                                  style: GoogleFonts.dmSans(
-                                                    fontSize: 18.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      137,
-                                                      26,
-                                                      255,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         );
                                       },
