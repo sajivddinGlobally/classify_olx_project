@@ -95,7 +95,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                             ),
                           ),
                           Text(
-                            "+91-8978456532",
+                            "${widget.phone}",
                             style: GoogleFonts.dmSans(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.sp,

@@ -36,13 +36,13 @@ Dio createDio() {
         handler.next(response);
       },
       onError: (DioException e, handler) async {
-        if (e.response!.requestOptions.path.contains("/api/auth/verifyOtp")) {
-          // ye code sirf agar wrong otp dalne par navigat nhi hoga
-          log("OTP verification failed - Invalid OTP");
+        // if (e.response!.requestOptions.path.contains("/api/auth/verifyOtp")) {
+        //   // ye code sirf agar wrong otp dalne par navigat nhi hoga
+        //   log("OTP verification failed - Invalid OTP");
 
-          handler.next(e); // Just forward the error, no navigation
-          return;
-        }
+        //   handler.next(e); // Just forward the error, no navigation
+        //   return;
+        // }
         if (e.response?.statusCode == 401) {
           log("Token expire refreshing ");
           //log(e.response?.data['message']);
