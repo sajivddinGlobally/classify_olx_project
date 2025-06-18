@@ -6,8 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/like/service/showlikeController.dart';
 
 class ShowlikePage extends ConsumerStatefulWidget {
-  final String id;
-  const ShowlikePage({super.key,required this.id});
+  const ShowlikePage({super.key});
 
   @override
   ConsumerState<ShowlikePage> createState() => _ShowlikePageState();

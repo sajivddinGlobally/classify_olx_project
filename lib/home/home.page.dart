@@ -224,8 +224,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       Navigator.push(
                                         context,
                                         CupertinoPageRoute(
-                                          builder:
-                                              (context) => ShowlikePage(id: ''),
+                                          builder: (context) => ShowlikePage(),
                                         ),
                                       );
                                     },
