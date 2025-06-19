@@ -45,6 +45,8 @@ class AllProduct {
     int status;
     DateTime createdAt;
     DateTime updatedAt;
+    int likes;
+    int dislikes;
 
     AllProduct({
         required this.id,
@@ -55,6 +57,8 @@ class AllProduct {
         required this.status,
         required this.createdAt,
         required this.updatedAt,
+        required this.likes,
+        required this.dislikes,
     });
 
     factory AllProduct.fromJson(Map<String, dynamic> json) => AllProduct(
@@ -66,6 +70,8 @@ class AllProduct {
         status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        likes: json["likes"],
+        dislikes: json["dislikes"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -77,6 +83,8 @@ class AllProduct {
         "status": status,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "likes": likes,
+        "dislikes": dislikes,
     };
 }
 

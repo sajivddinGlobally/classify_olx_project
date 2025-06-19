@@ -15,7 +15,9 @@ class ShowlikePage extends ConsumerStatefulWidget {
 class _ShowlikePageState extends ConsumerState<ShowlikePage> {
   @override
   Widget build(BuildContext context) {
-    final likeCount = ref.watch(showLikeCountProvider("50"));
+    
+    final likeCount = ref.watch(showLikeCountProvider("62"));
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

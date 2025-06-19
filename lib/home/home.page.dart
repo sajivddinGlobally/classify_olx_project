@@ -557,9 +557,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                               likeToggleProvider
                                                                   .notifier,
                                                             );
+
                                                         toggleNotifier.toggle(
                                                           productId,
                                                         );
+
                                                         final nowLiked =
                                                             toggleNotifier
                                                                 .isLiked(
