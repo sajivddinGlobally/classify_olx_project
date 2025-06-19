@@ -70,6 +70,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   int tabBottom = 0;
 
+  
+
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");

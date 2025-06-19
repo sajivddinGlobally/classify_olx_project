@@ -89,7 +89,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                     SizedBox(height: 20.h),
                     Text(
                       // box.get("fullName") ?? "sajivddin",
-                      data.data.fullName ?? "Your Name",
+                      data.data.fullName,
                       style: GoogleFonts.dmSans(
                         fontSize: 22.sp,
                         fontWeight: FontWeight.w600,
@@ -206,11 +206,11 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                                 name: 'Paid Plan',
                               ),
                             ),
-                            // SizedBox(height: 10.h),
-                            // EditProfileBody(
-                            //   icon: Icons.description_outlined,
-                            //   name: 'Privacy Policy',
-                            // ),
+                            SizedBox(height: 10.h),
+                            EditProfileBody(
+                              icon: Icons.help_outline,
+                              name: 'Help & Support',
+                            ),
                             // SizedBox(height: 10.h),
                             // EditProfileBody(
                             //   icon: Icons.insert_drive_file_outlined,

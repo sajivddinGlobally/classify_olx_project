@@ -30,6 +30,8 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
   final ownerControleller = TextEditingController();
   final titleController = TextEditingController();
   final descController = TextEditingController();
+  final priceController = TextEditingController();
+  final pinCodeController = TextEditingController();
 
   bool isloading = false;
 
@@ -101,6 +103,8 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
       "owner": ownerControleller.text,
       "title": titleController.text,
       "desc": descController.text,
+      "price": priceController.text,
+      "picCode": pinCodeController.text,
     };
     return Scaffold(
       body: SingleChildScrollView(
@@ -254,6 +258,18 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                               'Include condition, features and reason for selling\nRequired Fields',
                           maxlenghts: 4096,
                         ),
+                        SizedBox(height: 10.h),
+                        FormBody(
+                          labeltxt: "Price*",
+                          controller: priceController,
+                          type: TextInputType.number,
+                        ),
+                        SizedBox(height: 10.h),
+                        FormBody(
+                          labeltxt: "Pin Code*",
+                          controller: pinCodeController,
+                          type: TextInputType.number,
+                        ),
                         SizedBox(height: 20.h),
                         GestureDetector(
                           onTap: () {
@@ -312,22 +328,10 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                               log("km : ${kmDrivenController.text}");
                               log("owner : ${ownerControleller.text}");
                               log("title : ${titleController.text}");
+                              log("Price : ${priceController.text}");
+                              log("PinCode : ${pinCodeController.text}");
 
                               final apiserce = APIService(await createDio());
-                              // await apiserce.addProduct({
-                              //   "category": "text",
-                              //   "userId": "${box.get("id")}",
-                              //   "image": image?.path,
-                              //   "json_data": {
-                              //     "car": carControlelr.text,
-                              //     "Year": yearController.text,
-                              //     "fuel": fuelControlelr.text,
-                              //     "ko": kmDrivenController.text,
-                              //     "owner": ownerControleller.text,
-                              //     "title": titleController.text,
-                              //     "Des": descController.text,
-                              //   },
-                              // });
                               await apiserce.addProduct({
                                 "category": "test",
                                 "user_id": "${box.get("id")}",
@@ -343,6 +347,8 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
                                   "owner": ownerControleller.text,
                                   "title": titleController.text,
                                   "Des": descController.text,
+                                  "price": priceController.text,
+                                  "pinCode": pinCodeController.text,
                                 }),
                               });
                               Fluttertoast.showToast(
