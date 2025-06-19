@@ -207,9 +207,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                               ),
                             ),
                             SizedBox(height: 10.h),
-                            EditProfileBody(
-                              icon: Icons.help_outline,
-                              name: 'Help & Support',
+                            GestureDetector(
+                              onTap: () {
+                                
+                              },
+                              child: EditProfileBody(
+                                icon: Icons.help_outline,
+                                name: 'Help & Support',
+                              ),
                             ),
                             // SizedBox(height: 10.h),
                             // EditProfileBody(
