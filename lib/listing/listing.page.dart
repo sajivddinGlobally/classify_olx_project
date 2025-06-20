@@ -17,10 +17,13 @@ class ListingPage extends ConsumerStatefulWidget {
 }
 
 class _ListingPageState extends ConsumerState<ListingPage> {
-  List<Map<String, String>> listingList = [
-    {"imageUrl": "assets/listingimage.png"},
-    {"imageUrl": "assets/listingimage2.png"},
-  ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.microtask(() => ref.invalidate(listingController));
+  }
+
   @override
   Widget build(BuildContext context) {
     final listingProvider = ref.watch(listingController);
@@ -54,9 +57,10 @@ class _ListingPageState extends ConsumerState<ListingPage> {
                   // physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final data = listing.data.sellList[index];
-                    final Map<String, dynamic> jsonDetails = jsonDecode(
-                      data.jsonData,
-                    );
+                    // final Map<String, dynamic> jsonDetails = jsonDecode(
+                    //   data.jsonData,
+                    // );
+                      var jsondata = listing.data.sellList[index].jsonData.entries.toList();
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -105,7 +109,7 @@ class _ListingPageState extends ConsumerState<ListingPage> {
                                 SizedBox(height: 10.h),
                                 Text(
                                   // "Raymond's Silk Shirts with red coller",
-                                  jsonDetails['description'].toString(),
+                                  jsondata[0].value.toString(),
                                   style: GoogleFonts.dmSans(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
@@ -118,7 +122,7 @@ class _ListingPageState extends ConsumerState<ListingPage> {
                                   children: [
                                     Text(
                                       // "\$250.00",
-                                      "\$${jsonDetails['price'].toString()}",
+                                      "₹ ${listing.data.sellList[index].price}",
                                       style: GoogleFonts.dmSans(
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w600,
@@ -185,7 +189,14 @@ class _ListingPageState extends ConsumerState<ListingPage> {
             ],
           );
         },
-        error: (error, stackTrace) => Center(child: Text(error.toString())),
+        error: (error, stackTrace) {
+          if (error is UserNotLoggedInException) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.of(context).pushReplacementNamed('/login');
+            });
+          }
+          return Center(child: Text("$error"));
+        },
         loading: () => Center(child: CircularProgressIndicator()),
       ),
     );

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,18 +13,20 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/choseMap/controller/locationNotifer.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/map/map.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
-class DataEntryFormPage extends StatefulWidget {
+class DataEntryFormPage extends ConsumerStatefulWidget {
   const DataEntryFormPage({super.key});
 
   @override
-  State<DataEntryFormPage> createState() => _DataEntryFormPageState();
+  ConsumerState<DataEntryFormPage> createState() => _DataEntryFormPageState();
 }
 
-class _DataEntryFormPageState extends State<DataEntryFormPage> {
+class _DataEntryFormPageState extends ConsumerState<DataEntryFormPage> {
   final saleController = TextEditingController();
   final posiController = TextEditingController();
   final saleFormController = TextEditingController();
@@ -62,6 +65,31 @@ class _DataEntryFormPageState extends State<DataEntryFormPage> {
     }
   }
 
+  bool _didRedirect = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_didRedirect) return;
+
+    final shouldRedirect =
+        ModalRoute.of(context)?.settings.arguments as bool? ?? false;
+
+    if (shouldRedirect) {
+      _didRedirect = true;
+
+      // Delay using Future.delayed to let UI settle before navigation
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (mounted) {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const MapPage()));
+        }
+      });
+    }
+  }
+
   Future showImage() async {
     showCupertinoModalPopup(
       context: context,
@@ -92,6 +120,8 @@ class _DataEntryFormPageState extends State<DataEntryFormPage> {
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
+    final priceController = TextEditingController();
+    final location = ref.watch(locationNotifer);
     Map<String, dynamic> data = {
       "type": saleController.text,
       "bhk": posiController.text,
@@ -183,6 +213,13 @@ class _DataEntryFormPageState extends State<DataEntryFormPage> {
                         helper:
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
+
+                      SizedBox(height: 15.h),
+                      FormBody(
+                        controller: priceController,
+                        labeltxt: "Ad Price*",
+                        helper: "Price",
+                      ),
                       SizedBox(height: 15.h),
                       FormBody(
                         controller: desContrler,
@@ -246,6 +283,10 @@ class _DataEntryFormPageState extends State<DataEntryFormPage> {
                                 image!.path,
                                 filename: image!.path.split("/").last,
                               ),
+                              "latitude": location.lat,
+                              "longitude": location.long,
+
+                              "price": priceController.text,
                               "json_data": jsonEncode({
                                 "type": saleController.text,
                                 "bhk": posiController.text,

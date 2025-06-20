@@ -28,7 +28,10 @@ class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
       _CategoryItem('Cars', Icons.directions_car_filled_outlined, () {
         Navigator.push(
           context,
-          CupertinoPageRoute(builder: (context) => CarFormPage()),
+          CupertinoPageRoute(
+            builder: (context) => CarFormPage(),
+            settings: RouteSettings(arguments: true),
+          ),
         );
       }),
       _CategoryItem('Properties', Icons.home_outlined, () {

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,18 +14,20 @@ import 'package:image_picker/image_picker.dart' show ImagePicker, ImageSource;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/choseMap/controller/locationNotifer.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/map/map.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
-class GuesthouseFormPage extends StatefulWidget {
+class GuesthouseFormPage extends ConsumerStatefulWidget {
   const GuesthouseFormPage({super.key});
 
   @override
-  State<GuesthouseFormPage> createState() => _GuesthouseFormPageState();
+  ConsumerState<GuesthouseFormPage> createState() => _GuesthouseFormPageState();
 }
 
-class _GuesthouseFormPageState extends State<GuesthouseFormPage> {
+class _GuesthouseFormPageState extends ConsumerState<GuesthouseFormPage> {
   final projectControler = TextEditingController();
   final listedControlelr = TextEditingController();
   final superbuildController = TextEditingController();
@@ -94,6 +97,32 @@ class _GuesthouseFormPageState extends State<GuesthouseFormPage> {
     );
   }
 
+  bool _didRedirect = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_didRedirect) return;
+
+    final shouldRedirect =
+        ModalRoute.of(context)?.settings.arguments as bool? ?? false;
+
+    if (shouldRedirect) {
+      _didRedirect = true;
+
+      // Delay using Future.delayed to let UI settle before navigation
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (mounted) {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const MapPage()));
+        }
+      });
+    }
+  }
+
+  final priceController = TextEditingController();
   bool isLoading = false;
 
   @override
@@ -112,6 +141,7 @@ class _GuesthouseFormPageState extends State<GuesthouseFormPage> {
       "des": desContrler.text,
       "pri": projectName.text,
     };
+    final location = ref.watch(locationNotifer);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -219,6 +249,12 @@ class _GuesthouseFormPageState extends State<GuesthouseFormPage> {
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
                       SizedBox(height: 10.h),
+                      SizedBox(height: 15.h),
+                      FormBody(
+                        controller: priceController,
+                        labeltxt: "Ad Price*",
+                        helper: "Price",
+                      ),
                       FormBody(
                         controller: desContrler,
                         labeltxt: "Describe what you are selling *",
@@ -281,6 +317,10 @@ class _GuesthouseFormPageState extends State<GuesthouseFormPage> {
                                 image!.path,
                                 filename: image!.path.split("/").last,
                               ),
+                              "latitude": location.lat,
+                              "longitude": location.long,
+
+                              "price": priceController.text,
                               "json_data": jsonEncode({
                                 "project": projectControler.text,
                                 "listed": listedControlelr.text,

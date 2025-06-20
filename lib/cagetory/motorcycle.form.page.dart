@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,25 +14,27 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/new.plan.page.dart';
+import 'package:shopping_app_olx/choseMap/controller/locationNotifer.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/map/map.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
-class MotorcycleFormPage extends StatefulWidget {
+class MotorcycleFormPage extends ConsumerStatefulWidget {
   const MotorcycleFormPage({super.key});
 
   @override
-  State<MotorcycleFormPage> createState() => _MotorcycleFormPageState();
+  ConsumerState<MotorcycleFormPage> createState() => _MotorcycleFormPageState();
 }
 
-class _MotorcycleFormPageState extends State<MotorcycleFormPage> {
+class _MotorcycleFormPageState extends ConsumerState<MotorcycleFormPage> {
   final brandController = TextEditingController();
   final yearController = TextEditingController();
   final fuelControlelr = TextEditingController();
   final kmdrivenContorller = TextEditingController();
   final titleControler = TextEditingController();
   final desContrler = TextEditingController();
-
+    final priceController = TextEditingController();
   File? image;
   final picker = ImagePicker();
 
@@ -89,7 +92,30 @@ class _MotorcycleFormPageState extends State<MotorcycleFormPage> {
   }
 
   bool isLoading = false;
+  bool _didRedirect = false;
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_didRedirect) return;
+
+    final shouldRedirect =
+        ModalRoute.of(context)?.settings.arguments as bool? ?? false;
+
+    if (shouldRedirect) {
+      _didRedirect = true;
+
+      // Delay using Future.delayed to let UI settle before navigation
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (mounted) {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const MapPage()));
+        }
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
@@ -101,6 +127,7 @@ class _MotorcycleFormPageState extends State<MotorcycleFormPage> {
       "title": titleControler.text,
       "des": desContrler.text,
     };
+     final location = ref.watch(locationNotifer);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -177,6 +204,13 @@ class _MotorcycleFormPageState extends State<MotorcycleFormPage> {
                         helper:
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
+                        SizedBox(height: 15.h),
+                      FormBody(
+                        controller: priceController,
+                        labeltxt: "Ad Price*",
+                        helper:
+                            "Price",
+                      ),
                       SizedBox(height: 15.h),
                       FormBody(
                         controller: desContrler,
@@ -240,6 +274,10 @@ class _MotorcycleFormPageState extends State<MotorcycleFormPage> {
                                 image!.path,
                                 filename: image!.path.split("/").last,
                               ),
+                                       "latitude": location.lat,
+                              "longitude": location.long,
+
+                    "price": priceController.text,
                               "json_data": jsonEncode({
                                 "type": brandController.text,
                                 "bhk": yearController.text,

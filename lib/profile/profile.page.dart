@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_app_olx/edit/editProfile.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/listing/service/getlistingController.dart';
 import 'package:shopping_app_olx/plan/plan.page.dart';
 import 'package:shopping_app_olx/profile/service/profileController.dart';
 import 'package:shopping_app_olx/splash.page.dart';
@@ -208,9 +209,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                             ),
                             SizedBox(height: 10.h),
                             GestureDetector(
-                              onTap: () {
-                                
-                              },
+                              onTap: () {},
                               child: EditProfileBody(
                                 icon: Icons.help_outline,
                                 name: 'Help & Support',
@@ -327,7 +326,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 ),
               );
             },
-            error: (error, stackTrace) => Center(child: Text(error.toString())),
+            error: (error, stackTrace) {
+              if (error is UserNotLoggedInException) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.of(context).pushReplacementNamed('/login');
+                });
+              }
+              return Center(child: Text(error.toString()));
+            },
             loading: () => Center(child: CircularProgressIndicator()),
           ),
         ],

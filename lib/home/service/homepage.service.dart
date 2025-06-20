@@ -9,8 +9,8 @@ part 'homepage.service.g.dart';
 abstract class HomePageService {
   factory HomePageService(Dio dio, {String baseUrl}) = _HomePageService;
 
-  @GET('/api/home')
-  Future<HomepageModel> home();
+  @GET('/api/home?latitude={latitude}&longitude={longitude}')
+  Future<HomepageModel> home(@Path('latitude') String latitude, @Path('longitude') String longitude);
 
   @GET('/api/categories')
   Future<AllCategoryModel> allCategory();

@@ -77,6 +77,7 @@ class _BikePageState extends State<BikePage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => MotorcycleFormPage(),
+                             settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
@@ -89,6 +90,7 @@ class _BikePageState extends State<BikePage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => ScotorFormPage(),
+                             settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
@@ -99,8 +101,9 @@ class _BikePageState extends State<BikePage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          CupertinoPageRoute(
+                          CupertinoPageRoute(                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
                             builder: (context) => SparePartsFormPage(),
+                             settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
@@ -113,7 +116,9 @@ class _BikePageState extends State<BikePage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => BicycleFormPage(),
+                            settings: RouteSettings(arguments: true)
                           ),
+                          
                         );
                       },
                       child: PropertyBody(txt: "Bicycles"),

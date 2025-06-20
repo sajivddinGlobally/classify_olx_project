@@ -75,6 +75,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -87,6 +88,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -99,6 +101,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -111,6 +114,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -123,6 +127,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -135,6 +140,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -147,6 +153,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -159,6 +166,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -171,6 +179,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -183,6 +192,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -195,6 +205,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -207,6 +218,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -219,6 +231,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },
@@ -231,6 +244,7 @@ class _JobPageState extends State<JobPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => DataEntryFormPage(),
+                              settings: RouteSettings(arguments: true)
                             ),
                           );
                         },

@@ -20,25 +20,25 @@ class _GetListingService implements GetListingService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<GetLitingModel> fetchListing() async {
+  Future<GetListingModel> fetchListing(String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<GetLitingModel>(
+    final _options = _setStreamType<GetListingModel>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/api/user/listings?user_id=3',
+            '/api/user/listings?user_id=${id}',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late GetLitingModel _value;
+    late GetListingModel _value;
     try {
-      _value = GetLitingModel.fromJson(_result.data!);
+      _value = GetListingModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

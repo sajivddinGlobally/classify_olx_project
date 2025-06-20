@@ -24,9 +24,7 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
       body: particularprovider.when(
         data: (particular) {
-          final Map<String, dynamic> decodedJson = json.decode(
-            particular.data.jsonData,
-          );
+          var jsondata = particular.data.jsonData.entries.toList();
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,14 +102,14 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
                                 size: 15.sp,
                                 color: Color.fromARGB(255, 137, 26, 255),
                               ),
-                              Text(
-                                "Udaipur, rajasthan",
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color.fromARGB(255, 137, 26, 255),
-                                ),
-                              ),
+                              // Text(
+                              //   "${particular.data.category}",
+                              //   style: GoogleFonts.dmSans(
+                              //     fontSize: 12.sp,
+                              //     fontWeight: FontWeight.w500,
+                              //     color: Color.fromARGB(255, 137, 26, 255),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -136,88 +134,38 @@ class _ParticularDealsPageState extends ConsumerState<ParticularDealsPage> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        //"Nike Air Jorden 55 Medium",
-                        //particular.data.jsonData,
-                        decodedJson["name"].toString(),
-                        style: GoogleFonts.dmSans(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 97, 91, 104),
-                        ),
-                      ),
-                      Text(
-                        //"\$450.00",
-                        // particular.data.price.toString(),
-                        decodedJson['price'].toString(),
-                        style: GoogleFonts.dmSans(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 137, 26, 255),
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      Text(
-                        "Product Description ",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 36, 33, 38),
-                          letterSpacing: -1.5,
-                        ),
-                      ),
-                      Text(
-                        decodedJson["description"].toString(),
-                        style: GoogleFonts.dmSans(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Color.fromARGB(255, 97, 91, 104),
-                        ),
-                      ),
-                      SizedBox(height: 30.h),
-                      Text(
-                        "Product Specification ",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 36, 33, 38),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                
                 SizedBox(height: 16.h),
                 Padding(
                   padding: EdgeInsets.only(left: 20.w, right: 20.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProductDesc(
-                        name: "Model",
-                        title: "Nike Air Jordan 55 Medium",
-                      ),
-                      ProductDesc(
-                        name: "Upper Material",
-                        title: "Breathable mesh",
-                      ),
-                      ProductDesc(
-                        name: "Cushioning Technology",
-                        title: " Iconic Air cushioning",
-                      ),
-                      ProductDesc(
-                        name: "Ideal For",
-                        title: "Casual outings and athletic use",
-                      ),
-                      ProductDesc(
-                        name: "Branding",
-                        title: "Signature Air Jordan logo",
-                      ),
-                      ProductDesc(name: "Style", title: "NSleek and stylish"),
+                      ...jsondata.map((item) => ProductDesc(
+                        name: "${item.key}",
+                        title: "${item.value}",
+                      ),),
+                      // ProductDesc(
+                      //   name: "Model",
+                      //   title: "Nike Air Jordan 55 Medium",
+                      // ),
+                      // ProductDesc(
+                      //   name: "Upper Material",
+                      //   title: "Breathable mesh",
+                      // ),
+                      // ProductDesc(
+                      //   name: "Cushioning Technology",
+                      //   title: " Iconic Air cushioning",
+                      // ),
+                      // ProductDesc(
+                      //   name: "Ideal For",
+                      //   title: "Casual outings and athletic use",
+                      // ),
+                      // ProductDesc(
+                      //   name: "Branding",
+                      //   title: "Signature Air Jordan logo",
+                      // ),
+                      // ProductDesc(name: "Style", title: "NSleek and stylish"),
                     ],
                   ),
                 ),

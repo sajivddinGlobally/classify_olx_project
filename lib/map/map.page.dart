@@ -10,6 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shopping_app_olx/choseMap/controller/locationNotifer.dart';
+import 'package:shopping_app_olx/choseMap/mapView.dart';
 import 'package:shopping_app_olx/map/model/locationBodyModel.dart';
 import 'package:shopping_app_olx/map/service/locationController.dart';
 
@@ -22,17 +24,21 @@ class MapPage extends ConsumerStatefulWidget {
 
 class _MapPageState extends ConsumerState<MapPage> {
   GoogleMapController? _mapController;
-  LatLng? _CurrentLocatiion;
+  LatLng? _currentLocation;
   String _address = 'Loading';
   MapType _currentMapType = MapType.normal;
-  double manuelLAt = 0.0;
+  double manuelLat = 0.0;
   double manuelLong = 0.0;
+  final Set<Marker> _markers = {};
+  final Set<Circle> _circles = {}; // For 2 km radius
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _getPermissionAndLocation();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    showLocationSelectionDialog(context);
+  });
   }
 
   Future<void> _getPermissionAndLocation() async {
@@ -43,9 +49,9 @@ class _MapPageState extends ConsumerState<MapPage> {
       );
       LatLng latLng = LatLng(position.latitude, position.longitude);
       setState(() {
-        _CurrentLocatiion = LatLng(position.latitude, position.longitude);
+        _currentLocation = latLng;
+        _updateMarkerAndCircle(latLng); // Add initial marker and circle
       });
-
       _getAddressFromLatLng(latLng);
     }
   }
@@ -58,11 +64,9 @@ class _MapPageState extends ConsumerState<MapPage> {
       );
 
       if (placemarks.isNotEmpty) {
-        /// ye ek line pin code nikalne ke liye
         Placemark place = placemarks[0];
-
         setState(() {
-          manuelLAt = latLng.latitude;
+          manuelLat = latLng.latitude;
           manuelLong = latLng.longitude;
           _address =
               "${place.name}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
@@ -76,8 +80,38 @@ class _MapPageState extends ConsumerState<MapPage> {
     }
   }
 
+  void _updateMarkerAndCircle(LatLng position) {
+    setState(() {
+      _markers.clear();
+      _markers.add(
+        Marker(
+          markerId: const MarkerId('currentLocation'),
+          position: position,
+          infoWindow: const InfoWindow(title: 'You are here'),
+          draggable: true,
+          onDragEnd: (newPosition) {
+            _currentLocation = newPosition;
+            _updateMarkerAndCircle(newPosition);
+            _getAddressFromLatLng(newPosition);
+          },
+        ),
+      );
+      _circles.clear();
+      _circles.add(
+        Circle(
+          circleId: const CircleId('radius'),
+          center: position,
+          radius: 2000, // 2 km in meters
+          fillColor: Colors.blue.withOpacity(0.3), // Visible red radius
+          strokeColor: Colors.blue.withOpacity(0.3),
+          strokeWidth: 2,
+        ),
+      );
+    });
+  }
+
   Set<Polyline> _polylines = {};
-  List<LatLng> polylinecordinates = [
+  List<LatLng> polylineCoordinates = [
     LatLng(28.6139, 77.2090), // Point A (Delhi)
     LatLng(28.5355, 77.3910), // Point B (Noida)
   ];
@@ -85,35 +119,39 @@ class _MapPageState extends ConsumerState<MapPage> {
   void _toggleMapType() {
     setState(() {
       _currentMapType =
-          _currentMapType == MapType.none ? MapType.satellite : MapType.normal;
+          _currentMapType == MapType.normal
+              ? MapType.satellite
+              : MapType.normal;
     });
   }
 
-  Future<void> getLatLngFromAdress(String address) async {
+  Future<void> getLatLngFromAddress(String address) async {
     try {
       List<Location> locations = await locationFromAddress(address);
       if (locations.isNotEmpty) {
         double latitude = locations.first.latitude;
         double longitude = locations.first.longitude;
         setState(() {
-          manuelLAt = latitude;
+          manuelLat = latitude;
           manuelLong = longitude;
+          _currentLocation = LatLng(latitude, longitude);
+          _updateMarkerAndCircle(_currentLocation!);
         });
         print('Latitude: $latitude, Longitude: $longitude');
       } else {
         print("No result found");
       }
     } catch (e) {
-      print("Error occured : $e");
+      print("Error occurred: $e");
     }
   }
 
   void _addPolyline() {
     Polyline polyline = Polyline(
-      polylineId: PolylineId("rout"),
-      color: Color.fromARGB(255, 137, 26, 255),
+      polylineId: const PolylineId("route"),
+      color: const Color.fromARGB(255, 137, 26, 255),
       width: 5,
-      points: polylinecordinates,
+      points: polylineCoordinates,
     );
     setState(() {
       _polylines.add(polyline);
@@ -125,47 +163,55 @@ class _MapPageState extends ConsumerState<MapPage> {
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
+
     return Scaffold(
       body: Column(
         children: [
           Expanded(
-            flex: 3,
+            flex: 2,
             child:
-                _CurrentLocatiion == null
-                    ? Center(child: CircularProgressIndicator())
-                    : GoogleMap(
-                      initialCameraPosition: CameraPosition(
-                        target: _CurrentLocatiion!,
-                        zoom: 15,
-                      ),
-                      mapType: _currentMapType,
-                      markers: {
-                        Marker(
-                          markerId: MarkerId('currentLocation'),
-                          position: _CurrentLocatiion!,
-                          infoWindow: InfoWindow(title: 'You  are here'),
-                          draggable: true,
-                          onDragEnd: (newPosition) {
-                            _CurrentLocatiion = newPosition;
-                            _getAddressFromLatLng(newPosition);
+                _currentLocation == null
+                    ? const Center(child: CircularProgressIndicator())
+                    : Stack(
+                      children: [
+                        GoogleMap(
+                          initialCameraPosition: CameraPosition(
+                            target: _currentLocation!,
+                            zoom: 13,
+                          ),
+                          mapType: _currentMapType,
+                          markers: _markers,
+                          circles: _circles, // Add circles to the map
+                          polylines: _polylines,
+                          onTap: (latLng) {
+                            setState(() {
+                              _currentLocation = latLng;
+                              _updateMarkerAndCircle(latLng);
+                            });
+                            _getAddressFromLatLng(latLng);
                           },
+                          myLocationEnabled: true,
+                          onMapCreated:
+                              (controller) => _mapController = controller,
                         ),
-                      },
-                      onTap: (latLng) {
-                        setState(() {
-                          _CurrentLocatiion = latLng;
-                        });
-                        _getAddressFromLatLng(latLng);
-                      },
-                      myLocationEnabled: true,
-                      onMapCreated: (controller) => _mapController = controller,
+                        // Optional: Add a button to toggle map type
+                        Positioned(
+                          top: 10.h,
+                          right: 10.w,
+                          child: FloatingActionButton(
+                            onPressed: _toggleMapType,
+                            backgroundColor: Colors.blue[200],
+                            child: const Icon(Icons.layers),
+                          ),
+                        ),
+                      ],
                     ),
           ),
           Expanded(
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: 200.h,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 245, 242, 247),
               ),
               child: Padding(
@@ -178,7 +224,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                       style: GoogleFonts.dmSans(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 36, 33, 38),
+                        color: const Color.fromARGB(255, 36, 33, 38),
                       ),
                     ),
                     SizedBox(height: 15.h),
@@ -203,48 +249,62 @@ class _MapPageState extends ConsumerState<MapPage> {
                         hintStyle: GoogleFonts.dmSans(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 36, 33, 38),
+                          color: const Color.fromARGB(255, 36, 33, 38),
                         ),
                         suffixIcon: Icon(
                           Icons.my_location,
-                          color: Color.fromARGB(255, 137, 26, 255),
+                          color: const Color.fromARGB(255, 137, 26, 255),
                           size: 25.sp,
                         ),
                       ),
                     ),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: 10.h), // Reduced spacing for better layout
+                    Text(
+                      "2 km Radius Active",
+                      style: GoogleFonts.dmSans(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red,
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () async {
-                        setState(() {
+                           setState(() {
                           isLocation = true;
                         });
-                        if (_CurrentLocatiion != null) {
-                          final pickedLat = _CurrentLocatiion!.latitude;
-                          final pickedLng = _CurrentLocatiion!.longitude;
-                          final pickedAddress = _address;
-                          final locationbody = LocationBodyModel(
-                            userId: box.get("id").toString(),
-                            latitude: pickedLat,
-                            longitude: pickedLng,
-                          );
-                          ref
-                              .watch(locationController(locationbody).future)
-                              .then((_) {
-                                Fluttertoast.showToast(
-                                  msg: "Location sent successfully!",
-                                );
-                                Navigator.pop(context);
-                              })
-                              .catchError((e) {
-                                setState(() {
-                                  isLocation = false;
-                                });
-                                log(e.toString());
-                                Fluttertoast.showToast(
-                                  msg: "Failed: ${e.toString()}",
-                                );
-                              });
-                        }
+                        ref
+                            .read(locationNotifer.notifier)
+                            .updateLocation(lat: _currentLocation!.latitude.toString(), long: _currentLocation!.longitude.toString());
+                            Navigator.pop(context);
+                     
+                        // if (_currentLocation != null) {
+                        //   final pickedLat = _currentLocation!.latitude;
+                        //   final pickedLng = _currentLocation!.longitude;
+                        //   final pickedAddress = _address;
+                        //   // final locationBody = LocationBodyModel(
+                        //   //   userId: box.get("id").toString(),
+                        //   //   latitude: pickedLat,
+                        //   //   longitude: pickedLng,
+                        //   // );
+                        //   ref
+                        //       .watch(locationController(locationBody).future)
+                        //       .then((_) {
+                        //         Fluttertoast.showToast(
+                        //           msg: "Location sent successfully!",
+                        //         );
+                        //         Navigator.pop(context);
+                        //       })
+                        //       .catchError((e) {
+                        //         setState(() {
+                        //           isLocation = false;
+                        //         });
+                        //         log(e.toString());
+                        //         Fluttertoast.showToast(
+                        //           msg: "Failed: ${e.toString()}",
+                        //         );
+                        //       });
+                        // }
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -252,7 +312,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(35.45.r),
                           border: Border.all(
-                            color: Color.fromARGB(255, 137, 26, 255),
+                            color: const Color.fromARGB(255, 137, 26, 255),
                             width: 1.sp,
                           ),
                         ),
@@ -264,10 +324,15 @@ class _MapPageState extends ConsumerState<MapPage> {
                                     style: GoogleFonts.dmSans(
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.w500,
-                                      color: Color.fromARGB(255, 137, 26, 255),
+                                      color: const Color.fromARGB(
+                                        255,
+                                        137,
+                                        26,
+                                        255,
+                                      ),
                                     ),
                                   )
-                                  : Center(
+                                  : const Center(
                                     child: CircularProgressIndicator(
                                       color: Color.fromARGB(255, 137, 26, 255),
                                     ),

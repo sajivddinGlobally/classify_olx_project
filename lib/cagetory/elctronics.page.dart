@@ -75,6 +75,7 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => ElectronicsFormPage(),
+                            settings: RouteSettings(arguments: true),
                           ),
                         );
                       },
@@ -87,6 +88,7 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => ElectronicsFormPage(),
+                            settings: RouteSettings(arguments: true),
                           ),
                         );
                       },
@@ -111,6 +113,7 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => ElectronicsFormPage(),
+                            settings: RouteSettings(arguments: true),
                           ),
                         );
                       },
@@ -123,6 +126,7 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => ElectronicsFormPage(),
+                            settings: RouteSettings(arguments: true),
                           ),
                         );
                       },
@@ -149,6 +153,7 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => ElectronicsFormPage(),
+                            settings: RouteSettings(arguments: true),
                           ),
                         );
                       },
@@ -163,6 +168,7 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => ElectronicsFormPage(),
+                            settings: RouteSettings(arguments: true),
                           ),
                         );
                       },

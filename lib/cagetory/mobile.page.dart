@@ -76,6 +76,7 @@ class _MobilePageState extends State<MobilePage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => MobileFormPage(),
+                            settings: RouteSettings(arguments: true),
                           ),
                         );
                       },
@@ -88,6 +89,7 @@ class _MobilePageState extends State<MobilePage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => AccessoryFormPage(),
+                            settings: RouteSettings(arguments: true),
                           ),
                         );
                       },
@@ -100,6 +102,7 @@ class _MobilePageState extends State<MobilePage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => TabletFormPage(),
+                            settings: RouteSettings(arguments: true),
                           ),
                         );
                       },

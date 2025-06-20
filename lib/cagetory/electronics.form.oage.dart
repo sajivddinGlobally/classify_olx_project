@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,18 +13,21 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/choseMap/controller/locationNotifer.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/map/map.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
-class ElectronicsFormPage extends StatefulWidget {
+class ElectronicsFormPage extends ConsumerStatefulWidget {
   const ElectronicsFormPage({super.key});
 
   @override
-  State<ElectronicsFormPage> createState() => _ElectronicsFormPageState();
+  ConsumerState<ElectronicsFormPage> createState() =>
+      _ElectronicsFormPageState();
 }
 
-class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
+class _ElectronicsFormPageState extends ConsumerState<ElectronicsFormPage> {
   final titleController = TextEditingController();
   final descController = TextEditingController();
   final nameContorller = TextEditingController();
@@ -84,6 +88,31 @@ class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
     );
   }
 
+  bool _didRedirect = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_didRedirect) return;
+
+    final shouldRedirect =
+        ModalRoute.of(context)?.settings.arguments as bool? ?? false;
+
+    if (shouldRedirect) {
+      _didRedirect = true;
+
+      // Delay using Future.delayed to let UI settle before navigation
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (mounted) {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const MapPage()));
+        }
+      });
+    }
+  }
+
   bool isProperty = false;
   @override
   Widget build(BuildContext context) {
@@ -93,6 +122,8 @@ class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
       "desc": descController.text,
       "name": nameContorller.text,
     };
+    final location = ref.watch(locationNotifer);
+    final priceController = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -168,6 +199,12 @@ class _ElectronicsFormPageState extends State<ElectronicsFormPage> {
                         helper:
                             "Include condition, features and reason for selling\nRequired Fields",
                         maxlenghts: 4096,
+                      ),
+                      SizedBox(height: 15.h),
+                      FormBody(
+                        controller: priceController,
+                        labeltxt: "Ad Price*",
+                        helper: "Price",
                       ),
                       SizedBox(height: 20.h),
                       GestureDetector(

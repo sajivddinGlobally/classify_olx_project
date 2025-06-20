@@ -87,6 +87,7 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                             context,
                             CupertinoPageRoute(
                               builder: (context) => CarFormPage(),
+                              settings: RouteSettings(arguments: true),
                             ),
                           );
                         },

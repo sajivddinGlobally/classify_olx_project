@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,18 +12,21 @@ import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/choseMap/controller/locationNotifer.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/map/map.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
-class SalePropertyFormPage extends StatefulWidget {
+class SalePropertyFormPage extends ConsumerStatefulWidget {
   const SalePropertyFormPage({super.key});
 
   @override
-  State<SalePropertyFormPage> createState() => _SalePropertyFormPageState();
+  ConsumerState<SalePropertyFormPage> createState() =>
+      _SalePropertyFormPageState();
 }
 
-class _SalePropertyFormPageState extends State<SalePropertyFormPage> {
+class _SalePropertyFormPageState extends ConsumerState<SalePropertyFormPage> {
   final typeContrller = TextEditingController();
   final bhkController = TextEditingController();
   final bathroomController = TextEditingController();
@@ -39,7 +43,7 @@ class _SalePropertyFormPageState extends State<SalePropertyFormPage> {
   final proejctnameControler = TextEditingController();
   final titleControler = TextEditingController();
   final desContrler = TextEditingController();
-
+  final priceController = TextEditingController();
   File? image;
   final picker = ImagePicker();
 
@@ -97,10 +101,35 @@ class _SalePropertyFormPageState extends State<SalePropertyFormPage> {
   }
 
   bool isProperty = false;
+  bool _didRedirect = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_didRedirect) return;
+
+    final shouldRedirect =
+        ModalRoute.of(context)?.settings.arguments as bool? ?? false;
+
+    if (shouldRedirect) {
+      _didRedirect = true;
+
+      // Delay using Future.delayed to let UI settle before navigation
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (mounted) {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const MapPage()));
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
+    final location = ref.watch(locationNotifer);
     Map<String, dynamic> data = {
       "type": typeContrller.text,
       "bhk": bhkController.text,
@@ -243,6 +272,12 @@ class _SalePropertyFormPageState extends State<SalePropertyFormPage> {
                         helper:
                             "Mention the key features of your item (eg. brand, model 0/70 age, type)",
                       ),
+                      SizedBox(height: 15.h),
+                      FormBody(
+                        controller: priceController,
+                        labeltxt: "Ad Price*",
+                        helper: "Price",
+                      ),
                       SizedBox(height: 10.h),
                       FormBody(
                         controller: desContrler,
@@ -306,6 +341,10 @@ class _SalePropertyFormPageState extends State<SalePropertyFormPage> {
                                 image!.path,
                                 filename: image!.path.split('/').last,
                               ),
+                              "latitude": location.lat,
+                              "longitude": location.long,
+
+                              "price": priceController.text,
                               "json_data": jsonEncode({
                                 "type": typeContrller.text,
                                 "bhk": bhkController.text,

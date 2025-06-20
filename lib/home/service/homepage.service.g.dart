@@ -20,7 +20,7 @@ class _HomePageService implements HomePageService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HomepageModel> home() async {
+  Future<HomepageModel> home(String latitude, String longitude) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -29,7 +29,7 @@ class _HomePageService implements HomePageService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/api/home',
+            '/api/home?latitude=${latitude}&longitude=${longitude}',
             queryParameters: queryParameters,
             data: _data,
           )

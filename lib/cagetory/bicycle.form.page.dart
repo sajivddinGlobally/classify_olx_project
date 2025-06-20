@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,54 +12,105 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
+import 'package:shopping_app_olx/choseMap/controller/locationNotifer.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/map/map.page.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
 
-class BicycleFormPage extends StatefulWidget {
+// Placeholder for FormBody widget
+class FormBody extends StatelessWidget {
+  final String labeltxt;
+  final TextEditingController controller;
+  final String? helper;
+  final int? maxlenghts;
+
+  const FormBody({
+    super.key,
+    required this.labeltxt,
+    required this.controller,
+    this.helper,
+    this.maxlenghts,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          labeltxt,
+          style: GoogleFonts.dmSans(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w600,
+            color: const Color.fromARGB(255, 36, 33, 38),
+          ),
+        ),
+        SizedBox(height: 5.h),
+        TextField(
+          controller: controller,
+          maxLength: maxlenghts,
+          decoration: InputDecoration(
+            hintText: helper ?? labeltxt,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class BicycleFormPage extends ConsumerStatefulWidget {
   const BicycleFormPage({super.key});
 
   @override
-  State<BicycleFormPage> createState() => _BicycleFormPageState();
+  ConsumerState<BicycleFormPage> createState() => _BicycleFormPageState();
 }
 
-class _BicycleFormPageState extends State<BicycleFormPage> {
+class _BicycleFormPageState extends ConsumerState<BicycleFormPage> {
   final brandController = TextEditingController();
   final titleController = TextEditingController();
   final descController = TextEditingController();
-
+  final priceController = TextEditingController();
   File? image;
   final picker = ImagePicker();
 
-  Future<void> pickImageFormCamera() async {
+  Future<void> pickImageFromCamera() async {
     var status = await Permission.camera.request();
     if (status.isGranted) {
-      final PickedFile = await picker.pickImage(source: ImageSource.camera);
-      if (PickedFile != null) {
+      final XFile? pickedFile = await picker.pickImage(
+        source: ImageSource.camera,
+      );
+      if (pickedFile != null) {
         setState(() {
-          image = File(PickedFile.path);
+          image = File(pickedFile.path);
         });
       }
     } else {
-      print("Camera Permission isdenied");
+      print("Camera Permission is denied");
     }
   }
 
   Future<void> pickImageFromGallery() async {
-    var status = await Permission.camera.request();
+    var status =
+        await Permission.storage.request(); // Correct permission for gallery
     if (status.isGranted) {
-      final PickedFile = await picker.pickImage(source: ImageSource.gallery);
-      if (PickedFile != null) {
+      final XFile? pickedFile = await picker.pickImage(
+        source: ImageSource.gallery,
+      );
+      if (pickedFile != null) {
         setState(() {
-          image = File(PickedFile.path);
+          image = File(pickedFile.path);
         });
       }
     } else {
-      print("Gallery Permission isdenied");
+      print("Gallery Permission is denied");
     }
   }
 
-  Future showImage() async {
+  Future<void> showImage() async {
     showCupertinoModalPopup(
       context: context,
       builder:
@@ -66,7 +118,7 @@ class _BicycleFormPageState extends State<BicycleFormPage> {
             actions: [
               CupertinoActionSheetAction(
                 onPressed: () {
-                  pickImageFormCamera();
+                  pickImageFromCamera();
                   Navigator.pop(context);
                 },
                 child: Text("Camera"),
@@ -84,14 +136,36 @@ class _BicycleFormPageState extends State<BicycleFormPage> {
   }
 
   bool isProperty = false;
+  bool _didRedirect = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_didRedirect) return;
+
+    final shouldRedirect =
+        ModalRoute.of(context)?.settings.arguments as bool? ?? false;
+
+    if (shouldRedirect) {
+      _didRedirect = true;
+
+      // Delay using Future.delayed to let UI settle before navigation
+      Future.delayed(Duration(milliseconds: 100), () {
+        if (mounted) {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (_) => const MapPage()));
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
-    Map<String, dynamic> data = {
-      "owner": brandController.text,
-      "title": titleController.text,
-      "desc": descController.text,
-    };
+
+    final location = ref.watch(locationNotifer);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -153,7 +227,7 @@ class _BicycleFormPageState extends State<BicycleFormPage> {
                         controller: titleController,
                         labeltxt: "Ad title*",
                         helper:
-                            "Mention the key features of your item (eg. brand, model 0/70 age, type)",
+                            "Mention the key features of your item (e.g. brand, model, age, type)",
                       ),
                       SizedBox(height: 15.h),
                       FormBody(
@@ -162,6 +236,13 @@ class _BicycleFormPageState extends State<BicycleFormPage> {
                         helper:
                             "Include condition, features and reason for selling\nRequired Fields",
                         maxlenghts: 4096,
+                      ),
+                      SizedBox(height: 15.h),
+                      FormBody(
+                        controller: priceController,
+                        labeltxt: "Ad Price*",
+                        helper:
+                            "Price",
                       ),
                       SizedBox(height: 20.h),
                       GestureDetector(
@@ -206,18 +287,32 @@ class _BicycleFormPageState extends State<BicycleFormPage> {
                           backgroundColor: Color.fromARGB(255, 137, 26, 255),
                         ),
                         onPressed: () async {
+                          if (image == null ||
+                              brandController.text.isEmpty ||
+                              titleController.text.isEmpty ||
+                              descController.text.isEmpty ||
+                              priceController.text.isEmpty) {
+                            Fluttertoast.showToast(
+                              msg: "Please fill all fields and upload an image",
+                            );
+                            return;
+                          }
                           setState(() {
                             isProperty = true;
                           });
                           try {
-                            final apiservice = APIService(createDio());
-                            await apiservice.addProduct({
-                              "category": "test",
+                            final apiService = APIService(createDio());
+                            await apiService.addProduct({
+                              "category":
+                                  "bicycle", // Changed from "test" to "bicycle"
                               "user_id": "${box.get("id")}",
+                              "price": priceController.text,
                               "image": await MultipartFile.fromFile(
                                 image!.path,
                                 filename: image!.path.split("/").last,
                               ),
+                              "latitude": location.lat,
+                              "longitude": location.long,
                               "json_data": jsonEncode({
                                 "owner": brandController.text,
                                 "title": titleController.text,
@@ -225,7 +320,7 @@ class _BicycleFormPageState extends State<BicycleFormPage> {
                               }),
                             });
                             Fluttertoast.showToast(
-                              msg: "Product Add Successfull",
+                              msg: "Product Add Successful",
                             );
                             Navigator.pushAndRemoveUntil(
                               context,
@@ -239,7 +334,9 @@ class _BicycleFormPageState extends State<BicycleFormPage> {
                             setState(() {
                               isProperty = false;
                             });
-                            Fluttertoast.showToast(msg: "Product Add Failed");
+                            Fluttertoast.showToast(
+                              msg: "Product Add Failed: $e",
+                            );
                           }
                         },
                         child: Center(
@@ -272,3 +369,5 @@ class _BicycleFormPageState extends State<BicycleFormPage> {
     );
   }
 }
+
+// Placeholder for APIService (implement this in new.service.dart)

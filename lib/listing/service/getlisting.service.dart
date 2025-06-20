@@ -8,6 +8,6 @@ part 'getlisting.service.g.dart';
 abstract class GetListingService {
   factory GetListingService(Dio dio, {String baseUrl}) = _GetListingService;
 
-  @GET('/api/user/listings?user_id=3')
-  Future<GetLitingModel> fetchListing();
+  @GET('/api/user/listings?user_id={id}')
+  Future<GetListingModel> fetchListing(@Path('id') String id);
 }

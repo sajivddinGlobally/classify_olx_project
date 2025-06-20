@@ -75,6 +75,7 @@ class _CommericalPageState extends State<CommericalPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => CommericalFormPage(),
+                            settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
@@ -87,6 +88,7 @@ class _CommericalPageState extends State<CommericalPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => CommericalFormPage(),
+                            settings: RouteSettings(arguments: true)
                           ),
                         );
                       },

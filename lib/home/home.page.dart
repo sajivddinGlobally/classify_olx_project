@@ -70,8 +70,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   int tabBottom = 0;
 
-  
-
   @override
   Widget build(BuildContext context) {
     var box = Hive.box("data");
@@ -480,8 +478,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       itemBuilder: (context, index) {
                                         final product =
                                             listing.latestListings[index];
-                                        final Map<String, dynamic> jsonDetails =
-                                            jsonDecode(product.jsonData);
+
                                         ///// ye like ke liye
                                         final productId =
                                             listing.latestListings[index].id
@@ -489,6 +486,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         final isLiked = ref
                                             .watch(likeToggleProvider)
                                             .contains(productId);
+                                        var jsondata = listing.latestListings[index].jsonData.entries.toList();
                                         return Padding(
                                           padding: EdgeInsets.only(
                                             top: 21.h,
@@ -678,7 +676,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                 // listing
                                                 //     .latestListings[index]
                                                 //     .category,
-                                                jsonDetails['name'].toString(),
+                                                jsondata[0].value.toString(),
                                                 style: GoogleFonts.dmSans(
                                                   fontSize: 14.sp,
                                                   fontWeight: FontWeight.w500,
@@ -695,7 +693,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                 // "\$450.00",
                                                 // dealsList[index]["price"]
                                                 //     .toString(),
-                                                jsonDetails['price'].toString(),
+                                                "₹ ${listing
+                                                    .latestListings[index]
+                                                    .price}",
                                                 style: GoogleFonts.dmSans(
                                                   fontSize: 18.sp,
                                                   fontWeight: FontWeight.w600,
@@ -998,10 +998,11 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
             ),
             itemBuilder: (context, index) {
               final data = allproduct.allProducts[index];
-              final Map<String, dynamic> jsonData = jsonDecode(data.jsonData);
+              
               ///// ye like ke liye
               final productId = allproduct.allProducts[index].id.toString();
               final isLiked = ref.watch(likeToggleProvider).contains(productId);
+              var jsondata = allproduct.allProducts[index].jsonData.entries.toList();
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -1028,7 +1029,7 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
                             // latestList[index]["imageUrl"].toString(),
                             allproduct.allProducts[index].image,
                             width: 196.w,
-                            height: 160.h,
+                            height: 150.h,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -1120,7 +1121,7 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
                     // "Nike Air Jorden 55 Medium",
                     // latestList[index]["title"].toString(),
                     // allproduct.allProducts[index].name,
-                    jsonData['name'].toString(),
+                    jsondata[0].value,
                     style: GoogleFonts.dmSans(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -1131,8 +1132,8 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
                   Text(
                     // "\$450.00",
                     // latestList[index]["price"].toString(),
-                    //allproduct.allProducts[index].price.toString(),
-                    jsonData['price'].toString(),
+                    "₹ ${allproduct.allProducts[index].price.toString()}"
+                    ,
                     style: GoogleFonts.dmSans(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,

@@ -76,6 +76,7 @@ class _PropertyPageState extends State<PropertyPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => SalePropertyFormPage(),
+                                    settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
@@ -88,6 +89,7 @@ class _PropertyPageState extends State<PropertyPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => RentPropertyFormPage(),
+                                    settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
@@ -100,6 +102,7 @@ class _PropertyPageState extends State<PropertyPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => LandAndPlotFormPage(),
+                                    settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
@@ -112,6 +115,7 @@ class _PropertyPageState extends State<PropertyPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => ShopsOfficeFormPage(),
+                                    settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
@@ -124,6 +128,7 @@ class _PropertyPageState extends State<PropertyPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => ShopsOfficeFormPage(),
+                                    settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
@@ -136,6 +141,7 @@ class _PropertyPageState extends State<PropertyPage> {
                           context,
                           CupertinoPageRoute(
                             builder: (context) => GuesthouseFormPage(),
+                                    settings: RouteSettings(arguments: true)
                           ),
                         );
                       },
