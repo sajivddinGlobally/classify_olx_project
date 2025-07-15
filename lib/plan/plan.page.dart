@@ -1,223 +1,352 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
+import 'package:shopping_app_olx/new/controller/plan.provider.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 import 'package:shopping_app_olx/payment/payment.page.dart';
 import 'package:shopping_app_olx/plan/reting.page.dart';
 
-class PlanPage extends StatefulWidget {
+class PlanPage extends ConsumerStatefulWidget {
   const PlanPage({super.key});
 
   @override
-  State<PlanPage> createState() => _PlanPageState();
+  ConsumerState<PlanPage> createState() => _PlanPageState();
 }
 
-class _PlanPageState extends State<PlanPage> {
+class _PlanPageState extends ConsumerState<PlanPage> {
   @override
   Widget build(BuildContext context) {
+    final plan = ref.watch(planProvider);
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height + 100,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xFFECD7FD), Color(0xFFF5F2F7)],
-                ),
-              ),
-            ),
-            Image.asset("assets/bgimage.png"),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, top: 60.h),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  width: 46.w,
-                  height: 46.h,
+      body: plan.when(
+        data: (snap) {
+          return SingleChildScrollView(
+            child: Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height + 100,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Color(0xFFECD7FD), Color(0xFFF5F2F7)],
+                    ),
                   ),
-                  child: Icon(Icons.arrow_back),
                 ),
-              ),
-            ),
-            Positioned(
-              top: 100.h,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: EdgeInsets.only(left: 20.w, right: 20.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Text(
-                        "Paid Plan",
-                        style: GoogleFonts.dmSans(
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 33, 36, 38),
-                        ),
-                      ),
-                    ),
-                    DefaultTabController(
-                      length: 2,
-                      child: TabBar(
-                        dividerColor: Color.fromARGB(255, 137, 25, 255),
-                        dividerHeight: 1.w,
-                        unselectedLabelColor: Color.fromARGB(255, 30, 30, 30),
-                        labelColor: Colors.black,
-                        labelStyle: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 18,
-                        ),
-                        indicatorWeight: 6.w,
-                        indicatorColor: Color.fromARGB(255, 137, 25, 255),
-                        tabs: [
-                          Tab(
-                            child: Text(
-                              "Single Listing ",
-                              style: GoogleFonts.dmSans(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 137, 25, 255),
-                              ),
-                            ),
-                          ),
-                          Tab(
-                            child: Text(
-                              "Multiple Listing ",
-                              style: GoogleFonts.dmSans(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 30, 30, 30),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 30.h),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => RetingPage(),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          PlanBody(
-                            bgColor: Colors.white,
-                            plan: Colors.black,
-                            month: Colors.black,
-                            name: Colors.black,
-                            title: Colors.black,
-                          ),
-                          SizedBox(height: 10.h),
-                          PlanBody(
-                            bgColor: Color.fromARGB(255, 137, 25, 255),
-                            plan: Colors.white,
-                            month: Colors.white,
-                            name: Colors.white,
-                            title: Colors.white,
-                          ),
-                          SizedBox(height: 10.h),
-                          PlanBody(
-                            bgColor: Colors.white,
-                            plan: Colors.black,
-                            month: Colors.black,
-                            name: Colors.black,
-                            title: Colors.black,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 30.h),
-                    Text(
-                      "Ads Visibility ",
-                      style: GoogleFonts.dmSans(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 33, 36, 38),
-                      ),
-                    ),
-                    SizedBox(height: 15.h),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 106.h,
+                Image.asset("assets/bgimage.png"),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.w, top: 60.h),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 46.w,
+                      height: 46.h,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
+                        shape: BoxShape.circle,
                         color: Colors.white,
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 20.w, top: 20.h),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FeatureBody(txt: "15 days listing for Free Plan"),
-                            FeatureBody(txt: "30 days listing for Paid Plan"),
-                            SizedBox(height: 10.h),
-                          ],
-                        ),
-                      ),
+                      child: Icon(Icons.arrow_back),
                     ),
-                    SizedBox(height: 40.h),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => PaymentPage(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 49.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(35.45.r),
-                          color: Color.fromARGB(255, 137, 26, 255),
-                        ),
-                        child: Center(
+                  ),
+                ),
+                Positioned(
+                  top: 100.h,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
                           child: Text(
-                            "Upgrade to this plan",
+                            "Paid Plan",
                             style: GoogleFonts.dmSans(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 33, 36, 38),
                             ),
                           ),
                         ),
-                      ),
+                        DefaultTabController(
+                          length: 2,
+                          child: Column(
+                            children: [
+                              TabBar(
+                                dividerColor: Color.fromARGB(255, 137, 25, 255),
+                                dividerHeight: 1.w,
+                                unselectedLabelColor: Color.fromARGB(
+                                  255,
+                                  30,
+                                  30,
+                                  30,
+                                ),
+                                labelColor: Colors.black,
+                                labelStyle: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 18,
+                                ),
+                                indicatorWeight: 6.w,
+                                indicatorColor: Color.fromARGB(
+                                  255,
+                                  137,
+                                  25,
+                                  255,
+                                ),
+                                tabs: [
+                                  Tab(
+                                    child: Text(
+                                      "Single Listing ",
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color.fromARGB(
+                                          255,
+                                          137,
+                                          25,
+                                          255,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Tab(
+                                    child: Text(
+                                      "Multiple Listing ",
+                                      style: GoogleFonts.dmSans(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color.fromARGB(255, 30, 30, 30),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 30.h),
+                              SizedBox(
+                                height: 550.h, // Adjust this height as needed
+                                child: TabBarView(
+                                  children: [
+                                    // Single Listing Plans
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => RetingPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          ...snap.data
+                                              .where(
+                                                (e) => e.planType == "single",
+                                              )
+                                              .map(
+                                                (e) => Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 10.h,
+                                                  ),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      showModalBottomSheet(
+                                                        context: context,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.vertical(
+                                                                top:
+                                                                    Radius.circular(
+                                                                      20.r,
+                                                                    ),
+                                                              ),
+                                                        ),
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        builder:
+                                                            (
+                                                              _,
+                                                            ) => PaymentBottomSheet(
+                                                              amount:
+                                                                  double.tryParse(
+                                                                    e.price,
+                                                                  ) ??
+                                                                  0.0,
+                                                              id: e.id.toString(),
+                                                            ),
+                                                      );
+                                                    },
+                                                    child: PlanBody(
+                                                      planID: e.id.toString(),
+                                                      titlename: e.price,
+                                                      duration:
+                                                          e.duration.toString(),
+                                                      desc: e.description,
+                                                      addBoost:
+                                                          e.boostCount
+                                                              .toString(),
+                                                      bgColor: Colors.white,
+                                                      plan: Colors.black,
+                                                      month: Colors.black,
+                                                      name: Colors.black,
+                                                      title: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                              .toList(),
+                                        ],
+                                      ),
+                                    ),
+
+                                    // Multiple Listing Plans
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (context) => RetingPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          ...snap.data
+                                              .where(
+                                                (e) => e.planType == "multiple",
+                                              )
+                                              .map(
+                                                (e) => Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 10.h,
+                                                  ),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      showModalBottomSheet(
+                                                        context: context,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.vertical(
+                                                                top:
+                                                                    Radius.circular(
+                                                                      20.r,
+                                                                    ),
+                                                              ),
+                                                        ),
+                                                        backgroundColor:
+                                                            Colors.white,
+                                                        builder:
+                                                            (
+                                                              _,
+                                                            ) => PaymentBottomSheet(
+                                                              amount:
+                                                                  double.tryParse(
+                                                                    e.price,
+                                                                  ) ??
+                                                                  0.0,
+                                                              id: e.id.toString(),
+                                                            ),
+                                                      );
+                                                    },
+                                                    child: PlanBody(
+                                                      planID: e.id.toString(),
+                                                      titlename: e.price,
+                                                      duration:
+                                                          e.duration.toString(),
+                                                      desc: e.description,
+                                                      addBoost:
+                                                          e.boostCount
+                                                              .toString(),
+                                                      bgColor: Colors.white,
+                                                      plan: Colors.black,
+                                                      month: Colors.black,
+                                                      name: Colors.black,
+                                                      title: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                              .toList(),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 30.h),
+                        Text(
+                          "Ads Visibility ",
+                          style: GoogleFonts.dmSans(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 33, 36, 38),
+                          ),
+                        ),
+                        SizedBox(height: 15.h),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 106.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 20.w, top: 20.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FeatureBody(
+                                  txt: "15 days listing for Free Plan",
+                                ),
+                                FeatureBody(
+                                  txt: "30 days listing for Paid Plan",
+                                ),
+                                SizedBox(height: 10.h),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 40.h),
+
+                        SizedBox(height: 60.h),
+                      ],
                     ),
-                    SizedBox(height: 60.h),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
+        error: (err, stack) {
+          return Center(child: Text("$err"));
+        },
+        loading: () => Center(child: CircularProgressIndicator()),
       ),
     );
   }
 }
 
+// PLAN CARD
 class PlanBody extends StatefulWidget {
+  final String planID;
   final Color bgColor;
   final Color plan;
   final Color month;
   final Color name;
   final Color title;
-
+  final String titlename;
+  final String duration;
+  final String desc;
+  final String addBoost;
   const PlanBody({
     super.key,
     required this.bgColor,
@@ -225,6 +354,11 @@ class PlanBody extends StatefulWidget {
     required this.month,
     required this.name,
     required this.title,
+    required this.titlename,
+    required this.duration,
+    required this.desc,
+    required this.addBoost,
+    required this.planID,
   });
 
   @override
@@ -254,12 +388,12 @@ class _PlanBodyState extends State<PlanBody> {
                   color: widget.plan,
                 ),
                 children: [
-                  TextSpan(text: '₹1540.00/'),
+                  TextSpan(text: '₹${widget.titlename}/'),
                   WidgetSpan(
                     alignment: PlaceholderAlignment.baseline,
                     baseline: TextBaseline.alphabetic,
                     child: Text(
-                      'month',
+                      '${widget.duration} Days',
                       style: GoogleFonts.dmSans(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
@@ -272,7 +406,7 @@ class _PlanBodyState extends State<PlanBody> {
             ),
             SizedBox(height: 10.h),
             Text(
-              "Silver Plan",
+              "${widget.addBoost} Posts",
               style: GoogleFonts.dmSans(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
@@ -280,7 +414,7 @@ class _PlanBodyState extends State<PlanBody> {
               ),
             ),
             Text(
-              "Include one city where you can easily buy and sell items on this platform. ",
+              "${widget.desc}",
               style: GoogleFonts.dmSans(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
@@ -295,6 +429,7 @@ class _PlanBodyState extends State<PlanBody> {
   }
 }
 
+// FEATURE CHECKLIST
 class FeatureBody extends StatefulWidget {
   final String txt;
   const FeatureBody({super.key, required this.txt});
@@ -323,6 +458,131 @@ class _FeatureBodyState extends State<FeatureBody> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class PaymentBottomSheet extends StatefulWidget {
+  final String id;
+  final double amount;
+  final double gstPercentage;
+
+  PaymentBottomSheet({
+    super.key,
+    required this.amount,
+    this.gstPercentage = 18,
+    required this.id,
+  });
+
+  @override
+  State<PaymentBottomSheet> createState() => _PaymentBottomSheetState();
+}
+
+class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
+  bool loder = false;
+  @override
+  Widget build(BuildContext context) {
+    final double gstAmount = (widget.amount * widget.gstPercentage) / 100;
+    final double total = widget.amount + gstAmount;
+
+    return Padding(
+      padding: EdgeInsets.all(20.w),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "Payment Summary",
+            style: GoogleFonts.dmSans(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(height: 20.h),
+
+          _row("Amount", "₹${widget.amount.toStringAsFixed(2)}"),
+          _row("GST (${widget.gstPercentage}%)", "₹${gstAmount.toStringAsFixed(2)}"),
+          Divider(),
+          _row("Total", "₹${total.toStringAsFixed(2)}", isBold: true),
+
+          SizedBox(height: 30.h),
+
+          SizedBox(
+            width: double.infinity,
+            height: 50.h,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 137, 26, 255),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(35.45.r),
+                ),
+              ),
+              onPressed: () async{
+                setState(() {
+                  loder = true;
+                });
+                final box = Hive.box("data");
+                final userid = box.get("id");
+                final state = APIService(createDio());
+                final response = await state.buyPlan(userId: userid, trnxId: "dadadasdadad", paymentType: "Success", status: "complete", planId: widget.id);
+                if (response.response.data["status"] == true){
+                
+                  
+                  setState(() {
+                    loder = false;
+                  });
+                  Fluttertoast.showToast(msg: "${response.response.data["message"]}", backgroundColor: Colors.blue, textColor: Colors.white);
+                  Navigator.pop(context);
+                }else{
+                  setState(() {
+                    loder = false;
+                  });
+                  Fluttertoast.showToast(msg: "${response.response.data["message"]}", backgroundColor: Colors.red, textColor: Colors.white);
+                  Navigator.pop(context);
+
+                }
+                // navigate to payment or perform action
+              },
+              child: loder == true? CircularProgressIndicator(color: Colors.white,) : Text(
+                "Pay Now",
+                style: GoogleFonts.dmSans(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 20.h),
+        ],
+      ),
+    );
+  }
+
+  Widget _row(String label, String value, {bool isBold = false}) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 6.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: GoogleFonts.dmSans(
+              fontSize: 16.sp,
+              fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
+          Text(
+            value,
+            style: GoogleFonts.dmSans(
+              fontSize: 16.sp,
+              fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

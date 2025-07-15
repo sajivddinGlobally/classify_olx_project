@@ -11,9 +11,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shopping_app_olx/choseMap/controller/locationNotifer.dart';
-import 'package:shopping_app_olx/choseMap/mapView.dart';
-import 'package:shopping_app_olx/map/model/locationBodyModel.dart';
-import 'package:shopping_app_olx/map/service/locationController.dart';
 
 class MapPage extends ConsumerStatefulWidget {
   const MapPage({super.key});
@@ -30,15 +27,40 @@ class _MapPageState extends ConsumerState<MapPage> {
   double manuelLat = 0.0;
   double manuelLong = 0.0;
   final Set<Marker> _markers = {};
-  final Set<Circle> _circles = {}; // For 2 km radius
+  final Set<Circle> _circles = {};
+  bool isLocation = false;
 
   @override
   void initState() {
     super.initState();
+    _checkIfLocationAlreadySelected();
     _getPermissionAndLocation();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-    showLocationSelectionDialog(context);
-  });
+  }
+
+  void _checkIfLocationAlreadySelected() async {
+    var box = Hive.box("data");
+    log(box.get("location_selected").toString());
+    if (box.get("location_selected") == null) {
+      await Future.delayed(const Duration(milliseconds: 300));
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: const Text("Location Already Selected"),
+            content: const Text(
+                "You have already selected your location. You can't change it again"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        ).then((_) {
+          Navigator.pop(context); // exit page
+        });
+      }
+    }
   }
 
   Future<void> _getPermissionAndLocation() async {
@@ -50,7 +72,7 @@ class _MapPageState extends ConsumerState<MapPage> {
       LatLng latLng = LatLng(position.latitude, position.longitude);
       setState(() {
         _currentLocation = latLng;
-        _updateMarkerAndCircle(latLng); // Add initial marker and circle
+        _updateMarkerAndCircle(latLng);
       });
       _getAddressFromLatLng(latLng);
     }
@@ -101,8 +123,8 @@ class _MapPageState extends ConsumerState<MapPage> {
         Circle(
           circleId: const CircleId('radius'),
           center: position,
-          radius: 2000, // 2 km in meters
-          fillColor: Colors.blue.withOpacity(0.3), // Visible red radius
+          radius: 2000,
+          fillColor: Colors.blue.withOpacity(0.3),
           strokeColor: Colors.blue.withOpacity(0.3),
           strokeWidth: 2,
         ),
@@ -110,55 +132,12 @@ class _MapPageState extends ConsumerState<MapPage> {
     });
   }
 
-  Set<Polyline> _polylines = {};
-  List<LatLng> polylineCoordinates = [
-    LatLng(28.6139, 77.2090), // Point A (Delhi)
-    LatLng(28.5355, 77.3910), // Point B (Noida)
-  ];
-
   void _toggleMapType() {
     setState(() {
       _currentMapType =
-          _currentMapType == MapType.normal
-              ? MapType.satellite
-              : MapType.normal;
+          _currentMapType == MapType.normal ? MapType.satellite : MapType.normal;
     });
   }
-
-  Future<void> getLatLngFromAddress(String address) async {
-    try {
-      List<Location> locations = await locationFromAddress(address);
-      if (locations.isNotEmpty) {
-        double latitude = locations.first.latitude;
-        double longitude = locations.first.longitude;
-        setState(() {
-          manuelLat = latitude;
-          manuelLong = longitude;
-          _currentLocation = LatLng(latitude, longitude);
-          _updateMarkerAndCircle(_currentLocation!);
-        });
-        print('Latitude: $latitude, Longitude: $longitude');
-      } else {
-        print("No result found");
-      }
-    } catch (e) {
-      print("Error occurred: $e");
-    }
-  }
-
-  void _addPolyline() {
-    Polyline polyline = Polyline(
-      polylineId: const PolylineId("route"),
-      color: const Color.fromARGB(255, 137, 26, 255),
-      width: 5,
-      points: polylineCoordinates,
-    );
-    setState(() {
-      _polylines.add(polyline);
-    });
-  }
-
-  bool isLocation = false;
 
   @override
   Widget build(BuildContext context) {
@@ -169,51 +148,44 @@ class _MapPageState extends ConsumerState<MapPage> {
         children: [
           Expanded(
             flex: 2,
-            child:
-                _currentLocation == null
-                    ? const Center(child: CircularProgressIndicator())
-                    : Stack(
-                      children: [
-                        GoogleMap(
-                          initialCameraPosition: CameraPosition(
-                            target: _currentLocation!,
-                            zoom: 13,
-                          ),
-                          mapType: _currentMapType,
-                          markers: _markers,
-                          circles: _circles, // Add circles to the map
-                          polylines: _polylines,
-                          onTap: (latLng) {
-                            setState(() {
-                              _currentLocation = latLng;
-                              _updateMarkerAndCircle(latLng);
-                            });
-                            _getAddressFromLatLng(latLng);
-                          },
-                          myLocationEnabled: true,
-                          onMapCreated:
-                              (controller) => _mapController = controller,
+            child: _currentLocation == null
+                ? const Center(child: CircularProgressIndicator())
+                : Stack(
+                    children: [
+                      GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: _currentLocation!,
+                          zoom: 13,
                         ),
-                        // Optional: Add a button to toggle map type
-                        Positioned(
-                          top: 10.h,
-                          right: 10.w,
-                          child: FloatingActionButton(
-                            onPressed: _toggleMapType,
-                            backgroundColor: Colors.blue[200],
-                            child: const Icon(Icons.layers),
-                          ),
+                        mapType: _currentMapType,
+                        markers: _markers,
+                        circles: _circles,
+                        myLocationEnabled: true,
+                        onMapCreated: (controller) => _mapController = controller,
+                        onTap: (latLng) {
+                          setState(() {
+                            _currentLocation = latLng;
+                            _updateMarkerAndCircle(latLng);
+                          });
+                          _getAddressFromLatLng(latLng);
+                        },
+                      ),
+                      Positioned(
+                        top: 10.h,
+                        right: 10.w,
+                        child: FloatingActionButton(
+                          onPressed: _toggleMapType,
+                          backgroundColor: Colors.blue[200],
+                          child: const Icon(Icons.layers),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
           ),
           Expanded(
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 200.h,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 245, 242, 247),
-              ),
+              color: const Color.fromARGB(255, 245, 242, 247),
               child: Padding(
                 padding: EdgeInsets.only(top: 40.h, right: 20.w, left: 20.w),
                 child: Column(
@@ -242,10 +214,9 @@ class _MapPageState extends ConsumerState<MapPage> {
                           borderRadius: BorderRadius.circular(30.45.r),
                           borderSide: BorderSide.none,
                         ),
-                        hintText:
-                            _address.isNotEmpty
-                                ? _address
-                                : "Fetching address...",
+                        hintText: _address.isNotEmpty
+                            ? _address
+                            : "Fetching address...",
                         hintStyle: GoogleFonts.dmSans(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
@@ -258,7 +229,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10.h), // Reduced spacing for better layout
+                    SizedBox(height: 10.h),
                     Text(
                       "2 km Radius Active",
                       style: GoogleFonts.dmSans(
@@ -270,41 +241,33 @@ class _MapPageState extends ConsumerState<MapPage> {
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () async {
-                           setState(() {
+                        setState(() {
                           isLocation = true;
                         });
-                        ref
-                            .read(locationNotifer.notifier)
-                            .updateLocation(lat: _currentLocation!.latitude.toString(), long: _currentLocation!.longitude.toString());
+
+                        if (_currentLocation == null) {
+                          if (box.get("location_selected") != null) {
+                            await box.put("location_selected", true);
+                            await box.put("latitude", _currentLocation!.latitude);
+                            await box.put("longitude", _currentLocation!.longitude);
+
+                            ref.read(locationNotifer.notifier).updateLocation(
+                                  lat: _currentLocation!.latitude.toString(),
+                                  long: _currentLocation!.longitude.toString(),
+                                );
+
+                            Fluttertoast.showToast(msg: "Location saved!");
                             Navigator.pop(context);
-                     
-                        // if (_currentLocation != null) {
-                        //   final pickedLat = _currentLocation!.latitude;
-                        //   final pickedLng = _currentLocation!.longitude;
-                        //   final pickedAddress = _address;
-                        //   // final locationBody = LocationBodyModel(
-                        //   //   userId: box.get("id").toString(),
-                        //   //   latitude: pickedLat,
-                        //   //   longitude: pickedLng,
-                        //   // );
-                        //   ref
-                        //       .watch(locationController(locationBody).future)
-                        //       .then((_) {
-                        //         Fluttertoast.showToast(
-                        //           msg: "Location sent successfully!",
-                        //         );
-                        //         Navigator.pop(context);
-                        //       })
-                        //       .catchError((e) {
-                        //         setState(() {
-                        //           isLocation = false;
-                        //         });
-                        //         log(e.toString());
-                        //         Fluttertoast.showToast(
-                        //           msg: "Failed: ${e.toString()}",
-                        //         );
-                        //       });
-                        // }
+                          } else {
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Location already selected. Cannot change.");
+                          }
+                        }
+
+                        setState(() {
+                          isLocation = false;
+                        });
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -317,26 +280,19 @@ class _MapPageState extends ConsumerState<MapPage> {
                           ),
                         ),
                         child: Center(
-                          child:
-                              isLocation == false
-                                  ? Text(
-                                    "Confirm Location",
-                                    style: GoogleFonts.dmSans(
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color.fromARGB(
-                                        255,
-                                        137,
-                                        26,
-                                        255,
-                                      ),
-                                    ),
-                                  )
-                                  : const Center(
-                                    child: CircularProgressIndicator(
-                                      color: Color.fromARGB(255, 137, 26, 255),
-                                    ),
+                          child: isLocation == false
+                              ? Text(
+                                  "Confirm Location",
+                                  style: GoogleFonts.dmSans(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color:
+                                        const Color.fromARGB(255, 137, 26, 255),
                                   ),
+                                )
+                              : const CircularProgressIndicator(
+                                  color: Color.fromARGB(255, 137, 26, 255),
+                                ),
                         ),
                       ),
                     ),

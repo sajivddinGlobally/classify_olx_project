@@ -52,13 +52,13 @@ class AllProduct {
   String latitude;
   String longitude;
   String category;
-  String image;
+  String? image;
   String jsonDataRaw; // raw string from API
   Map<String, dynamic> jsonData; // parsed map
   int status;
   DateTime createdAt;
   DateTime updatedAt;
-  int distance;
+
   int likes;
   int dislikes;
 
@@ -75,7 +75,7 @@ class AllProduct {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
-    required this.distance,
+
     required this.likes,
     required this.dislikes,
   });
@@ -106,7 +106,7 @@ class AllProduct {
       status: json["status"],
       createdAt: DateTime.parse(json["created_at"]),
       updatedAt: DateTime.parse(json["updated_at"]),
-      distance: json["distance"],
+
       likes: json["likes"],
       dislikes: json["dislikes"],
     );
@@ -124,7 +124,7 @@ class AllProduct {
         "status": status,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "distance": distance,
+
         "likes": likes,
         "dislikes": dislikes,
       };
@@ -133,7 +133,7 @@ class AllProduct {
 class Category {
   int id;
   String title;
-  String imageUrl;
+  String? imageUrl;
   DateTime createdAt;
   DateTime updatedAt;
 

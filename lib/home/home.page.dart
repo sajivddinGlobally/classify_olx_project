@@ -68,15 +68,52 @@ class _HomePageState extends ConsumerState<HomePage> {
     },
   ];
 
+  final List<Map<String, dynamic>> categoryList = [
+    {
+      "icon": Icon(Icons.car_rental, color: Colors.blue.shade400),
+      "title": "Cars",
+    },
+    {
+      "icon": Icon(Icons.house_outlined, color: Colors.blue.shade400),
+      "title": "Properties",
+    },
+    {
+      "icon": Icon(Icons.mobile_friendly, color: Colors.blue.shade400),
+      "title": "Mobies",
+    },
+    {
+      "icon": Icon(Icons.badge_outlined, color: Colors.blue.shade400),
+      "title": "Jobs",
+    },
+    {
+      "icon": Icon(Icons.bike_scooter_outlined, color: Colors.blue.shade400),
+      "title": "Bikes",
+    },
+    {
+      "icon": Icon(Icons.tv_outlined, color: Colors.blue.shade400),
+      "title": "Electronics",
+    },
+    {
+      "icon": Icon(Icons.transform_outlined, color: Colors.blue.shade400),
+      "title": "Commrcial",
+    },
+  ];
+
   int tabBottom = 0;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final data = printCurrentLocation();
     var box = Hive.box("data");
     var token = box.get("token");
-
-    final categorProvider = ref.watch(allCategoryController);
     final homepageData = ref.watch(homepageController);
+    final categorProvider = ref.watch(allCategoryController);
 
     final locationAsyncValue = ref.watch(locationProvider);
 
@@ -84,6 +121,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       return Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     if (homepageData.error != null) {
+      print("/////////////////////");
+      print(homepageData.error);
       return Scaffold(body: Center(child: Text("${homepageData.error}")));
     }
     return Scaffold(
@@ -307,64 +346,59 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(20.r),
                                   ),
-                                  child: categorProvider.when(
-                                    data: (category) {
-                                      return ListView.builder(
-                                        itemCount: category.data.length,
-                                        scrollDirection: Axis.horizontal,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: EdgeInsets.only(
-                                              left: 15.w,
-                                              right: 15.w,
-                                            ),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  CupertinoPageRoute(
-                                                    builder:
-                                                        (context) =>
-                                                            ClothingPage(),
+                                  child: ListView.builder(
+                                    itemCount: categoryList.length,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.only(
+                                          left: 15.w,
+                                          right: 15.w,
+                                        ),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              CupertinoPageRoute(
+                                                builder:
+                                                    (context) =>
+                                                        ClothingPage("bicycle"),
+                                              ),
+                                            );
+                                          },
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: 54.w,
+                                                height: 54.h,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    246,
+                                                    245,
+                                                    250,
                                                   ),
-                                                );
-                                              },
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: 54.w,
-                                                    height: 54.h,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Color.fromARGB(
-                                                        255,
-                                                        246,
-                                                        245,
-                                                        250,
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: EdgeInsets.all(
-                                                        8.0,
-                                                      ),
-                                                      child: ClipOval(
-                                                        child: Image.network(
-                                                          category
-                                                              .data[index]
-                                                              .imageUrl,
-                                                          width: 32.w,
-                                                          height: 32,
-                                                        ),
-                                                      ),
-                                                    ),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: ClipOval(
+                                                    child:
+                                                        categoryList[index]['icon'],
                                                   ),
-                                                  SizedBox(height: 6.h),
-                                                  Text(
-                                                    category.data[index].title,
+                                                ),
+                                              ),
+                                              SizedBox(height: 6.h),
+                                              SizedBox(
+                                                width: 75.w,
+                                                child: Center(
+                                                  child: Text(
+                                                    categoryList[index]['title'],
+                                                    textAlign: TextAlign.start,
                                                     style: GoogleFonts.dmSans(
                                                       fontSize: 13.sp,
                                                       fontWeight:
@@ -377,21 +411,32 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                       ),
                                                     ),
                                                   ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
+                                            ],
+                                          ),
+                                        ),
                                       );
                                     },
-                                    error:
-                                        (error, stackTrace) =>
-                                            Center(child: Text(e.toString())),
-                                    loading:
-                                        () => Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
                                   ),
+                                  // child: categorProvider.when(
+                                  //   data: (category) {
+                                  //     return ListView.builder(
+                                  //       itemCount: categoryList.length,
+                                  //       scrollDirection: Axis.horizontal,
+                                  //       itemBuilder: (context, index) {
+                                  //         return ;
+                                  //       },
+                                  //     );
+                                  //   },
+                                  //   error:
+                                  //       (error, stackTrace) =>
+                                  //           Center(child: Text(e.toString())),
+                                  //   loading:
+                                  //       () => Center(
+                                  //         child: CircularProgressIndicator(),
+                                  //       ),
+                                  // ),
                                 ),
                               ),
                               SizedBox(height: 24.h),
@@ -486,7 +531,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         final isLiked = ref
                                             .watch(likeToggleProvider)
                                             .contains(productId);
-                                        var jsondata = listing.latestListings[index].jsonData.entries.toList();
+                                        var jsondata =
+                                            listing
+                                                .latestListings[index]
+                                                .jsonData
+                                                .entries
+                                                .toList();
                                         return Padding(
                                           padding: EdgeInsets.only(
                                             top: 21.h,
@@ -527,7 +577,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                         listing
                                                             .latestListings[index]
                                                             .image
-                                                            .toString(),
+                                                            ?? "https://www.irisoele.com/img/noimage.png",
                                                         width: 240.w,
                                                         height: 160.h,
                                                         fit: BoxFit.cover,
@@ -693,9 +743,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                 // "\$450.00",
                                                 // dealsList[index]["price"]
                                                 //     .toString(),
-                                                "₹ ${listing
-                                                    .latestListings[index]
-                                                    .price}",
+                                                "₹ ${listing.latestListings[index].price}",
                                                 style: GoogleFonts.dmSans(
                                                   fontSize: 18.sp,
                                                   fontWeight: FontWeight.w600,
@@ -998,11 +1046,12 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
             ),
             itemBuilder: (context, index) {
               final data = allproduct.allProducts[index];
-              
+
               ///// ye like ke liye
               final productId = allproduct.allProducts[index].id.toString();
               final isLiked = ref.watch(likeToggleProvider).contains(productId);
-              var jsondata = allproduct.allProducts[index].jsonData.entries.toList();
+              var jsondata =
+                  allproduct.allProducts[index].jsonData.entries.toList();
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -1027,7 +1076,7 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
                           child: Image.network(
                             // "assets/shoes1.png",
                             // latestList[index]["imageUrl"].toString(),
-                            allproduct.allProducts[index].image,
+                            allproduct.allProducts[index].image?? "https://www.irisoele.com/img/noimage.png",
                             width: 196.w,
                             height: 150.h,
                             fit: BoxFit.cover,
@@ -1132,8 +1181,7 @@ class _AllProductBodyState extends ConsumerState<AllProductBody> {
                   Text(
                     // "\$450.00",
                     // latestList[index]["price"].toString(),
-                    "₹ ${allproduct.allProducts[index].price.toString()}"
-                    ,
+                    "₹ ${allproduct.allProducts[index].price.toString()}",
                     style: GoogleFonts.dmSans(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,

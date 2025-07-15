@@ -4,8 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/listing/service/getlistingController.dart';
+import 'package:shopping_app_olx/new/new.service.dart';
 import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 import 'package:shopping_app_olx/plan/reting.page.dart';
 
@@ -27,6 +31,8 @@ class _ListingPageState extends ConsumerState<ListingPage> {
   @override
   Widget build(BuildContext context) {
     final listingProvider = ref.watch(listingController);
+    final box = Hive.box("data");
+    final planid = box.get("plan_id");
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
       body: listingProvider.when(
@@ -60,7 +66,8 @@ class _ListingPageState extends ConsumerState<ListingPage> {
                     // final Map<String, dynamic> jsonDetails = jsonDecode(
                     //   data.jsonData,
                     // );
-                      var jsondata = listing.data.sellList[index].jsonData.entries.toList();
+                    var jsondata =
+                        listing.data.sellList[index].jsonData.entries.toList();
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -99,8 +106,8 @@ class _ListingPageState extends ConsumerState<ListingPage> {
                                   child: Image.network(
                                     // "assets/listingimage.png",
                                     // listingList[index]["imageUrl"].toString(),
-                                    listing.data.sellList[index].image
-                                        .toString(),
+                                    listing.data.sellList[index].image ?? "https://png.pngtree.com/png-vector/20190820/ourmid/pngtree-no-image-vector-illustration-isolated-png-image_1694547.jpg"
+                                        ,
                                     width: MediaQuery.of(context).size.width,
                                     height: 133.h,
                                     fit: BoxFit.cover,
@@ -134,47 +141,7 @@ class _ListingPageState extends ConsumerState<ListingPage> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      width: 78.w,
-                                      height: 29.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          40.r,
-                                        ),
-                                        color: Color.fromARGB(25, 137, 26, 255),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.edit,
-                                            color: Color.fromARGB(
-                                              255,
-                                              137,
-                                              26,
-                                              255,
-                                            ),
-                                            size: 15.sp,
-                                          ),
-                                          Text(
-                                            "Edit Ad",
-                                            style: GoogleFonts.dmSans(
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color.fromARGB(
-                                                255,
-                                                137,
-                                                26,
-                                                255,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    
                                   ],
                                 ),
                               ],

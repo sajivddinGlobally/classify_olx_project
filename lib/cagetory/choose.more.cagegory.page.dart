@@ -10,6 +10,7 @@ import 'package:shopping_app_olx/cagetory/elctronics.page.dart';
 import 'package:shopping_app_olx/cagetory/fashion.page.dart';
 import 'package:shopping_app_olx/cagetory/furniture.page.dart';
 import 'package:shopping_app_olx/cagetory/job.page.dart';
+import 'package:shopping_app_olx/cagetory/jobsekeer.page.dart';
 import 'package:shopping_app_olx/cagetory/mobile.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
 
@@ -227,6 +228,22 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                         child: CategoryBody(
                           image: "assets/support.png",
                           txt: "Books, Sports & Hobbies",
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => JobSeekerFormPage(),
+                                 settings: RouteSettings(arguments: true),
+                            ),
+                          );
+                        },
+                        child: CategoryBody(
+                          image: "assets/image.png",
+                          txt: "Job Seeker",
                         ),
                       ),
                       SizedBox(height: 20.h),

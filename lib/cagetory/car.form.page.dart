@@ -360,7 +360,7 @@ class _CarFormPageState extends ConsumerState<CarFormPage> {
 
                               final apiserce = APIService(await createDio());
                               await apiserce.addProduct({
-                                "category": "test",
+                                "category": "car",
                                 "user_id": "${box.get("id")}",
                                 "image": await MultipartFile.fromFile(
                                   image!.path,

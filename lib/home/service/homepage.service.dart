@@ -16,4 +16,4 @@ abstract class HomePageService {
   Future<AllCategoryModel> allCategory();
 }
  /// parser: parser.flutterComput  ise response fast call hogi
- /// baseUrl : "http://classified.globallywebsolutions.com", parser:parser.flutterComput
+ /// baseUrl : "http://classified.globallywebsolutions.com", parser:parser.flutterComput 

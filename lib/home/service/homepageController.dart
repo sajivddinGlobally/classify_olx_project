@@ -6,10 +6,11 @@ import 'package:shopping_app_olx/home/service/homepage.service.dart';
 
 import 'package:geolocator/geolocator.dart';
 final homepageController = FutureProvider<HomepageModel>((ref) async {
+  
   final location = await printCurrentLocation();
   final homepageservice = HomePageService(await createDio());
 
-  return homepageservice.home('${location!.latitude}', '${location.longitude}');
+  return homepageservice.home('${location?.latitude}', '${location?.longitude}');
 });
 
 final allCategoryController = FutureProvider<AllCategoryModel>((ref) async {

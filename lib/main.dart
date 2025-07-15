@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:shopping_app_olx/cagetory/locationCheckrPafge.dart';
+import 'package:shopping_app_olx/config/pretty.dio.dart';
 
 import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/login/login.page.dart';
@@ -23,6 +25,7 @@ void main() async {
   runApp(ProviderScope(child: MyApp()));
 }
 
+// globalkey/navigatorkey.dart
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends ConsumerStatefulWidget {
@@ -37,26 +40,42 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   bool isOffline = false;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   // _listener = InternetConnection().onStatusChange.listen((status) {
+  //   //   final hasInternet = status == InternetStatus.connected;
+  //   //   final ctx = navigatorKey.currentContext;
+
+  //   //   if (!hasInternet && !isOffline && ctx != null) {
+  //   //     isOffline = true;
+  //   //     if (ModalRoute.of(ctx)?.settings.name != '/no-internet') {
+  //   //       navigatorKey.currentState?.pushReplacementNamed('/no-internet');
+  //   //     }
+  //   //   } else if (hasInternet && isOffline && ctx != null) {
+  //   //     isOffline = false;
+  //   //     if (ModalRoute.of(ctx)?.settings.name != '/home') {
+  //   //       navigatorKey.currentState?.pushReplacementNamed('/home');
+  //   //     }
+  //   //   }
+  //   // });
+
+  // }
   @override
   void initState() {
     super.initState();
 
-    // _listener = InternetConnection().onStatusChange.listen((status) {
-    //   final hasInternet = status == InternetStatus.connected;
-    //   final ctx = navigatorKey.currentContext;
+    logoutNotifier.addListener(() {
+      if (logoutNotifier.value) {
+        logoutNotifier.value = false; // reset
 
-    //   if (!hasInternet && !isOffline && ctx != null) {
-    //     isOffline = true;
-    //     if (ModalRoute.of(ctx)?.settings.name != '/no-internet') {
-    //       navigatorKey.currentState?.pushReplacementNamed('/no-internet');
-    //     }
-    //   } else if (hasInternet && isOffline && ctx != null) {
-    //     isOffline = false;
-    //     if (ModalRoute.of(ctx)?.settings.name != '/home') {
-    //       navigatorKey.currentState?.pushReplacementNamed('/home');
-    //     }
-    //   }
-    // });
+        navigatorKey.currentState?.pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const LoginPage()),
+          (_) => false,
+        );
+      }
+    });
   }
 
   @override
@@ -84,11 +103,11 @@ class _MyAppState extends ConsumerState<MyApp> {
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             ),
-            home: HomePage(), // Check if token exists
+            home: LocationPermissionPage(), // Check if token exists
             routes: {
               '/home': (context) => const HomePage(),
               '/no-internet': (context) => const NoInternetPage(),
-              '/login': (context) => const LoginPage()
+              '/login': (context) => const LoginPage(),
             },
           ),
         );

@@ -9,7 +9,8 @@ import 'package:shopping_app_olx/cloth/service/categoryController.dart';
 import 'package:shopping_app_olx/particularDeals/particularDeals.page.dart';
 
 class ClothingPage extends ConsumerStatefulWidget {
-  const ClothingPage({super.key});
+  final String query;
+  const ClothingPage(this.query, {super.key});
 
   @override
   ConsumerState<ClothingPage> createState() => _ClothingPageState();
@@ -83,7 +84,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dataProvider = ref.watch(categoryController);
+    final dataProvider = ref.watch(categoryController(widget.query));
     final searchQuery = ref.watch(searchProvider).toLowerCase();
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 242, 247),
@@ -129,7 +130,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                         borderSide: BorderSide.none,
                       ),
                       prefixIcon: Icon(Icons.search),
-                      hintText: "Clothing",
+                      hintText: "",
                     ),
                   ),
                 ),
@@ -151,26 +152,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
             SizedBox(height: 20.h),
             dataProvider.when(
               data: (data) {
-                final filterData =
-                    data.data.where((item) {
-                      final jsonMap = jsonDecode(item.jsonData);
-                      final name = jsonMap['name'].toString().toLowerCase();
-                      final category = item.category.toLowerCase();
-                      return name.contains(searchQuery) ||
-                          category.contains(searchQuery);
-                    }).toList();
-                if (filterData.isEmpty) {
-                  return Center(
-                    child: Text(
-                      "No data found",
-                      style: GoogleFonts.dmSans(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  );
-                }
+                
                 log(data.data.length.toString());
                 return Expanded(
                   child: Padding(
@@ -178,7 +160,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                     child: GridView.builder(
                       padding: EdgeInsets.zero,
 
-                      itemCount: filterData.length,
+                      itemCount: data.data.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 20.w,
@@ -186,8 +168,8 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                         childAspectRatio: 0.75,
                       ),
                       itemBuilder: (context, index) {
-                        final item = filterData[index];
-                        final jsonDetails = jsonDecode(item.jsonData);
+                        final item = data.data[index];
+                        var jsondata = item.jsonData.entries.toList();
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -216,7 +198,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                                       // data.data[index].image,
                                       item.image,
                                       width: 196.w,
-                                      height: 160.h,
+                                      height: 150.h,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -254,12 +236,13 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                                 child: Row(
                                   children: [
                                     Icon(
-                                      Icons.location_on,
+                                      Icons.category,
                                       size: 15.sp,
                                       color: Color.fromARGB(255, 137, 26, 255),
                                     ),
+                                    SizedBox(width: 4.w,),
                                     Text(
-                                      "Udaipur, rajasthan",
+                                      "${item.category}",
                                       //clothsList[index]["location"].toString(),
                                       //productcategory.data[index].address,
                                       style: GoogleFonts.dmSans(
@@ -284,7 +267,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                               // productcategory.data[index].name,
                               //jsonDetails['name'].toString(),
                               // data.data[index].category,
-                              item.category,
+                              jsondata[0].value,
                               style: GoogleFonts.dmSans(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w500,
@@ -297,7 +280,7 @@ class _ClothingPageState extends ConsumerState<ClothingPage> {
                               //clothsList[index]["price"].toString(),
                               // productcategory.data[index].price.toString(),
                               //jsonDetails['price'].toString(),
-                              jsonDetails['price'].toString(),
+                              "₹"+item.price,
                               style: GoogleFonts.dmSans(
                                 fontSize: 18.sp,
                                 fontWeight: FontWeight.w600,

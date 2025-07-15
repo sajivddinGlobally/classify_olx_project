@@ -36,29 +36,26 @@ Dio createDio() {
         handler.next(response);
       },
       onError: (DioException e, handler) async {
-        // if (e.response!.requestOptions.path.contains("/api/auth/verifyOtp")) {
-        //   // ye code sirf agar wrong otp dalne par navigat nhi hoga
-        //   log("OTP verification failed - Invalid OTP");
-
-        //   handler.next(e); // Just forward the error, no navigation
-        //   return;
-        // }
         if (e.response?.statusCode == 401) {
-          log("Token expire refreshing ");
-          //log(e.response?.data['message']);
-          Fluttertoast.showToast(msg: "Token expire please login");
-          // ✅ Use the global navigator key
-          navigatorKey.currentState?.pushAndRemoveUntil(
-            CupertinoPageRoute(builder: (_) => LoginPage()),
-            (_) => false,
-          );
+          log("Token expired, handling in UI layer");
+          Fluttertoast.showToast(msg: "Session expired. Please log in again.");
+
+          // Just clear token, no navigation here
+          var box = Hive.box("data");
+          await box.delete("token");
+
+          // Notify app to log out
+          logoutNotifier.value = true;
+
           return;
-        } else {
-          handler.next(e);
         }
+
+        handler.next(e);
       },
     ),
   );
 
   return dio;
 }
+
+ValueNotifier<bool> logoutNotifier = ValueNotifier(false);
