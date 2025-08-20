@@ -20,7 +20,10 @@ class _ParticularProductService implements ParticularProductService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ParticularProductModel> particularProduct(String id) async {
+  Future<ParticularProductModel> particularProduct(
+    String id,
+    String userId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -29,7 +32,7 @@ class _ParticularProductService implements ParticularProductService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/api/ProductDetails?id=${id}',
+            '/api/ProductDetails?id=${id}&user_id=${userId}',
             queryParameters: queryParameters,
             data: _data,
           )

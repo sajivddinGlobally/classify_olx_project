@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/chat/chating.page.dart';
+import 'package:shopping_app_olx/chat/controller/inboxProvider.provider.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({super.key});
@@ -15,169 +16,118 @@ class ChatPage extends ConsumerStatefulWidget {
 class _ChatPageState extends ConsumerState<ChatPage> {
   @override
   Widget build(BuildContext context) {
+    final inboxListASync = ref.watch(inboxProvider);
+
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 245, 242, 247),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 60.h),
-            Row(
-              children: [
-                SizedBox(width: 20.w),
-                // GestureDetector(
-                //   onTap: () {},
-                //   child: Container(
-                //     width: 46.w,
-                //     height: 46.h,
-                //     decoration: BoxDecoration(
-                //       shape: BoxShape.circle,
-                //       color: Colors.white,
-                //     ),
-                //     child: Center(child: Icon(Icons.arrow_back)),
-                //   ),
-                // ),
-                // SizedBox(width: 100.w),
-                Text(
-                  "Message",
-                  style: GoogleFonts.dmSans(
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 36, 33, 38),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16.h),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 49.h,
-                child: TextField(
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(
-                      vertical: 13.h,
-                      horizontal: 13.w,
-                    ),
-                    prefixIcon: Icon(Icons.search, size: 20.sp),
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(40.r),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderRadius: BorderRadius.circular(40.r),
-                      borderSide: BorderSide.none,
-                    ),
-                    hintText: "Search chats...",
-                    hintStyle: GoogleFonts.dmSans(fontSize: 19.sp),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 24.h),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, right: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      backgroundColor: const Color.fromARGB(255, 245, 242, 247),
+      body: inboxListASync.when(
+        data: (snap) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 60.h),
+
+              /// Header
+              Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(builder: (context) => ChatingPage()),
-                      );
-                    },
-                    child: NameBody(
-                      image: "assets/chatimage1.png",
-                      name: "Robert Jackson",
-                      txt: "Hi, How are you?",
-                      time: "02:45pm",
-                      isDivider: true,
+                  SizedBox(width: 20.w),
+                  Text(
+                    "Message",
+                    style: GoogleFonts.dmSans(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w600,
+                      color: const Color.fromARGB(255, 36, 33, 38),
                     ),
-                  ),
-                  SizedBox(height: 18.h),
-                  NameBody(
-                    image: "assets/chatimage2.png",
-                    name: "Emily Chen",
-                    txt: "Looking forward to our meeting!",
-                    time: "03:00pm",
-                    isDivider: true,
-                  ),
-                  SizedBox(height: 18.h),
-                  NameBody(
-                    image: "assets/chatimage3.png",
-                    name: "Michael Smith",
-                    txt: "Could you send me the report?",
-                    time: "02:45pm",
-                    isDivider: true,
-                  ),
-                  SizedBox(height: 18.h),
-                  NameBody(
-                    image: "assets/chatimage4.png",
-                    name: "Robert Jackson",
-                    txt: "Hi, How are you?",
-                    time: "03:15pm",
-                    isDivider: true,
-                  ),
-                  SizedBox(height: 18.h),
-                  NameBody(
-                    image: "assets/chatimage5.png",
-                    name: "Robert Jackson",
-                    txt: "What time is our call?",
-                    time: "03:30pm",
-                    isDivider: true,
-                  ),
-                  SizedBox(height: 18.h),
-                  NameBody(
-                    image: "assets/chatimage6.png",
-                    name: "James Wilson",
-                    txt: "Are you free this weekend?",
-                    time: "03:45pm",
-                    isDivider: true,
-                  ),
-                  SizedBox(height: 18.h),
-                  NameBody(
-                    image: "assets/chatimage7.png",
-                    name: "Olivia Brown",
-                    txt: "Let's catch up later!",
-                    time: "04:00pm",
-                    isDivider: true,
-                  ),
-                  SizedBox(height: 18.h),
-                  NameBody(
-                    image: "assets/chatimage8.png",
-                    name: "Ethan Davis",
-                    txt: "I have a question about the project.",
-                    time: "04:15pm",
-                    isDivider: true,
-                  ),
-                  SizedBox(height: 18.h),
-                  NameBody(
-                    image: "assets/chatimage9.png",
-                    name: "Ava Johnson",
-                    txt: "Can we reschedule our meeting?",
-                    time: "04:30pm",
-                    isDivider: false,
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
+              SizedBox(height: 16.h),
+
+              /// Search Bar
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: SizedBox(
+                  height: 49.h,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 13.h,
+                        horizontal: 13.w,
+                      ),
+                      prefixIcon: Icon(Icons.search, size: 20.sp),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40.r),
+                        borderSide: BorderSide.none,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40.r),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: "Search chats...",
+                      hintStyle: GoogleFonts.dmSans(fontSize: 19.sp),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 24.h),
+
+              /// Inbox List
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: ListView.builder(
+                    itemCount: snap.inbox.length, // your API data length
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 24),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) =>  ChatingPage(userid: snap.inbox[index].otherUser.id.toString(), name: snap.inbox[index].otherUser.name,),
+                              ),
+                            );
+                          },
+                          child: NameBody(
+                            image:
+                                snap.inbox[index].otherUser.profilePick
+                                    .toString(),
+                            //"assets/chatimage1.png", // static for now
+                            name: snap.inbox[index].otherUser.name,
+                            //"Unknown", // from API
+                            txt: snap.inbox[index].lastMessage,
+                            //"No message yet",
+                            time:
+                                "${snap.inbox[index].timestamp.hour}:${snap.inbox[index].timestamp.minute}",
+                            // "--:--",
+                            isDivider: true,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+        error: (err, stack) => Center(child: Text("$err")),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }
 }
 
-class NameBody extends StatefulWidget {
+class NameBody extends StatelessWidget {
   final String image;
   final String name;
   final String txt;
   final String time;
   final bool isDivider;
+
   const NameBody({
     super.key,
     required this.image,
@@ -188,62 +138,63 @@ class NameBody extends StatefulWidget {
   });
 
   @override
-  State<NameBody> createState() => _NameBodyState();
-}
-
-class _NameBodyState extends State<NameBody> {
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
           children: [
-            Container(
-              width: 44.w,
-              height: 44..h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Image.asset(widget.image, fit: BoxFit.cover),
+            /// Profile Image
+            ClipOval(
+              child: Image.network(
+                "http://classified.globallywebsolutions.com" + image,
+                fit: BoxFit.cover,
+                width: 44.w,
+                height: 44.h,
+                errorBuilder:
+                    (context, error, stackTrace) =>
+                        Icon(Icons.image_not_supported),
               ),
             ),
             SizedBox(width: 10.w),
+
+            /// Name + Message
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.name,
+                  name,
                   style: GoogleFonts.dmSans(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 36, 33, 38),
+                    color: const Color.fromARGB(255, 36, 33, 38),
                   ),
                 ),
                 Text(
-                  widget.txt,
+                  txt,
                   style: GoogleFonts.dmSans(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
-                    color: Color.fromARGB(255, 97, 91, 104),
+                    color: const Color.fromARGB(255, 97, 91, 104),
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
+
+            /// Time
             Text(
-              widget.time,
+              time,
               style: GoogleFonts.dmSans(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
-                color: Color.fromARGB(255, 97, 91, 104),
+                color: const Color.fromARGB(255, 97, 91, 104),
               ),
             ),
           ],
         ),
         SizedBox(height: 10.h),
-        widget.isDivider ? Divider() : SizedBox(),
+        isDivider ? const Divider() : const SizedBox(),
       ],
     );
   }

@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:shopping_app_olx/globalkey/navigatorkey.dart';
-import 'package:shopping_app_olx/login/login.page.dart';
+
 
 Dio createDio() {
   final dio = Dio();
@@ -50,6 +49,9 @@ Dio createDio() {
           return;
         }
 
+
+
+
         handler.next(e);
       },
     ),
@@ -59,3 +61,18 @@ Dio createDio() {
 }
 
 ValueNotifier<bool> logoutNotifier = ValueNotifier(false);
+
+Dio createDio2() {
+  final dio = Dio();
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestBody: true,
+      requestHeader: true,
+      responseBody: true,
+      responseHeader: true,
+    ),
+  );
+
+ 
+  return dio;
+}

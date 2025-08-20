@@ -19,8 +19,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   final phoneController = TextEditingController();
   bool islogin = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +47,8 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+
                   Image.asset("assets/loginimage.png"),
                   SizedBox(height: 50.h),
                   Center(
@@ -103,7 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
+
                         SizedBox(height: 30.h),
+
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size(
@@ -128,9 +134,11 @@ class _LoginPageState extends State<LoginPage> {
                               final body = LoginBodyModel(
                                 phoneNumber: phoneController.text,
                               );
+
                               final loginservice = LoginService(
                                 await createDio(),
                               );
+
                               final response = await loginservice.login(body);
                               Fluttertoast.showToast(
                                 msg: "OTP sent to your phone number",
@@ -148,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                                 msg: "${response.otpForTesting}",
                                 fontSize: 30.sp,
                                 timeInSecForIosWeb: 40,
-                                
+
                                 gravity: ToastGravity.TOP,
                                 toastLength: Toast.LENGTH_LONG,
                               );
@@ -170,6 +178,10 @@ class _LoginPageState extends State<LoginPage> {
                               );
                               log(e.toString());
                             }
+
+
+
+
                           },
                           child:
                               islogin == false
@@ -191,6 +203,8 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                         ),
+
+
                         SizedBox(height: 50.h),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -214,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               },
                               child: Text(
-                                "Register",
+                                " Register",
                                 style: GoogleFonts.dmSans(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w500,
@@ -227,6 +241,9 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
+
+
+
                 ],
               ),
             ),

@@ -40,22 +40,24 @@ class _MapPageState extends ConsumerState<MapPage> {
   void _checkIfLocationAlreadySelected() async {
     var box = Hive.box("data");
     log(box.get("location_selected").toString());
-    if (box.get("location_selected") == null) {
+    if (box.get("location_selected") != null) {
       await Future.delayed(const Duration(milliseconds: 300));
       if (mounted) {
         showDialog(
           context: context,
-          builder: (_) => AlertDialog(
-            title: const Text("Location Already Selected"),
-            content: const Text(
-                "You have already selected your location. You can't change it again"),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("OK"),
+          builder:
+              (_) => AlertDialog(
+                title: const Text("Location Already Selected"),
+                content: const Text(
+                  "You have already selected your location. You can't change it again",
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("OK"),
+                  ),
+                ],
               ),
-            ],
-          ),
         ).then((_) {
           Navigator.pop(context); // exit page
         });
@@ -135,7 +137,9 @@ class _MapPageState extends ConsumerState<MapPage> {
   void _toggleMapType() {
     setState(() {
       _currentMapType =
-          _currentMapType == MapType.normal ? MapType.satellite : MapType.normal;
+          _currentMapType == MapType.normal
+              ? MapType.satellite
+              : MapType.normal;
     });
   }
 
@@ -148,39 +152,41 @@ class _MapPageState extends ConsumerState<MapPage> {
         children: [
           Expanded(
             flex: 2,
-            child: _currentLocation == null
-                ? const Center(child: CircularProgressIndicator())
-                : Stack(
-                    children: [
-                      GoogleMap(
-                        initialCameraPosition: CameraPosition(
-                          target: _currentLocation!,
-                          zoom: 13,
+            child:
+                _currentLocation == null
+                    ? const Center(child: CircularProgressIndicator())
+                    : Stack(
+                      children: [
+                        GoogleMap(
+                          initialCameraPosition: CameraPosition(
+                            target: _currentLocation!,
+                            zoom: 13,
+                          ),
+                          mapType: _currentMapType,
+                          markers: _markers,
+                          circles: _circles,
+                          myLocationEnabled: true,
+                          onMapCreated:
+                              (controller) => _mapController = controller,
+                          onTap: (latLng) {
+                            setState(() {
+                              _currentLocation = latLng;
+                              _updateMarkerAndCircle(latLng);
+                            });
+                            _getAddressFromLatLng(latLng);
+                          },
                         ),
-                        mapType: _currentMapType,
-                        markers: _markers,
-                        circles: _circles,
-                        myLocationEnabled: true,
-                        onMapCreated: (controller) => _mapController = controller,
-                        onTap: (latLng) {
-                          setState(() {
-                            _currentLocation = latLng;
-                            _updateMarkerAndCircle(latLng);
-                          });
-                          _getAddressFromLatLng(latLng);
-                        },
-                      ),
-                      Positioned(
-                        top: 10.h,
-                        right: 10.w,
-                        child: FloatingActionButton(
-                          onPressed: _toggleMapType,
-                          backgroundColor: Colors.blue[200],
-                          child: const Icon(Icons.layers),
+                        Positioned(
+                          top: 10.h,
+                          right: 10.w,
+                          child: FloatingActionButton(
+                            onPressed: _toggleMapType,
+                            backgroundColor: Colors.blue[200],
+                            child: const Icon(Icons.layers),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
           ),
           Expanded(
             child: Container(
@@ -214,9 +220,10 @@ class _MapPageState extends ConsumerState<MapPage> {
                           borderRadius: BorderRadius.circular(30.45.r),
                           borderSide: BorderSide.none,
                         ),
-                        hintText: _address.isNotEmpty
-                            ? _address
-                            : "Fetching address...",
+                        hintText:
+                            _address.isNotEmpty
+                                ? _address
+                                : "Fetching address...",
                         hintStyle: GoogleFonts.dmSans(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
@@ -239,35 +246,139 @@ class _MapPageState extends ConsumerState<MapPage> {
                       ),
                     ),
                     SizedBox(height: 20.h),
+                    // GestureDetector(
+                    //   onTap: () async {
+                    //     log("hhhuh");
+                    //     setState(() {
+                    //       isLocation = true;
+                    //     });
+                    //
+                    //     if (_currentLocation != null) {
+                    //       log("jjjj");
+                    //       if (box.get("location_selected") == null) {
+                    //         await box.put("location_selected", true);
+                    //         await box.put("latitude", _currentLocation!.latitude);
+                    //         await box.put("longitude", _currentLocation!.longitude);
+                    //         ref.read(locationNotifer.notifier).updateLocation(
+                    //               lat: _currentLocation!.latitude.toString(),
+                    //               long: _currentLocation!.longitude.toString(),
+                    //             );
+                    //         Fluttertoast.showToast(msg: "Location saved!");
+                    //         Navigator.pop(context);
+                    //       } else {
+                    //         Fluttertoast.showToast(
+                    //             msg:
+                    //                 "Location already selected. Cannot change.");
+                    //       }
+                    //     }
+                    //
+                    //     setState(() {
+                    //       isLocation = false;
+                    //     });
+                    //   },
+                    //   child: Container(
+                    //     width: MediaQuery.of(context).size.width,
+                    //     height: 49.h,
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(35.45.r),
+                    //       border: Border.all(
+                    //         color: const Color.fromARGB(255, 137, 26, 255),
+                    //         width: 1.sp,
+                    //       ),
+                    //     ),
+                    //     child: Center(
+                    //       child: isLocation == false
+                    //           ? Text(
+                    //               "Confirm Location",
+                    //               style: GoogleFonts.dmSans(
+                    //                 fontSize: 15.sp,
+                    //                 fontWeight: FontWeight.w500,
+                    //                 color:
+                    //                     const Color.fromARGB(255, 137, 26, 255),
+                    //               ),
+                    //             )
+                    //           : const CircularProgressIndicator(
+                    //               color: Color.fromARGB(255, 137, 26, 255),
+                    //             ),
+                    //     ),
+                    //   ),
+                    // ),
                     GestureDetector(
                       onTap: () async {
-                        setState(() {
-                          isLocation = true;
-                        });
+                        if (_currentLocation != null) {
+                          // Show confirmation dialog
+                          showDialog(
+                            context: context,
+                            builder:
+                                (_) => AlertDialog(
+                                  title: const Text("Confirm Location"),
+                                  content: const Text(
+                                    "Are you sure you want to select this location? You won't be able to change it later.",
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed:
+                                          () =>
+                                              Navigator.pop(context), // Cancel
+                                      child: const Text("Cancel"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        Navigator.pop(
+                                          context,
+                                        ); // Close the dialog
+                                        setState(() {
+                                          isLocation = true;
+                                        });
 
-                        if (_currentLocation == null) {
-                          if (box.get("location_selected") != null) {
-                            await box.put("location_selected", true);
-                            await box.put("latitude", _currentLocation!.latitude);
-                            await box.put("longitude", _currentLocation!.longitude);
+                                        log("hhhuh");
+                                        if (box.get("location_selected") ==
+                                            null) {
+                                          await box.put(
+                                            "location_selected",
+                                            true,
+                                          );
+                                          await box.put(
+                                            "latitude",
+                                            _currentLocation!.latitude,
+                                          );
+                                          await box.put(
+                                            "longitude",
+                                            _currentLocation!.longitude,
+                                          );
+                                          ref
+                                              .read(locationNotifer.notifier)
+                                              .updateLocation(
+                                                lat:
+                                                    _currentLocation!.latitude
+                                                        .toString(),
+                                                long:
+                                                    _currentLocation!.longitude
+                                                        .toString(),
+                                              );
+                                          Fluttertoast.showToast(
+                                            msg: "Location saved!",
+                                          );
+                                          Navigator.pop(
+                                            context,
+                                          ); // Exit the page
+                                        } else {
+                                          Fluttertoast.showToast(
+                                            msg:
+                                                "Location already selected. Cannot change.",
+                                          );
+                                        }
 
-                            ref.read(locationNotifer.notifier).updateLocation(
-                                  lat: _currentLocation!.latitude.toString(),
-                                  long: _currentLocation!.longitude.toString(),
-                                );
-
-                            Fluttertoast.showToast(msg: "Location saved!");
-                            Navigator.pop(context);
-                          } else {
-                            Fluttertoast.showToast(
-                                msg:
-                                    "Location already selected. Cannot change.");
-                          }
+                                        setState(() {
+                                          isLocation = false;
+                                        });
+                                      },
+                                      child: const Text("Confirm"),
+                                    ),
+                                  ],
+                                ),
+                          );
                         }
-
-                        setState(() {
-                          isLocation = false;
-                        });
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -280,19 +391,24 @@ class _MapPageState extends ConsumerState<MapPage> {
                           ),
                         ),
                         child: Center(
-                          child: isLocation == false
-                              ? Text(
-                                  "Confirm Location",
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color:
-                                        const Color.fromARGB(255, 137, 26, 255),
+                          child:
+                              isLocation == false
+                                  ? Text(
+                                    "Confirm Location",
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: const Color.fromARGB(
+                                        255,
+                                        137,
+                                        26,
+                                        255,
+                                      ),
+                                    ),
+                                  )
+                                  : const CircularProgressIndicator(
+                                    color: Color.fromARGB(255, 137, 26, 255),
                                   ),
-                                )
-                              : const CircularProgressIndicator(
-                                  color: Color.fromARGB(255, 137, 26, 255),
-                                ),
                         ),
                       ),
                     ),

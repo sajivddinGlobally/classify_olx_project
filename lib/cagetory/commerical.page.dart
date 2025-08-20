@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_app_olx/cagetory/commerical.form.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
+import 'package:shopping_app_olx/cagetory/spare.parts.form.page.dart';
 
 class CommericalPage extends StatefulWidget {
   const CommericalPage({super.key});
@@ -74,7 +75,7 @@ class _CommericalPageState extends State<CommericalPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => CommericalFormPage(),
+                            builder: (context) => CommercialFormPage(),
                             settings: RouteSettings(arguments: true)
                           ),
                         );
@@ -87,7 +88,7 @@ class _CommericalPageState extends State<CommericalPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => CommericalFormPage(),
+                            builder: (context) => SparePartsFormPage(),
                             settings: RouteSettings(arguments: true)
                           ),
                         );

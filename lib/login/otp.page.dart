@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,8 +29,10 @@ class _OtpPageState extends ConsumerState<OtpPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Stack(
               children: [
+
                 Container(
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
@@ -40,7 +43,9 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                     ),
                   ),
                 ),
+
                 Image.asset("assets/bgimage.png"),
+
                 Positioned.fill(
                   top: 150.h,
                   left: 0,
@@ -123,9 +128,15 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                           });
                         },
                         onSubmit: (value) async {
+
+                          final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+                          String? token = await _firebaseMessaging.getToken();
+                          print('FCM Token: $token');
                           final otpBody = OtpBodyModel(
                             phoneNumber: widget.phone,
                             otp: value,
+                            fcm_Token:token!,
+
                           );
 
                           try {
@@ -133,7 +144,9 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                               otpProvider(otpBody).future,
                             );
 
+
                             log("TOKEN SAVED: ${response.token}");
+
 
                             var box = await Hive.box("data");
                             await box.put("token", response.token.toString());
@@ -194,28 +207,15 @@ class _OtpPageState extends ConsumerState<OtpPage> {
                         ],
                       ),
 
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     if (otp.length == 6) {
-                      //       print("OTP Submitted: $otp");
-                      //       ScaffoldMessenger.of(context).showSnackBar(
-                      //         SnackBar(content: Text("OTP Submitted: $otp")),
-                      //       );
-                      //     } else {
-                      //       ScaffoldMessenger.of(context).showSnackBar(
-                      //         const SnackBar(
-                      //           content: Text("Please enter 6 digits"),
-                      //         ),
-                      //       );
-                      //     }
-                      //   },
-                      //   child: const Text("Submit OTP"),
-                      // ),
                     ],
                   ),
                 ),
+
+
+
               ],
             ),
+
           ],
         ),
       ),

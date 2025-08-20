@@ -1,36 +1,35 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shopping_app_olx/cagetory/locationCheckrPafge.dart';
+import 'package:shopping_app_olx/chat/chating.page.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
-
 import 'package:shopping_app_olx/home/home.page.dart';
 import 'package:shopping_app_olx/login/login.page.dart';
 import 'package:shopping_app_olx/noInterNet.dart' show NoInternetPage;
+import 'package:firebase_core/firebase_core.dart';
+import 'firbaseOption.dart';
+import 'notificationService.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize Hive and open the box
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await NotificationService().init();
   await Hive.initFlutter();
   await Hive.openBox("data");
-
-  // Initialize the navigator key globally
-
-  // Run the app with the ProviderScope and pass the navigatorKey
   runApp(ProviderScope(child: MyApp()));
 }
 
-// globalkey/navigatorkey.dart
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
-
   @override
   ConsumerState<MyApp> createState() => _MyAppState();
 }
@@ -38,38 +37,16 @@ class MyApp extends ConsumerStatefulWidget {
 class _MyAppState extends ConsumerState<MyApp> {
   late final StreamSubscription<InternetStatus> _listener;
 
-  bool isOffline = false;
 
-  // @override
-  // void initState() {
-  //   super.initState();
 
-  //   // _listener = InternetConnection().onStatusChange.listen((status) {
-  //   //   final hasInternet = status == InternetStatus.connected;
-  //   //   final ctx = navigatorKey.currentContext;
-
-  //   //   if (!hasInternet && !isOffline && ctx != null) {
-  //   //     isOffline = true;
-  //   //     if (ModalRoute.of(ctx)?.settings.name != '/no-internet') {
-  //   //       navigatorKey.currentState?.pushReplacementNamed('/no-internet');
-  //   //     }
-  //   //   } else if (hasInternet && isOffline && ctx != null) {
-  //   //     isOffline = false;
-  //   //     if (ModalRoute.of(ctx)?.settings.name != '/home') {
-  //   //       navigatorKey.currentState?.pushReplacementNamed('/home');
-  //   //     }
-  //   //   }
-  //   // });
-
-  // }
   @override
   void initState() {
     super.initState();
-
+    setupInteractedMessage();
+    listenForegroundNotification();
     logoutNotifier.addListener(() {
       if (logoutNotifier.value) {
         logoutNotifier.value = false; // reset
-
         navigatorKey.currentState?.pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => const LoginPage()),
           (_) => false,
@@ -77,6 +54,40 @@ class _MyAppState extends ConsumerState<MyApp> {
       }
     });
   }
+
+  void listenForegroundNotification() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("🔹 Foreground message: ${message.data}");
+      // You can show a dialog/snackbar here if needed
+    });
+  }
+
+  // Handle notification click (terminated + background)
+  void setupInteractedMessage() async {
+    // App terminated
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    // App background
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    if (message.data.isNotEmpty) {
+      final String id = message.data['userid'] ?? '';
+      final String title = message.data['fullname'] ?? 'No Title';
+
+      navigatorKey.currentState?.push(
+        MaterialPageRoute(
+          builder: (_) => ChatingPage(userid: id, name: title),
+        ),
+      );
+    }
+  }
+
 
   @override
   void dispose() {
@@ -90,7 +101,6 @@ class _MyAppState extends ConsumerState<MyApp> {
     var token = box.get("token");
     log("///////////////////////////////////");
     log(token?.toString() ?? "No token found");
-
     return ScreenUtilInit(
       designSize: Size(440, 956),
       minTextAdapt: true,
@@ -98,12 +108,16 @@ class _MyAppState extends ConsumerState<MyApp> {
       builder: (context, child) {
         return SafeArea(
           child: MaterialApp(
+
             navigatorKey: navigatorKey,
             title: 'Flutter Demo',
+
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             ),
+
             home: LocationPermissionPage(), // Check if token exists
+
             routes: {
               '/home': (context) => const HomePage(),
               '/no-internet': (context) => const NoInternetPage(),

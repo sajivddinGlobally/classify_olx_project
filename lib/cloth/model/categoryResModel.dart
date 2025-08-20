@@ -33,6 +33,7 @@ class CategoryResModel {
     };
 }
 
+
 class Datum {
     int id;
     int userId;
@@ -43,7 +44,12 @@ class Datum {
     DateTime createdAt;
     DateTime updatedAt;
     Map<String, dynamic> jsonData;
-    String price;
+    String? price; // Make price nullable
+    String? listing_type; // Make price nullable
+    int? likes; // Make price nullable
+    int? dislikes; // Make price nullable
+    bool? userlike; // Make price nullable
+
 
     Datum({
         required this.id,
@@ -55,36 +61,43 @@ class Datum {
         required this.createdAt,
         required this.updatedAt,
         required this.jsonData,
-        required this.price
+        this.price, // Nullable, so no `required`
+        this.listing_type, // Nullable, so no `required`
+this.likes,
+        this.dislikes,
+        this.userlike,
+
     });
 
     factory Datum.fromJson(Map<String, dynamic> json) {
-      final raw = json["json_data"] ?? "";
-      Map<String, dynamic> parsed = {};
+        final raw = json["json_data"] ?? "";
+        Map<String, dynamic> parsed = {};
 
-      try{
-        final decoded = jsonDecode(raw);
-        if ( decoded is Map<String, dynamic>){
-          parsed = decoded;
+        try {
+            final decoded = jsonDecode(raw);
+            if (decoded is Map<String, dynamic>) {
+                parsed = decoded;
+            }
+        } catch (e) {
+            // log("Invalid json_data: $e");
         }
 
-      } catch (e) {
-      // log("Invalid json_data: $e");
-      }
-
-      return Datum(
-      
-        id: json["id"],
-        userId: json["user_id"],
-        category: json["category"],
-        image: json["image"],
-        jsonData: parsed,
-        jsonDataRaw: raw,
-        status: json["status"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        price: json['price']
-    );
+        return Datum(
+            id: json["id"],
+            userId: json["user_id"],
+            category: json["category"] ?? "", // Provide default if null
+            image: json["image"] ?? "", // Provide default if null
+            jsonData: parsed,
+            jsonDataRaw: raw,
+            status: json["status"],
+            createdAt: DateTime.parse(json["created_at"]),
+            updatedAt: DateTime.parse(json["updated_at"]),
+            price: json["price"], // Nullable, so null is fine
+            listing_type: json["listing_type"], // Nullable, so null is fine
+            likes: json["likes"], // Nullable, so null is fine
+            dislikes: json["dislikes"], // Nullable, so null is fine
+            userlike: json["userlike"], // Nullable, so null is fine
+        );
     }
 
     Map<String, dynamic> toJson() => {
@@ -96,6 +109,10 @@ class Datum {
         "status": status,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "price": price
+        "price": price, // Nullable, so null is fine
+        "listing_type": listing_type, // Nullable, so null is fine
+        "likes": likes, // Nullable, so null is fine
+        "dislikes": dislikes, // Nullable, so null is fine
+        "userlike": userlike, // Nullable, so null is fine
     };
 }

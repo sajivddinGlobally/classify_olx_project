@@ -6,11 +6,10 @@ import 'package:shopping_app_olx/cagetory/electronics.form.oage.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
 
 class ElctronicsPage extends StatefulWidget {
-  const ElctronicsPage({super.key});
 
+  const ElctronicsPage({super.key});
   @override
-  State<ElctronicsPage> createState() => _ElctronicsPageState();
-}
+  State<ElctronicsPage> createState() => _ElctronicsPageState();}
 
 class _ElctronicsPageState extends State<ElctronicsPage> {
   @override
@@ -69,25 +68,27 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 20.h),
+
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => ElectronicsFormPage(),
+                            builder: (context) => ElectronicsFormPage("TVs, Video-Audio"),
                             settings: RouteSettings(arguments: true),
                           ),
                         );
                       },
                       child: PropertyBody(txt: "TVs, Video-Audio"),
                     ),
+
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => ElectronicsFormPage(),
+                            builder: (context) => ElectronicsFormPage("Kitchen & Other Appliances"),
                             settings: RouteSettings(arguments: true),
                           ),
                         );
@@ -97,12 +98,18 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                     /*   Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => ElectronicsFormPage(),
+                            builder: (context) => ElectronicsFormPage("Computers & Laptops"),
                           ),
-                        );
+                        );*/
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => ElectronicsFormPage("Computers & Laptops"),
+                              settings: RouteSettings(arguments: true),
+                            ));
                       },
                       child: PropertyBody(txt: "Computers & Laptops"),
                     ),
@@ -112,7 +119,7 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => ElectronicsFormPage(),
+                            builder: (context) => ElectronicsFormPage("Cameras & Lenses"),
                             settings: RouteSettings(arguments: true),
                           ),
                         );
@@ -125,7 +132,7 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => ElectronicsFormPage(),
+                            builder: (context) => ElectronicsFormPage("Games & Entertainment"),
                             settings: RouteSettings(arguments: true),
                           ),
                         );
@@ -133,26 +140,14 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                       child: PropertyBody(txt: "Games & Entertainment"),
                     ),
                     SizedBox(height: 20.h),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       CupertinoPageRoute(
-                    //         builder: (context) => ElectronicsFormPage(),
-                    //       ),
-                    //     );
-                    //   },
-                    //   child: PropertyBody(txt: "Fridges"),
-                    // ),
-                    //SizedBox(height: 20.h),
-                    // PropertyBody(txt: "Computer Accessories"),
+
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => ElectronicsFormPage(),
+                            builder: (context) => ElectronicsFormPage("Hard Disks, Printers & Monitors"),
                             settings: RouteSettings(arguments: true),
                           ),
                         );
@@ -162,18 +157,20 @@ class _ElctronicsPageState extends State<ElctronicsPage> {
                       ),
                     ),
                     SizedBox(height: 20.h),
+
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => ElectronicsFormPage(),
+                            builder: (context) => ElectronicsFormPage("ACS"),
                             settings: RouteSettings(arguments: true),
                           ),
                         );
                       },
                       child: PropertyBody(txt: "ACS"),
                     ),
+
                     SizedBox(height: 20.h),
                   ],
                 ),

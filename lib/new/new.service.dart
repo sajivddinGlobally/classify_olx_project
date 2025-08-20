@@ -8,14 +8,42 @@ part 'new.service.g.dart';
 @RestApi(baseUrl: "http://classified.globallywebsolutions.com")
 abstract class APIService {
   factory APIService(Dio dio, {String baseUrl}) = _APIService;
-  
+
+
   @POST("/api/Add/product")
   @MultiPart() // ✅ VERY IMPORTANT
   Future<HttpResponse<dynamic>> addProduct(@Part() Map<String, dynamic> parts);
+
+
+/*
+  @POST("/api/product/update")
+  @MultiPart() // ✅ VERY IMPORTANT
+  Future<HttpResponse<dynamic>>
+  updateProduct(@Part() Map<String, dynamic> parts);
+
+*/
+
+  @POST("/api/product/update")
+  @MultiPart()
+  Future<HttpResponse<dynamic>> updateProduct(
+      @Query("id") int id, // Add id as a query parameter
+      @Part() Map<String, dynamic> parts,
+      );
+
+
+  @POST("/api/product/Delete")
+  @MultiPart()
+  Future<HttpResponse<dynamic>> deleteProduct(
+      @Query("id") int id, // Add id as a query parameter
+      );
+
+
   @GET("/api/plans")
   Future<PlanModel> getPlan();
+
   @POST("/api/buy-plan")
   @MultiPart()
+
   Future<HttpResponse<dynamic>> buyPlan({
     @Part(name: "user_id") required String userId,
     @Part(name: "trnx_id") required String trnxId,
@@ -24,6 +52,7 @@ abstract class APIService {
     @Part(name: "plan_id") required String planId,
   });
   @GET("/api/user-active-wallet?user_id={id}")
+
   Future<ActivePlan?> getActivePlan(@Path('id') String id);
   @POST("/api/boost-post")
   @MultiPart()

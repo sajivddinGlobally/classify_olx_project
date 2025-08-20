@@ -41,6 +41,7 @@ class Datum {
     int boostCount;
     DateTime createdAt;
     DateTime updatedAt;
+    String? listing_type;
 
     Datum({
         required this.id,
@@ -51,6 +52,7 @@ class Datum {
         required this.boostCount,
         required this.createdAt,
         required this.updatedAt,
+        required this.listing_type,
     });
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -62,6 +64,7 @@ class Datum {
         boostCount: json["boost_count"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        listing_type:  json["listing_type"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -73,5 +76,6 @@ class Datum {
         "boost_count": boostCount,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "listing_type": listing_type,
     };
 }

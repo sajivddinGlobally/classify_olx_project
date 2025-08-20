@@ -144,7 +144,7 @@ class _JobPageState extends State<JobPage> {
                             ),
                           );
                         },
-                        child: PropertyBody(txt: "Delivery & Colection"),
+                        child: PropertyBody(txt: "Delivery & Collection"),
                       ),
                       SizedBox(height: 20.h),
                       GestureDetector(

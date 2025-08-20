@@ -11,10 +11,10 @@ import 'package:shopping_app_olx/home/service/homepageController.dart';
 
 class CategoryPage extends ConsumerStatefulWidget {
   const CategoryPage({super.key});
-
   @override
   ConsumerState<CategoryPage> createState() => _CategoryPageState();
 }
+
 
 class _CategoryPageState extends ConsumerState<CategoryPage> {
   int tab = 0;
@@ -25,6 +25,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
+
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -88,6 +89,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                         ),
                       ),
                       SizedBox(height: 20.h),
+
                       ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -99,14 +101,6 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                               setState(() {
                                 tab = index;
                               });
-
-
-                              // Navigator.push(
-                              //   context,
-                              //   CupertinoPageRoute(
-                              //     builder: (context) => ChooseCategoryPage(),
-                              //   ),
-                              // );
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
@@ -132,26 +126,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                         },
                       ),
 
-                      // CategorBody(
-                      //   bgColor: Colors.white,
-                      //   image: 'assets/clothing.png',
-                      //   txt: 'Clothing',
-                      //   txtColor: Color.fromARGB(255, 97, 91, 104),
-                      // ),
-                      // SizedBox(height: 8.h),
-                      // CategorBody(
-                      //   bgColor: Colors.white,
-                      //   image: 'assets/furniture.png',
-                      //   txt: 'Furniture',
-                      //   txtColor: Color.fromARGB(255, 97, 91, 104),
-                      // ),
-                      // SizedBox(height: 8.h),
-                      // CategorBody(
-                      //   bgColor: Colors.white,
-                      //   image: 'assets/car.png',
-                      //   txt: 'Vehicles',
-                      //   txtColor: Color.fromARGB(255, 97, 91, 104),
-                      // ),
+
                       SizedBox(height: 40.h),
                     ],
                   ),
@@ -160,12 +135,19 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
               error: (error, stackTrace) => Center(child: Text(e.toString())),
               loading: () => Center(child: CircularProgressIndicator()),
             ),
+
+
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
+
 
 class CategorBody extends StatelessWidget {
   final Color bgColor;

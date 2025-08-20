@@ -10,7 +10,6 @@ import 'package:shopping_app_olx/cagetory/shopsoffice.form.page.dart';
 
 class PropertyPage extends StatefulWidget {
   const PropertyPage({super.key});
-
   @override
   State<PropertyPage> createState() => _PropertyPageState();
 }
@@ -55,6 +54,7 @@ class _PropertyPageState extends State<PropertyPage> {
                 ),
               ),
               SizedBox(height: 10.h),
+
               Center(
                 child: Text(
                   "Properties",
@@ -65,11 +65,13 @@ class _PropertyPageState extends State<PropertyPage> {
                   ),
                 ),
               ),
+
               SizedBox(height: 40.h),
               Padding(
                 padding: EdgeInsets.only(left: 25.w, right: 25.w),
                 child: Column(
                   children: [
+
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -82,7 +84,9 @@ class _PropertyPageState extends State<PropertyPage> {
                       },
                       child: PropertyBody(txt: "For Sale: Houses & Apartment"),
                     ),
+
                     SizedBox(height: 20.h),
+
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -95,7 +99,9 @@ class _PropertyPageState extends State<PropertyPage> {
                       },
                       child: PropertyBody(txt: "For Rent: Houses & Apartment"),
                     ),
+
                     SizedBox(height: 20.h),
+
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -108,6 +114,7 @@ class _PropertyPageState extends State<PropertyPage> {
                       },
                       child: PropertyBody(txt: "Lands & Plots"),
                     ),
+
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {

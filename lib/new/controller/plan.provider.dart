@@ -8,9 +8,11 @@ final planProvider = FutureProvider((ref) async {
   return state.getPlan();
 });
 
+
 final activePlanProvider = FutureProvider((ref) async {
   final box = Hive.box('data');
   final userid = box.get('id');
   final state = APIService(createDio());
   return state.getActivePlan(userid);
 });
+

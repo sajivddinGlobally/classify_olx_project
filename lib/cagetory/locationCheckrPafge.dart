@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
 import 'package:shopping_app_olx/home/home.page.dart';
+import 'package:shopping_app_olx/login/login.page.dart';
 
 class LocationModel {
   final String latitude;
@@ -23,15 +25,35 @@ class _LocationPermissionPageState extends State<LocationPermissionPage> {
     _checkLocationAndNavigate();
   }
 
-  Future<void> _checkLocationAndNavigate() async {
+/*  Future<void> _checkLocationAndNavigate() async {
     final location = await _getCurrentLocation();
     if (location != null && mounted) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     }
+  }*/
+  Future<void> _checkLocationAndNavigate() async {
+    final location = await _getCurrentLocation();
+    if (location != null && mounted) {
+      var box = Hive.box("data");
+      var token = box.get("token");
+
+      if (token != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage())
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      }
+    }
   }
+
 
   Future<LocationModel?> _getCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();

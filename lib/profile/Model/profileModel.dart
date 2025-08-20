@@ -40,6 +40,7 @@ class Data {
   String address;
   String city;
   String pincode;
+  String profile_approved;
   dynamic image;
   DateTime createdAt;
   DateTime updatedAt;
@@ -51,6 +52,7 @@ class Data {
     required this.address,
     required this.city,
     required this.pincode,
+    required this.profile_approved,
     required this.image,
     required this.createdAt,
     required this.updatedAt,
@@ -63,6 +65,7 @@ class Data {
     address: json["address"],
     city: json["city"],
     pincode: json["pincode"],
+    profile_approved: json["profile_approved"],
     image: json["image"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
@@ -75,6 +78,7 @@ class Data {
     "address": address,
     "city": city,
     "pincode": pincode,
+    "profile_approved": profile_approved,
     "image": image,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),

@@ -54,7 +54,7 @@ class RegisterController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text("your account was created")));
+        ).showSnackBar(SnackBar(content: Text("Your account is created successfull")));
         navigatorKey.currentState?.push(
           CupertinoPageRoute(builder: (context) => LoginPage()),
         );

@@ -31,7 +31,109 @@ class _OtherFormPageState extends State<OtherFormPage> {
   File? image;
   final picker = ImagePicker();
 
-  Future<void> pickImageFormCamera() async {
+  List<XFile> images = []; // Changed to List<XFile> for multiple images
+  Future<void> pickImageFromCamera() async {
+    var status = await Permission.camera.request();
+    if (status.isGranted) {
+      final pickedFile = await picker.pickImage(source: ImageSource.camera);
+      if (pickedFile != null) {
+        setState(() {
+          images.add(pickedFile);
+        });
+      }
+    } else {
+      print("Camera Permission is denied");
+    }
+  }
+  Future<void> pickImageFromGallery() async {
+    try {
+      // Use Permission.storage for Android 10 and below
+      var status = await Permission.storage.status;
+      print("Initial storage permission status (Android 10): $status");
+
+      if (!status.isGranted) {
+        status = await Permission.storage.request();
+        print("Requested storage permission status: $status");
+      }
+
+      if (status.isGranted) {
+        print("Opening gallery for multiple image selection");
+        final pickedFiles = await picker.pickMultiImage(
+          maxWidth: 1920,
+          maxHeight: 1080,
+          imageQuality: 80,
+        );
+        if (pickedFiles.isNotEmpty) {
+          setState(() {
+            images.addAll(pickedFiles.take(5 - images.length)); // Limit to 5 images
+          });
+          print("Selected ${pickedFiles.length} images: ${pickedFiles.map((e) => e.path).toList()}");
+          Fluttertoast.showToast(
+            msg: "Selected ${pickedFiles.length} images",
+            toastLength: Toast.LENGTH_LONG,
+          );
+        } else {
+          print("No images selected from gallery");
+          Fluttertoast.showToast(
+            msg: "No images selected",
+            toastLength: Toast.LENGTH_LONG,
+          );
+        }
+      } else if (status.isDenied) {
+        print("Storage permission denied");
+        Fluttertoast.showToast(
+          msg: "Please grant storage permission to select images",
+          toastLength: Toast.LENGTH_LONG,
+        );
+      } else if (status.isPermanentlyDenied) {
+        print("Storage permission permanently denied");
+        Fluttertoast.showToast(
+          msg: "Please enable storage permission in your device settings",
+          toastLength: Toast.LENGTH_LONG,
+        );
+        await openAppSettings();
+      } else {
+        print("Unexpected permission status: $status");
+        Fluttertoast.showToast(
+          msg: "Unable to access gallery due to permission issue",
+          toastLength: Toast.LENGTH_LONG,
+        );
+      }
+    } catch (e, stackTrace) {
+      print("Error picking images: $e");
+      print("Stack trace: $stackTrace");
+      Fluttertoast.showToast(
+        msg: "Failed to pick images: $e",
+        toastLength: Toast.LENGTH_LONG,
+      );
+    }
+  }
+  Future showImage() async {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        actions: [
+          CupertinoActionSheetAction(
+            onPressed: () {
+              pickImageFromCamera();
+              Navigator.pop(context);
+            },
+            child: Text("Camera"),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              pickImageFromGallery();
+              Navigator.pop(context);
+            },
+            child: Text("Gallery"),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+/*  Future<void> pickImageFormCamera() async {
     var status = await Permission.camera.request();
     if (status.isGranted) {
       final PickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -82,7 +184,7 @@ class _OtherFormPageState extends State<OtherFormPage> {
             ],
           ),
     );
-  }
+  }*/
 
   bool isProperty = false;
   @override
@@ -169,36 +271,125 @@ class _OtherFormPageState extends State<OtherFormPage> {
                       maxlenghts: 4096,
                     ),
                     SizedBox(height: 20.h),
-                    GestureDetector(
-                      onTap: () {
-                        showImage();
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 216.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.r),
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey, width: 1.w),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     showImage();
+                    //   },
+                    //   child: Container(
+                    //     width: MediaQuery.of(context).size.width,
+                    //     height: 216.h,
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(15.r),
+                    //       color: Colors.white,
+                    //       border: Border.all(color: Colors.grey, width: 1.w),
+                    //     ),
+                    //     child:
+                    //         image == null
+                    //             ? Column(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               children: [
+                    //                 Icon(Icons.upload),
+                    //                 Text("Upload Image"),
+                    //               ],
+                    //             )
+                    //             : ClipRRect(
+                    //               borderRadius: BorderRadius.circular(15.r),
+                    //               child: Image.file(
+                    //                 image!,
+                    //                 width: MediaQuery.of(context).size.width,
+                    //                 height: 216.h,
+                    //                 fit: BoxFit.cover,
+                    //               ),
+                    //             ),
+                    //   ),
+                    // ),
+
+                    Container(
+                      height: 216.h,
+                      child: images.isEmpty
+                          ? GestureDetector(
+                        onTap: showImage,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.r),
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey, width: 1.w),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.upload),
+                              Text("Upload Images"),
+                            ],
+                          ),
                         ),
-                        child:
-                            image == null
-                                ? Column(
+                      )
+                          : ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: images.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == images.length) {
+                            return GestureDetector(
+                              onTap: showImage,
+                              child: Container(
+                                width: 100.w,
+                                margin: EdgeInsets.only(right: 8.w),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.r),
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.grey, width: 1.w),
+                                ),
+                                child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.upload),
-                                    Text("Upload Image"),
+                                    Icon(Icons.add),
+                                    Text("Add More"),
                                   ],
-                                )
-                                : ClipRRect(
+                                ),
+                              ),
+                            );
+                          }
+                          return Stack(
+                            children: [
+                              Container(
+                                width: 100.w,
+                                margin: EdgeInsets.only(right: 8.w),
+                                child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15.r),
                                   child: Image.file(
-                                    image!,
-                                    width: MediaQuery.of(context).size.width,
+                                    File(images[index].path),
                                     height: 216.h,
                                     fit: BoxFit.cover,
                                   ),
                                 ),
+                              ),
+                              Positioned(
+                                right: 8.w,
+                                top: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      images.removeAt(index);
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.red,
+                                    ),
+                                    child: Icon(
+                                      Icons.close,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ),
                     SizedBox(height: 40.h),
@@ -211,19 +402,32 @@ class _OtherFormPageState extends State<OtherFormPage> {
                         backgroundColor: Color.fromARGB(255, 137, 26, 255),
                       ),
                       onPressed: () async {
+                        var box = Hive.box("data");
+                        double? latitude = box.get('latitude');
+                        double? longitude = box.get('longitude');
                         try {
                           setState(() {
                             isProperty = true;
                           });
 
                           final apiservice = APIService(createDio());
+                          List<MultipartFile> imageFiles = [];
+                          for (var img in images) {
+                            imageFiles.add(await MultipartFile.fromFile(
+                              img.path,
+                              filename: img.path.split("/").last,
+                            ));
+                          }
                           await apiservice.addProduct({
                             "category": "test",
                             "user_id": "${box.get("id")}",
-                            "image": await MultipartFile.fromFile(
-                              image!.path,
-                              filename: image!.path.split("/").last,
-                            ),
+                            "images[]": imageFiles, // Changed from "image" to "images"
+                            "latitude": latitude,
+                            "longitude": longitude,
+                            // "image": await MultipartFile.fromFile(
+                            //   image!.path,
+                            //   filename: image!.path.split("/").last,
+                            // ),
                             "data_json": jsonEncode({
                               "title": titleController.text,
                               "desc": descController.text,

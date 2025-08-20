@@ -1,169 +1,181 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:shopping_app_olx/chat/controller/inboxProvider.provider.dart';
+import 'package:shopping_app_olx/chat/model/mesagesList.response.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
-class ChatingPage extends StatefulWidget {
-  const ChatingPage({super.key});
+class ChatingPage extends ConsumerStatefulWidget {
+  final String userid;
+  final String name;
+  const ChatingPage({super.key, required this.userid, required this.name});
 
   @override
-  State<ChatingPage> createState() => _ChatingPageState();
+  ConsumerState<ChatingPage> createState() => _ChatingPageState();
 }
 
-class _ChatingPageState extends State<ChatingPage> {
+class _ChatingPageState extends ConsumerState<ChatingPage> {
   final controller = TextEditingController();
-  List<Map<String, dynamic>> messages = [];
-  void onSend() {
-    setState(() {
-      messages.add({
-        "txt": controller.text.trim(),
-        "time": TimeOfDay.now().format(context),
-        "isMe": true,
-      });
-      controller.clear();
+  late WebSocketChannel channel;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    final box = Hive.box("data");
+    final id = box.get("id");
+
+    // Connect WebSocket
+    channel = WebSocketChannel.connect(
+      Uri.parse('ws://d05a1a3f3ef2.ngrok-free.app/chat/ws/$id'),
+    );
+
+    // Page open hone ke turant baad scroll to bottom
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToBottom();
+    });
+  }
+
+  @override
+  void dispose() {
+    channel.sink.close();
+    controller.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToBottom() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final messagesList = ref.watch(messageProvider(widget.userid));
+    final box = Hive.box("data");
+    final id = box.get("id");
+
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 245, 242, 247),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 60.h),
-            Row(
-              children: [
-                SizedBox(width: 20.w),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 46.w,
-                    height: 46.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Center(child: Icon(Icons.arrow_back)),
-                  ),
-                ),
-                SizedBox(width: 100.w),
-                Container(
-                  width: 132.w,
-                  height: 34.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.45.r),
-                    color: Color.fromARGB(25, 137, 26, 255),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Robert Jackson",
-                      style: GoogleFonts.dmSans(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 137, 26, 255),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            ListView(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                ChatBubble(isUserMessage: true, message: "Hello, how are you?"),
-                ChatBubble(
-                  isUserMessage: false,
-                  message: "Hello, I’m well, How can i help you?",
-                ),
-                ChatBubble(
-                  isUserMessage: true,
-                  message:
-                      "I wanted to check in about the shoe listing I saw. Could you let me know how old the shoes are and what condition they're in? I'm really interested and would love to get more details before making a decision. Thanks!",
-                ),
-              ],
-            ),
-            ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final mess = messages[index];
-                return ChatScreen(
-                  text: mess["txt"],
-                  isMe: mess['isMe'],
-                  time: mess['time'],
-                );
-              },
-            ),
-            SizedBox(height: 60.h),
-          ],
+      backgroundColor: const Color.fromARGB(255, 245, 242, 247),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 1,
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: const Icon(Icons.arrow_back, color: Colors.black),
         ),
-      ),
-      bottomSheet: SizedBox(
-        height: 60.w,
-        child: MessageInput(controller: controller, onSend: onSend),
-      ),
-    );
-  }
-}
-
-class ChatScreen extends StatefulWidget {
-  final String text;
-  final bool isMe;
-  final String time;
-  const ChatScreen({
-    super.key,
-    required this.text,
-    required this.isMe,
-    required this.time,
-  });
-
-  @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: widget.isMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Padding(
-        padding: EdgeInsets.only(left: 20.w, right: 20.w),
-        child: Container(
-          // width: 200.w,
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          margin: EdgeInsets.symmetric(vertical: 5),
+        title: Container(
+          height: 34.h,
           decoration: BoxDecoration(
-            color:
-                widget.isMe ? Color.fromARGB(255, 137, 26, 255) : Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.r),
-              topRight: Radius.circular(20.r),
-              bottomRight: widget.isMe ? Radius.zero : Radius.circular(10.r),
-              bottomLeft: widget.isMe ? Radius.circular(20.r) : Radius.zero,
-            ),
+            borderRadius: BorderRadius.circular(35.45.r),
+            color: const Color.fromARGB(25, 137, 26, 255),
           ),
-          child: Text(
-            widget.text,
-            style: GoogleFonts.dmSans(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w500,
-              color:
-                  widget.isMe ? Colors.white : Color.fromARGB(255, 97, 91, 104),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Text(
+                widget.name,
+                style: GoogleFonts.dmSans(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: const Color.fromARGB(255, 137, 26, 255),
+                ),
+              ),
             ),
           ),
         ),
+      ),
+      body: messagesList.when(
+        data: (snap) {
+          // Jab bhi data load ho, scroll to bottom
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollToBottom();
+          });
+
+          return Column(
+            children: [
+              Expanded(
+                child: StreamBuilder(
+                  stream: channel.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      log("Incoming: ${snapshot.data}");
+                      try {
+                        final data = jsonDecode(snapshot.data);
+                        snap.chat.add(
+                          Chat(
+                            sender: int.parse(data['sender_id']),
+                            message: data['message'],
+                            timestamp: DateTime.now(),
+                          ),
+                        );
+                        _scrollToBottom();
+                      } catch (e) {
+                        log("Error parsing: $e");
+                      }
+                    }
+
+                    return ListView.builder(
+                      controller: _scrollController,
+                      itemCount: snap.chat.length,
+                      itemBuilder: (context, index) {
+                        final e = snap.chat[index];
+                        return ChatBubble(
+                          isUserMessage: e.sender.toString() != id.toString(),
+                          message: e.message,
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+              MessageInput(
+                controller: controller,
+                onSend: () {
+                  if (controller.text.trim().isEmpty) return;
+
+                  channel.sink.add(
+                    jsonEncode({
+                      "receiver_id": widget.userid,
+                      "message": controller.text,
+                    }),
+                  );
+
+                  setState(() {
+                    snap.chat.add(
+                      Chat(
+                        sender: int.parse(id.toString()),
+                        message: controller.text,
+                        timestamp: DateTime.now(),
+                      ),
+                    );
+                    controller.clear();
+                  });
+                  _scrollToBottom();
+                },
+              ),
+            ],
+          );
+        },
+        error: (err, stack) => Center(child: Text("$err")),
+        loading: () => const Center(child: CircularProgressIndicator()),
       ),
     );
   }
 }
 
-class ChatBubble extends StatefulWidget {
+class ChatBubble extends StatelessWidget {
   final bool isUserMessage;
   final String message;
   const ChatBubble({
@@ -173,43 +185,33 @@ class ChatBubble extends StatefulWidget {
   });
 
   @override
-  State<ChatBubble> createState() => _ChatBubbleState();
-}
-
-class _ChatBubbleState extends State<ChatBubble> {
-  @override
   Widget build(BuildContext context) {
     return Align(
-      alignment:
-          widget.isUserMessage ? Alignment.centerLeft : Alignment.centerRight,
+      alignment: isUserMessage ? Alignment.centerLeft : Alignment.centerRight,
       child: Padding(
-        padding: EdgeInsets.only(left: 20.w, right: 20.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
         child: Container(
-          width: 200.w,
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          margin: EdgeInsets.symmetric(vertical: 5),
           decoration: BoxDecoration(
             color:
-                widget.isUserMessage
+                isUserMessage
                     ? Colors.white
-                    : Color.fromARGB(255, 137, 26, 255),
+                    : const Color.fromARGB(255, 137, 26, 255),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.r),
               topRight: Radius.circular(20.r),
-              bottomRight:
-                  widget.isUserMessage ? Radius.circular(20.r) : Radius.zero,
-              bottomLeft:
-                  widget.isUserMessage ? Radius.zero : Radius.circular(20.r),
+              bottomRight: isUserMessage ? Radius.circular(20.r) : Radius.zero,
+              bottomLeft: isUserMessage ? Radius.zero : Radius.circular(20.r),
             ),
           ),
           child: Text(
-            widget.message,
+            message,
             style: GoogleFonts.dmSans(
               fontSize: 14.sp,
               fontWeight: FontWeight.w500,
               color:
-                  widget.isUserMessage
-                      ? Color.fromARGB(255, 97, 91, 104)
+                  isUserMessage
+                      ? const Color.fromARGB(255, 97, 91, 104)
                       : Colors.white,
             ),
           ),
@@ -219,7 +221,7 @@ class _ChatBubbleState extends State<ChatBubble> {
   }
 }
 
-class MessageInput extends StatefulWidget {
+class MessageInput extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSend;
   const MessageInput({
@@ -229,50 +231,32 @@ class MessageInput extends StatefulWidget {
   });
 
   @override
-  State<MessageInput> createState() => _MessageInputState();
-}
-
-class _MessageInputState extends State<MessageInput> {
-  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 20.w, right: 20.w),
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.all(8.w),
       child: Row(
         children: [
-          Container(
-            width: 50.w,
-            height: 50.h,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            child: Center(
-              child: Icon(Icons.add, color: Color.fromARGB(255, 119, 112, 128)),
-            ),
-          ),
-          SizedBox(width: 10.w),
           Expanded(
             child: TextField(
-              controller: widget.controller,
+              controller: controller,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(top: 15.h, left: 15.w),
                 filled: true,
                 fillColor: Colors.white,
-                enabledBorder: UnderlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(40.r),
                   borderSide: BorderSide.none,
                 ),
-                focusedBorder: UnderlineInputBorder(
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(40.r),
                   borderSide: BorderSide.none,
                 ),
                 suffixIcon: GestureDetector(
-                  onTap: () {
-                    widget.onSend();
-                  },
+                  onTap: onSend,
                   child: Icon(
                     Icons.send,
-                    color: Color.fromARGB(255, 137, 26, 255),
+                    color: const Color.fromARGB(255, 137, 26, 255),
                     size: 25.sp,
                   ),
                 ),
@@ -280,7 +264,7 @@ class _MessageInputState extends State<MessageInput> {
                 hintStyle: GoogleFonts.dmSans(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
-                  color: Color.fromARGB(255, 97, 91, 104),
+                  color: const Color.fromARGB(255, 97, 91, 104),
                 ),
               ),
             ),

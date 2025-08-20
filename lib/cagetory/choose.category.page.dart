@@ -6,26 +6,33 @@ import 'package:shopping_app_olx/cagetory/bike.page.dart';
 import 'package:shopping_app_olx/cagetory/car.form.page.dart';
 import 'package:shopping_app_olx/cagetory/choose.more.cagegory.page.dart';
 import 'package:shopping_app_olx/cagetory/commerical.page.dart';
-import 'package:shopping_app_olx/cagetory/data.entry.form.page.dart';
 import 'package:shopping_app_olx/cagetory/elctronics.page.dart';
-import 'package:shopping_app_olx/cagetory/electronics.form.oage.dart';
 import 'package:shopping_app_olx/cagetory/job.page.dart';
 import 'package:shopping_app_olx/cagetory/mobile.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
 
+import '../listing/model/getlistingModel.dart';
+
+
 class ChooseCategoryPage extends StatefulWidget {
   const ChooseCategoryPage({super.key});
-
   @override
   State<ChooseCategoryPage> createState() => _ChooseCategoryPageState();
 }
 
+
 class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
   List<_CategoryItem> get categories => _getCategories();
-
   List<_CategoryItem> _getCategories() {
     return [
       _CategoryItem('Cars', Icons.directions_car_filled_outlined, () {
+
+     /*   Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => const CarFormPage(productToEdit: null),
+          ),
+        );*/
         Navigator.push(
           context,
           CupertinoPageRoute(
@@ -33,6 +40,7 @@ class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
             settings: RouteSettings(arguments: true),
           ),
         );
+
       }),
       _CategoryItem('Properties', Icons.home_outlined, () {
         Navigator.push(
@@ -80,10 +88,12 @@ class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
           CupertinoPageRoute(builder: (context) => ChooseMoreCagegoryPage()),
         );
       }),
+
     ];
   }
-
   int tab = 0;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,7 +148,10 @@ class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
                     ],
                   ),
                 ),
+
+
                 SizedBox(height: 30.h),
+
                 Expanded(
                   child: GridView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -156,6 +169,7 @@ class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
                     },
                   ),
                 ),
+                SizedBox(height: 20.h,)
               ],
             ),
           ),
@@ -163,6 +177,9 @@ class _ChooseCategoryPageState extends State<ChooseCategoryPage> {
       ),
     );
   }
+
+
+
 }
 
 class _CategoryItem {

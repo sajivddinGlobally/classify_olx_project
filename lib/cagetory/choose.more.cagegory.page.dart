@@ -14,16 +14,19 @@ import 'package:shopping_app_olx/cagetory/jobsekeer.page.dart';
 import 'package:shopping_app_olx/cagetory/mobile.page.dart';
 import 'package:shopping_app_olx/cagetory/property.page.dart';
 
+import 'ServicesPage.dart';
+
 class ChooseMoreCagegoryPage extends StatefulWidget {
   const ChooseMoreCagegoryPage({super.key});
-
   @override
   State<ChooseMoreCagegoryPage> createState() => _ChooseMoreCagegoryPageState();
 }
-
 class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
       body: Stack(
         children: [
@@ -40,7 +43,9 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
           ),
           Image.asset("assets/bgimage.png"),
           Positioned(
-            child: Column(
+            child:
+            SingleChildScrollView(child:
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 60.h),
@@ -84,6 +89,20 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                         /* Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => const CarFormPage(productToEdit: null),
+                            ),
+                          );*/
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //       builder: (context) => CarFormPage(),
+                          //       settings: RouteSettings(arguments: true)
+                          //   ),
+                          // );
+
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
@@ -91,12 +110,15 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                               settings: RouteSettings(arguments: true),
                             ),
                           );
+
                         },
                         child: CategoryBody(
                           image: "assets/carses.png",
                           txt: "Cars",
                         ),
                       ),
+
+
                       SizedBox(height: 20.h),
                       GestureDetector(
                         onTap: () {
@@ -128,6 +150,7 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                         ),
                       ),
                       SizedBox(height: 20.h),
+
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -140,7 +163,9 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                           txt: "Jobs",
                         ),
                       ),
+
                       SizedBox(height: 20.h),
+
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -155,7 +180,9 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                           txt: "Bikes",
                         ),
                       ),
+
                       SizedBox(height: 20.h),
+
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -170,7 +197,9 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                           txt: "Electronics & Appliances",
                         ),
                       ),
+
                       SizedBox(height: 20.h),
+
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -247,17 +276,46 @@ class _ChooseMoreCagegoryPageState extends State<ChooseMoreCagegoryPage> {
                         ),
                       ),
                       SizedBox(height: 20.h),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => ServicesPage(),
+                            ),
+                          );
+                          // Navigator.push(
+                          //   context,
+                          //   CupertinoPageRoute(
+                          //     builder: (context) => ServicesPage(),
+                          //     settings: RouteSettings(arguments: true),
+                          //   ),
+                          // );
+                        },
+                        child: CategoryBody(
+                          image: "assets/support.png",
+                          txt: "Services",
+                        ),
+                      ),
+
                     ],
                   ),
                 ),
               ],
             ),
           ),
+          )
+
         ],
       ),
     );
+
+
+
   }
+
 }
+
 
 class CategoryBody extends StatelessWidget {
   final String image;

@@ -73,11 +73,19 @@ class _BooksPageState extends State<BooksPage> {
                         SizedBox(height: 20.h),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
+                           /* Navigator.push(
                               context,
                               CupertinoPageRoute(
                                 builder: (context) => BooksFormPage(),
                               ),
+                            );*/
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) =>  BooksFormPage(),
+                                  settings: RouteSettings(arguments: true)
+                              ),
+
                             );
                           },
                           child: PropertyBody(txt: "Books"),
@@ -85,12 +93,21 @@ class _BooksPageState extends State<BooksPage> {
                         SizedBox(height: 20.h),
                         GestureDetector(
                           onTap: () {
+
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => BooksFormPage(),
+                                  builder: (context) =>  BooksFormPage(),
+                                  settings: RouteSettings(arguments: true)
                               ),
+
                             );
+                            // Navigator.push(
+                            //   context,
+                            //   CupertinoPageRoute(
+                            //     builder: (context) => BooksFormPage(),
+                            //   ),
+                            // );
                           },
                           child: PropertyBody(txt: "Gym & Fitness"),
                         ),
@@ -100,9 +117,17 @@ class _BooksPageState extends State<BooksPage> {
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => BooksFormPage(),
+                                  builder: (context) =>  BooksFormPage(),
+                                  settings: RouteSettings(arguments: true)
                               ),
+
                             );
+                            // Navigator.push(
+                            //   context,
+                            //   CupertinoPageRoute(
+                            //     builder: (context) => BooksFormPage(),
+                            //   ),
+                            // );
                           },
                           child: PropertyBody(txt: "Musical Instruments"),
                         ),
@@ -112,20 +137,36 @@ class _BooksPageState extends State<BooksPage> {
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => BooksFormPage(),
+                                  builder: (context) =>  BooksFormPage(),
+                                  settings: RouteSettings(arguments: true)
                               ),
+
                             );
+                            // Navigator.push(
+                            //   context,
+                            //   CupertinoPageRoute(
+                            //     builder: (context) => BooksFormPage(),
+                            //   ),
+                            // );
                           },
                           child: PropertyBody(txt: "Sports Equipment"),
                         ),
                         SizedBox(height: 20.h),
                         GestureDetector(
                           onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   CupertinoPageRoute(
+                            //     builder: (context) => BooksFormPage(),
+                            //   ),
+                            // );
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => BooksFormPage(),
+                                  builder: (context) =>  BooksFormPage(),
+                                  settings: RouteSettings(arguments: true)
                               ),
+
                             );
                           },
                           child: PropertyBody(txt: "Other Hobbies"),

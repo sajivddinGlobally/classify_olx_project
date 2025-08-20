@@ -71,23 +71,32 @@ class _FurniturePageState extends State<FurniturePage> {
                   children: [
                     GestureDetector(
                       onTap: () {
+
+
+
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => FurnitureFormPage(),
+                              builder: (context) => FurnitureFormPage(),
+                              settings: RouteSettings(arguments: true)
                           ),
+
                         );
                       },
+
                       child: PropertyBody(txt: "Sofa & Dining"),
                     ),
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
+
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => FurnitureFormPage(),
+                              builder: (context) => FurnitureFormPage(),
+                              settings: RouteSettings(arguments: true)
                           ),
+
                         );
                       },
                       child: PropertyBody(txt: "Beds & Wardrobes"),
@@ -95,11 +104,14 @@ class _FurniturePageState extends State<FurniturePage> {
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
+
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => FurnitureFormPage(),
+                              builder: (context) => FurnitureFormPage(),
+                              settings: RouteSettings(arguments: true)
                           ),
+
                         );
                       },
                       child: PropertyBody(txt: "Home Decor & Garden"),
@@ -107,11 +119,14 @@ class _FurniturePageState extends State<FurniturePage> {
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
+
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => FurnitureFormPage(),
+                              builder: (context) => FurnitureFormPage(),
+                              settings: RouteSettings(arguments: true)
                           ),
+
                         );
                       },
                       child: PropertyBody(txt: "Kids Furniture"),
@@ -119,11 +134,19 @@ class _FurniturePageState extends State<FurniturePage> {
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                     /*   Navigator.push(
                           context,
                           CupertinoPageRoute(
                             builder: (context) => OtherFormPage(),
                           ),
+                        );*/
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => FurnitureFormPage(),
+                              settings: RouteSettings(arguments: true)
+                          ),
+
                         );
                       },
                       child: PropertyBody(txt: "Other Household Items"),

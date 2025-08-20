@@ -10,9 +10,9 @@ final listingController = FutureProvider((ref) async {
   if (id == null) {
     throw UserNotLoggedInException();
   }
-
   final getlistingservice = GetListingService(await createDio());
   return getlistingservice.fetchListing(id);
-});
+}
+);
 
 class UserNotLoggedInException implements Exception {}

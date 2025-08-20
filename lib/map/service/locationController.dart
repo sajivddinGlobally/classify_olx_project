@@ -33,10 +33,10 @@ final locationProvider = FutureProvider<String>((ref) async {
 
   if (placemarks.isNotEmpty) {
     final place = placemarks.first;
-    // return "${place.locality}, ${place.administrativeArea}";
     log(place.street.toString());
     return "${place.name}, ${place.locality}, ${place.administrativeArea} , ${place.country}";
   } else {
     return "Location not found";
   }
-});
+}
+);

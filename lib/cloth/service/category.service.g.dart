@@ -20,11 +20,11 @@ class _CategoryService implements CategoryService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CategoryResModel> fetchCategory(String category) async {
+  Future<CategoryResModel> fetchCategory(String category, String userId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'category': category};
+    final _data = {'category': category, 'user_id': userId};
     final _options = _setStreamType<CategoryResModel>(
       Options(
             method: 'POST',

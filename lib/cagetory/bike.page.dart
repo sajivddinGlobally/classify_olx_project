@@ -8,6 +8,8 @@ import 'package:shopping_app_olx/cagetory/property.page.dart';
 import 'package:shopping_app_olx/cagetory/scotor.form.page.dart';
 import 'package:shopping_app_olx/cagetory/spare.parts.form.page.dart';
 
+import 'BikeSparsFormPage.dart';
+
 class BikePage extends StatefulWidget {
   const BikePage({super.key});
 
@@ -89,7 +91,7 @@ class _BikePageState extends State<BikePage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (context) => ScotorFormPage(),
+                            builder: (context) => ScooterFormPage(),
                              settings: RouteSettings(arguments: true)
                           ),
                         );
@@ -102,7 +104,7 @@ class _BikePageState extends State<BikePage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-                            builder: (context) => SparePartsFormPage(),
+                            builder: (context) => BikeSparsFormPage(),
                              settings: RouteSettings(arguments: true)
                           ),
                         );
@@ -118,12 +120,13 @@ class _BikePageState extends State<BikePage> {
                             builder: (context) => BicycleFormPage(),
                             settings: RouteSettings(arguments: true)
                           ),
-                          
                         );
                       },
                       child: PropertyBody(txt: "Bicycles"),
                     ),
+
                     SizedBox(height: 20.h),
+
                   ],
                 ),
               ),

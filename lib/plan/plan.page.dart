@@ -8,26 +8,41 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:shopping_app_olx/config/pretty.dio.dart';
 import 'package:shopping_app_olx/new/controller/plan.provider.dart';
 import 'package:shopping_app_olx/new/new.service.dart';
-import 'package:shopping_app_olx/payment/payment.page.dart';
 import 'package:shopping_app_olx/plan/reting.page.dart';
+import '../home/home.page.dart';
 
 class PlanPage extends ConsumerStatefulWidget {
   const PlanPage({super.key});
-
   @override
   ConsumerState<PlanPage> createState() => _PlanPageState();
 }
 
 class _PlanPageState extends ConsumerState<PlanPage> {
+  int tabBottom = 0;
+  DateTime? lastBackPressTime;
+
+
   @override
   Widget build(BuildContext context) {
     final plan = ref.watch(planProvider);
-    return Scaffold(
+
+    return PopScope(
+    canPop: false,
+    onPopInvoked: (didPop) {
+      if (!didPop) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage(page: 3)),
+        );
+      }
+    },child: Scaffold(
+
       body: plan.when(
         data: (snap) {
           return SingleChildScrollView(
             child: Stack(
               children: [
+
                 Container(
                   height: MediaQuery.of(context).size.height + 100,
                   decoration: BoxDecoration(
@@ -38,12 +53,15 @@ class _PlanPageState extends ConsumerState<PlanPage> {
                     ),
                   ),
                 ),
+
                 Image.asset("assets/bgimage.png"),
+
                 Padding(
                   padding: EdgeInsets.only(left: 20.w, top: 60.h),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage(page:3)));
+                      // Navigator.pop(context);
                     },
                     child: Container(
                       width: 46.w,
@@ -56,6 +74,9 @@ class _PlanPageState extends ConsumerState<PlanPage> {
                     ),
                   ),
                 ),
+
+
+
                 Positioned(
                   top: 100.h,
                   left: 0,
@@ -75,6 +96,8 @@ class _PlanPageState extends ConsumerState<PlanPage> {
                             ),
                           ),
                         ),
+
+
                         DefaultTabController(
                           length: 2,
                           child: Column(
@@ -129,6 +152,7 @@ class _PlanPageState extends ConsumerState<PlanPage> {
                                 ],
                               ),
                               SizedBox(height: 30.h),
+
                               SizedBox(
                                 height: 550.h, // Adjust this height as needed
                                 child: TabBarView(
@@ -196,6 +220,8 @@ class _PlanPageState extends ConsumerState<PlanPage> {
                                                       month: Colors.black,
                                                       name: Colors.black,
                                                       title: Colors.black,
+                                                      listing_type:e.listing_type.toString()
+
                                                     ),
                                                   ),
                                                 ),
@@ -268,6 +294,7 @@ class _PlanPageState extends ConsumerState<PlanPage> {
                                                       month: Colors.black,
                                                       name: Colors.black,
                                                       title: Colors.black,
+                                                        listing_type:e.listing_type.toString()
                                                     ),
                                                   ),
                                                 ),
@@ -283,6 +310,8 @@ class _PlanPageState extends ConsumerState<PlanPage> {
                           ),
                         ),
                         SizedBox(height: 30.h),
+
+
                         Text(
                           "Ads Visibility ",
                           style: GoogleFonts.dmSans(
@@ -322,6 +351,8 @@ class _PlanPageState extends ConsumerState<PlanPage> {
                     ),
                   ),
                 ),
+
+
               ],
             ),
           );
@@ -331,9 +362,12 @@ class _PlanPageState extends ConsumerState<PlanPage> {
         },
         loading: () => Center(child: CircularProgressIndicator()),
       ),
-    );
+      )) ;
   }
 }
+
+
+
 
 // PLAN CARD
 class PlanBody extends StatefulWidget {
@@ -347,6 +381,7 @@ class PlanBody extends StatefulWidget {
   final String duration;
   final String desc;
   final String addBoost;
+  final String listing_type;
   const PlanBody({
     super.key,
     required this.bgColor,
@@ -359,6 +394,7 @@ class PlanBody extends StatefulWidget {
     required this.desc,
     required this.addBoost,
     required this.planID,
+    required this.listing_type,
   });
 
   @override
@@ -413,15 +449,37 @@ class _PlanBodyState extends State<PlanBody> {
                 color: widget.name,
               ),
             ),
-            Text(
-              "${widget.desc}",
-              style: GoogleFonts.dmSans(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-                color: widget.title,
-                letterSpacing: -0.50,
+
+            Row(
+
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+
+              Text(
+                "${widget.desc}",
+                style: GoogleFonts.dmSans(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: widget.title,
+                  letterSpacing: -0.50,
+                ),
               ),
-            ),
+
+
+              Text(
+                widget.listing_type??"",
+                style: GoogleFonts.dmSans(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: widget.title,
+                  letterSpacing: -0.50,
+                ),
+              ),
+
+
+            ],)
+
           ],
         ),
       ),
@@ -499,14 +557,11 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
             ),
           ),
           SizedBox(height: 20.h),
-
           _row("Amount", "₹${widget.amount.toStringAsFixed(2)}"),
           _row("GST (${widget.gstPercentage}%)", "₹${gstAmount.toStringAsFixed(2)}"),
           Divider(),
           _row("Total", "₹${total.toStringAsFixed(2)}", isBold: true),
-
           SizedBox(height: 30.h),
-
           SizedBox(
             width: double.infinity,
             height: 50.h,
@@ -525,21 +580,22 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                 final userid = box.get("id");
                 final state = APIService(createDio());
                 final response = await state.buyPlan(userId: userid, trnxId: "dadadasdadad", paymentType: "Success", status: "complete", planId: widget.id);
+
                 if (response.response.data["status"] == true){
-                
-                  
                   setState(() {
                     loder = false;
                   });
                   Fluttertoast.showToast(msg: "${response.response.data["message"]}", backgroundColor: Colors.blue, textColor: Colors.white);
-                  Navigator.pop(context);
-                }else{
+                  // Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                }
+
+                else{
                   setState(() {
                     loder = false;
                   });
                   Fluttertoast.showToast(msg: "${response.response.data["message"]}", backgroundColor: Colors.red, textColor: Colors.white);
                   Navigator.pop(context);
-
                 }
                 // navigate to payment or perform action
               },
@@ -557,6 +613,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
         ],
       ),
     );
+
   }
 
   Widget _row(String label, String value, {bool isBold = false}) {
