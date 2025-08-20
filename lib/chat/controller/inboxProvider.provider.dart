@@ -17,5 +17,3 @@ final messageProvider = FutureProvider.family((ref, userid) async {
   final api = ChatService(createDio2());
   return await api.getMessage(id, userid.toString());
 });
-
-
