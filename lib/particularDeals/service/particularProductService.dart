@@ -7,7 +7,7 @@ part 'particularProductService.g.dart';
 
 
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class ParticularProductService {
   factory ParticularProductService(Dio dio, {String baseUrl}) = _ParticularProductService;
   @GET('/api/ProductDetails?id={id}&user_id={userId}')

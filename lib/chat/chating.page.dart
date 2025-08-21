@@ -31,7 +31,7 @@ class _ChatingPageState extends ConsumerState<ChatingPage> {
 
     // Connect WebSocket
     channel = WebSocketChannel.connect(
-      Uri.parse('ws://d05a1a3f3ef2.ngrok-free.app/chat/ws/$id'),
+      Uri.parse('ws://classfiy.onrender.com/chat/ws/$id'),
     );
 
     // Page open hone ke turant baad scroll to bottom
@@ -111,15 +111,21 @@ class _ChatingPageState extends ConsumerState<ChatingPage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       log("Incoming: ${snapshot.data}");
+
                       try {
-                        final data = jsonDecode(snapshot.data);
-                        snap.chat.add(
-                          Chat(
-                            sender: int.parse(data['sender_id']),
-                            message: data['message'],
-                            timestamp: DateTime.now(),
-                          ),
-                        );
+                        final data = jsonDecode(snapshot.requireData);
+                        if (!snap.chat.any((m) => m.id == data['id'])) {
+                          snap.chat.add(
+                            Chat(
+                              id: data["id"],
+                              sender: int.parse(data['sender_id']),
+                              message: data['message'],
+                              timestamp: DateTime.now(),
+                            ),
+                          );
+                          _scrollToBottom();
+                        }
+
                         _scrollToBottom();
                       } catch (e) {
                         log("Error parsing: $e");
@@ -155,6 +161,7 @@ class _ChatingPageState extends ConsumerState<ChatingPage> {
                   setState(() {
                     snap.chat.add(
                       Chat(
+                        id: "sender",
                         sender: int.parse(id.toString()),
                         message: controller.text,
                         timestamp: DateTime.now(),

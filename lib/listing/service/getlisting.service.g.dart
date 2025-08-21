@@ -10,7 +10,7 @@ part of 'getlisting.service.dart';
 
 class _GetListingService implements GetListingService {
   _GetListingService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://classified.globallywebsolutions.com';
+    baseUrl ??= 'https://classify.mymarketplace.co.in';
   }
 
   final Dio _dio;

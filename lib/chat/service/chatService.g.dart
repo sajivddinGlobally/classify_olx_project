@@ -10,7 +10,7 @@ part of 'chatService.dart';
 
 class _ChatService implements ChatService {
   _ChatService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://d05a1a3f3ef2.ngrok-free.app';
+    baseUrl ??= 'https://classfiy.onrender.com';
   }
 
   final Dio _dio;

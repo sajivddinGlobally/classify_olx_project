@@ -23,7 +23,7 @@ import 'package:shopping_app_olx/cloth/model/categoryResModel.dart';
 
 part 'category.service.g.dart';
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class CategoryService {
   factory CategoryService(Dio dio, {String baseUrl}) = _CategoryService;
 

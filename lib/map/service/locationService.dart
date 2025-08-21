@@ -5,7 +5,7 @@ import 'package:shopping_app_olx/map/model/locationResModel.dart';
 
 part 'locationService.g.dart';
 
-@RestApi(baseUrl: 'https://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class LocationService {
   factory LocationService(Dio dio, {String baseUrl}) = _LocationService;
 

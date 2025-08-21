@@ -10,7 +10,7 @@ part of 'locationService.dart';
 
 class _LocationService implements LocationService {
   _LocationService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://classified.globallywebsolutions.com';
+    baseUrl ??= 'https://classify.mymarketplace.co.in';
   }
 
   final Dio _dio;

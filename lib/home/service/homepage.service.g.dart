@@ -10,7 +10,7 @@ part of 'homepage.service.dart';
 
 class _HomePageService implements HomePageService {
   _HomePageService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://classified.globallywebsolutions.com';
+    baseUrl ??= 'https://classify.mymarketplace.co.in';
   }
 
   final Dio _dio;

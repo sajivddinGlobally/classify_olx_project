@@ -10,7 +10,7 @@ part of 'otpService.dart';
 
 class _OtpService implements OtpService {
   _OtpService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://classified.globallywebsolutions.com';
+    baseUrl ??= 'https://classify.mymarketplace.co.in';
   }
 
   final Dio _dio;

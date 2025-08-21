@@ -5,7 +5,7 @@ import 'package:shopping_app_olx/product/model.addproduct/addproductResModel.dar
 
 part 'addproductService.g.dart';
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class AddproductService {
   factory AddproductService(Dio dio, {String baseUrl}) = _AddproductService;
   @POST('/api/Add/product')

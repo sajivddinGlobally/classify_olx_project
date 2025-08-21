@@ -10,7 +10,7 @@ part of 'like.service.dart';
 
 class _LikeService implements LikeService {
   _LikeService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://classified.globallywebsolutions.com';
+    baseUrl ??= 'https://classify.mymarketplace.co.in';
   }
 
   final Dio _dio;

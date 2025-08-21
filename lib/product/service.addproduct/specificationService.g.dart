@@ -10,7 +10,7 @@ part of 'specificationService.dart';
 
 class _SpecificationService implements SpecificationService {
   _SpecificationService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://classified.globallywebsolutions.com';
+    baseUrl ??= 'https://classify.mymarketplace.co.in';
   }
 
   final Dio _dio;

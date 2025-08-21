@@ -7,7 +7,7 @@ import 'package:shopping_app_olx/like/model/showlikeResModel.dart';
 
 part 'like.service.g.dart';
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class LikeService {
   factory LikeService(Dio dio, {String baseUrl}) = _LikeService;
 

@@ -7,7 +7,7 @@ import 'package:shopping_app_olx/login/Model/loginResMdel.dart';
 part 'loginService.g.dart';
 
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 
 abstract class LoginService {
 

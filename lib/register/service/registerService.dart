@@ -6,7 +6,7 @@ part 'registerService.g.dart';
 
 
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class RegisterService {
   factory RegisterService(Dio dio, {String baseUrl}) = _RegisterService;
   @POST('/api/auth/register')

@@ -4,7 +4,7 @@ import 'package:shopping_app_olx/profile/Model/profileModel.dart';
 
 part 'profileService.g.dart';
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class ProfileService {
   factory ProfileService(Dio dio, {String baseUrl}) = _ProfileService;
 

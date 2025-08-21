@@ -6,7 +6,7 @@ import 'package:shopping_app_olx/login/Model/otpResModel.dart';
 
 part 'otpService.g.dart';
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class OtpService {
   factory OtpService(Dio dio, {String baseUrl}) = _OtpService;
 

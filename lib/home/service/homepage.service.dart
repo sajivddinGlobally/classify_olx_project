@@ -6,7 +6,7 @@ part 'homepage.service.g.dart';
 
 
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 
 abstract class HomePageService {
   factory HomePageService(Dio dio, {String baseUrl}) = _HomePageService;

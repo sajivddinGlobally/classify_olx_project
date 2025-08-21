@@ -10,7 +10,7 @@ part of 'addproductService.dart';
 
 class _AddproductService implements AddproductService {
   _AddproductService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://classified.globallywebsolutions.com';
+    baseUrl ??= 'https://classify.mymarketplace.co.in';
   }
 
   final Dio _dio;

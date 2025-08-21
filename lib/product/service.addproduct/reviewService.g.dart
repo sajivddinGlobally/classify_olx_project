@@ -10,7 +10,7 @@ part of 'reviewService.dart';
 
 class _ReviewService implements ReviewService {
   _ReviewService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://classified.globallywebsolutions.com';
+    baseUrl ??= 'https://classify.mymarketplace.co.in';
   }
 
   final Dio _dio;

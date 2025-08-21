@@ -5,7 +5,7 @@ import 'package:shopping_app_olx/product/model.addproduct/reviewResModel.dart';
 
 part 'reviewService.g.dart';
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class ReviewService {
   factory ReviewService(Dio dio, {String baseUrl}) = _ReviewService;
 

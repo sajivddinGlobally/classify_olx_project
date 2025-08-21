@@ -10,7 +10,7 @@ part of 'profileService.dart';
 
 class _ProfileService implements ProfileService {
   _ProfileService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://classified.globallywebsolutions.com';
+    baseUrl ??= 'https://classify.mymarketplace.co.in';
   }
 
   final Dio _dio;

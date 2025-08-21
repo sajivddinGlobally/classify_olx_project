@@ -5,7 +5,7 @@ import 'package:shopping_app_olx/model/planModel.model.dart';
 
 part 'new.service.g.dart';
 
-@RestApi(baseUrl: "http://classified.globallywebsolutions.com")
+@RestApi(baseUrl: "https://classify.mymarketplace.co.in")
 abstract class APIService {
   factory APIService(Dio dio, {String baseUrl}) = _APIService;
 

@@ -5,7 +5,7 @@ import 'package:shopping_app_olx/product/model.addproduct/specificationResModel.
 
 part 'specificationService.g.dart';
 
-@RestApi(baseUrl: 'http://classified.globallywebsolutions.com')
+@RestApi(baseUrl: 'https://classify.mymarketplace.co.in')
 abstract class SpecificationService {
   factory SpecificationService(Dio dio, {String baseUrl}) =
       _SpecificationService;

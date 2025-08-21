@@ -9,7 +9,7 @@ import 'package:shopping_app_olx/like/model/showlikeResModel.dart';
 
 part 'chatService.g.dart';
 
-@RestApi(baseUrl: 'https://d05a1a3f3ef2.ngrok-free.app')
+@RestApi(baseUrl: 'https://classfiy.onrender.com')
 abstract class ChatService {
   factory ChatService(Dio dio, {String baseUrl}) = _ChatService;
 
@@ -21,8 +21,3 @@ abstract class ChatService {
     @Path('userid2') String userid2,
   );
 }
-
-
-
-
-
