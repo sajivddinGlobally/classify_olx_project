@@ -133,7 +133,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               ],
             );
           },
-          error: (err, stack) => Center(child: Text("$err")),
+          error: (err, stack) => Center(child: Text("pull to refresh")),
           loading: () => const Center(child: CircularProgressIndicator()),
         ),
       ),
