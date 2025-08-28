@@ -24,8 +24,8 @@ import 'package:shopping_app_olx/login/login.page.dart';
 class RegisterController {
   static Future<Map<String, dynamic>> register({
     required BuildContext context,
-    required String full_name,
-    required String phone_number,
+    required String fullname,
+    required String phonenumber,
     required String address,
     required String city,
     required String pincode,
@@ -37,8 +37,8 @@ class RegisterController {
     request.headers.addAll({"Accept": "application/json"});
 
     request.fields.addAll({
-      "full_name": full_name,
-      "phone_number": phone_number,
+      "full_name": fullname,
+      "phone_number": phonenumber,
       "address": address,
       "city": city,
       "pincode": pincode,

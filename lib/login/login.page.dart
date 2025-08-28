@@ -19,7 +19,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final phoneController = TextEditingController();
   bool islogin = false;
 
@@ -47,8 +46,6 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-
                   Image.asset("assets/loginimage.png"),
                   SizedBox(height: 50.h),
                   Center(
@@ -156,7 +153,6 @@ class _LoginPageState extends State<LoginPage> {
                                 msg: "${response.otpForTesting}",
                                 fontSize: 30.sp,
                                 timeInSecForIosWeb: 40,
-
                                 gravity: ToastGravity.TOP,
                                 toastLength: Toast.LENGTH_LONG,
                               );
@@ -178,10 +174,6 @@ class _LoginPageState extends State<LoginPage> {
                               );
                               log(e.toString());
                             }
-
-
-
-
                           },
                           child:
                               islogin == false
@@ -203,7 +195,6 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                         ),
-
 
                         SizedBox(height: 50.h),
                         Row(
@@ -241,9 +232,6 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
-
-
-
                 ],
               ),
             ),

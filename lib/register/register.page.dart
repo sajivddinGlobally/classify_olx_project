@@ -720,8 +720,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                                   await RegisterController.register(
                                     context: context,
-                                    full_name: nameController.text,
-                                    phone_number: phoneController.text,
+                                    fullname: nameController.text,
+                                    phonenumber: phoneController.text,
                                     address: addController.text,
                                     city: cityController.text,
                                     pincode: pincodeController.text,
